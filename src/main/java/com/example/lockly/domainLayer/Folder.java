@@ -11,6 +11,6 @@ import lombok.Setter;
 @Builder
 public class Folder {
     private Long id;
-    private String nome;
+    private String name;
     private User user;
 }

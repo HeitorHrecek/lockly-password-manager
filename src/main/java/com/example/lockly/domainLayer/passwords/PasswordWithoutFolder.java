@@ -12,7 +12,7 @@ import lombok.Setter;
 @Builder
 public class PasswordWithoutFolder {
     private Long id;
-    private String nome;
-    private String conteudo;
+    private String name;
+    private String content;
     private User user;
 }

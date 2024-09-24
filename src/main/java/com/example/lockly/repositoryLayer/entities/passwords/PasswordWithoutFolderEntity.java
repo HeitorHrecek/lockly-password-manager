@@ -16,8 +16,8 @@ public class PasswordWithoutFolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private String conteudo;
+    private String name;
+    private String content;
     @ManyToOne
     private UserEntity userEntity;
 

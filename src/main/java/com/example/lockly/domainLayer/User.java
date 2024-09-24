@@ -11,7 +11,7 @@ import lombok.Setter;
 @Builder
 public class User {
     private Long id;
-    private String nome;
+    private String name;
     private String email;
-    private String senha;
+    private String password;
 }

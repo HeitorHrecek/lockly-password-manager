@@ -7,5 +7,5 @@ import com.example.lockly.domainLayer.User;
 import lombok.Builder;
 
 @Builder
-public record PasswordWithFolderDto(Long id, String nome, String conteudo, UserDto userDto, FolderDto folderDto) {
+public record PasswordWithFolderDto(Long id, String name, String content, UserDto userDto, FolderDto folderDto) {
 }
