@@ -13,8 +13,8 @@ import lombok.Setter;
 @Builder
 public class PasswordWithFolder {
     private Long id;
-    private String nome;
-    private String conteudo;
+    private String name;
+    private String content;
     private User user;
     private Folder folder;
 }
