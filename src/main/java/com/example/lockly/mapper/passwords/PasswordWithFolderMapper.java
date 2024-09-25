@@ -1,11 +1,8 @@
 package com.example.lockly.mapper.passwords;
 
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
-import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.mapper.UserMapper;
-import com.example.lockly.repositoryLayer.entities.UserEntity;
 import com.example.lockly.repositoryLayer.entities.passwords.PasswordWithFolderEntity;
 
 import java.util.List;
