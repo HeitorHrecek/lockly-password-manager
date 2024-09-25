@@ -21,4 +21,7 @@ public class PasswordWithoutService {
 
     public PasswordWithoutFolder changeNoFolder(PasswordWithoutFolder forDomainFromDto, Long id) {
     }
+
+    public PasswordWithoutFolder consultById(Long idPasswordWithoutFolder) {
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.lockly.serviceLayer;
 
+import com.example.lockly.dataproviderLayer.PasswordWithFolderDataProvider;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
@@ -22,7 +23,7 @@ public class PasswordWithFolderService {
     private final FolderService folderService;
 
     public PasswordWithFolder registerWithFolder(PasswordWithFolder newPassword) {
-        Optional<PasswordWithFolder> resultConsult = dataProvider.consultByName(newPassword.getName());
+        Optional<PasswordWithFolder> resultConsult = dataProvider.queryByName(newPassword.getName());
         resultConsult.ifPresent(password -> {
             throw new PasswordAlreadyRegisteredException();
         });
@@ -45,7 +46,7 @@ public class PasswordWithFolderService {
                 .user(passwordWithoutFolder.getUser())
                 .folder(folder)
                 .build()
-            );
+        );
     }
 
     public void removePasswordFolder(Long idPasswordWithFolder) {
@@ -61,7 +62,7 @@ public class PasswordWithFolderService {
 
     public List<PasswordWithFolder> consultAllWithFolderByUser(Long idUser) {
         List<PasswordWithFolder> passwordWithFolderList = dataProvider.consultAllWithFolderByUser(idUser);
-        if(passwordWithFolderList.isEmpty()) {
+        if (passwordWithFolderList.isEmpty()) {
             throw new NoPasswordFoundException();
         }
         return passwordWithFolderList;
@@ -69,7 +70,7 @@ public class PasswordWithFolderService {
 
     public PasswordWithFolder queryByNameWithFolder(String name) {
         Optional<PasswordWithFolder> passwordWithFolder = dataProvider.queryByName(name);
-        if(passwordWithFolder.isEmpty()) {
+        if (passwordWithFolder.isEmpty()) {
             throw new PasswordNotFoundException();
         }
         return passwordWithFolder.get();
@@ -85,7 +86,7 @@ public class PasswordWithFolderService {
         PasswordWithFolder password = consultById(idPassword);
         password.setFolder(newFolder);
 
-        dataProvider.save(password);
+        return dataProvider.save(password);
     }
 
     public String encryptPassword(String password) {
@@ -94,7 +95,7 @@ public class PasswordWithFolderService {
 
     private PasswordWithFolder consultById(Long id) {
         Optional<PasswordWithFolder> resultQuery = dataProvider.consultById(id);
-        if(resultQuery.isEmpty()) {
+        if (resultQuery.isEmpty()) {
             throw new PasswordNotFoundException();
         }
         return resultQuery.get();

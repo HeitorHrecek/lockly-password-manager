@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserDataProvier userDataProvider;
+
     public User consultById(Long id) {
         return userDataProvider.consultById(id).get();
     }
