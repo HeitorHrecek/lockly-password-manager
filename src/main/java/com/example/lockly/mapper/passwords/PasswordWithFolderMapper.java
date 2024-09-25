@@ -2,6 +2,7 @@ package com.example.lockly.mapper.passwords;
 
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
+import com.example.lockly.mapper.FolderMapper;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.repositoryLayer.entities.passwords.PasswordWithFolderEntity;
 
@@ -28,12 +29,11 @@ public abstract class PasswordWithFolderMapper {
     }
 
     public static PasswordWithFolderDto forDto(PasswordWithFolder domain) {
-        return PasswordWithFolderDto.builder()
-                .id(domain.getId())
-                .name(domain.getName())
-                .content(domain.getContent())
-                .userDto(UserMapper.forDto(domain.getUser()))
-                .build();
+        return new PasswordWithFolderDto(domain.getId(),
+                domain.getName(),
+                domain.getContent(),
+                UserMapper.forDto(domain.getUser()),
+                FolderMapper.forDto(domain.getFolder()));
     }
 
     public static PasswordWithFolder forDomainFromDto(PasswordWithFolderDto dto) {

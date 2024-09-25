@@ -1,8 +1,10 @@
 package com.example.lockly.controllerLayer;
 
+import com.example.lockly.controllerLayer.dtos.PasswordFolderIdsDto;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
-import com.example.lockly.mapper.PasswordWithFolderMapper;
+import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
+import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
+import com.example.lockly.serviceLayer.PasswordWithFolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,16 +20,16 @@ public class PasswordWithFolderController {
     private final PasswordWithFolderService service;
 
     @PostMapping("/register")
-    public ResponseEntity<PasswordWithFolderDto> registerWithFolder(@RequestBody PasswordWithFolderDto passwordWithFolderDto) {
-        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.registerWithFolder(PasswordWithFolderMapper.forDomainFromDto(passwordWithFolderDto)));
+    public ResponseEntity<PasswordWithFolderDto> registerWithFolder(@RequestBody PasswordWithFolderDto newPassword) {
+        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.registerWithFolder(PasswordWithFolderMapper.forDomainFromDto(newPassword)));
         return ResponseEntity
                 .created(UriComponentsBuilder.newInstance().path("/passwords/add/with-pasta/{id}").buildAndExpand(passwordResponse.id()).toUri())
                 .body(passwordResponse);
     }
 
-    @PostMapping(value = "/put-in-folder/{idFolder}")
-    public ResponseEntity<PasswordWithFolderDto> putInFolder(@RequestBody PasswordWithoutFolderDto passwordWithoutFolder, @PathVariable Long idFolder) {
-        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.putInFolder(passwordWithoutFolder, idFolder));
+    @PostMapping("/put-in-folder")
+    public ResponseEntity<PasswordWithFolderDto> putInFolder(@RequestBody PasswordFolderIdsDto ids) {
+        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.putInFolder(ids.idPassword(), ids.idFolder()));
         return ResponseEntity
                 .created(UriComponentsBuilder.newInstance().path("/passwords/put-in-folder/{id}").buildAndExpand(passwordResponse.id()).toUri())
                 .body(passwordResponse);
@@ -58,9 +60,9 @@ public class PasswordWithFolderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/change/{id}")
-    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordWithFolderDto newPassword, @PathVariable Long id) {
-        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeWithFolder(PasswordWithFolderMapper.forDomainFromDto(newPassword), id));
+    @PutMapping("/change")
+    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordFolderIdsDto ids) {
+        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeWithFolder(ids.idPassword(), ids.idFolder()));
         return ResponseEntity.ok(passwordResult);
     }
 }

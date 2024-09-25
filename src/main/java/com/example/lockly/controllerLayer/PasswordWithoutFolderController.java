@@ -1,7 +1,8 @@
 package com.example.lockly.controllerLayer;
 
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
-import com.example.lockly.mapper.PasswordWithoutFolderMapper;
+import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
+import com.example.lockly.serviceLayer.PasswordWithoutService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
