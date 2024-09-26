@@ -25,7 +25,7 @@ public class PasswordWithFolderDataProvider {
         try {
             password = repository.save(password);
         }catch (Exception exception) {
-            log.error("Error saving password.", exception);
+            log.error("Error saving password with password.", exception);
             throw new ErrorSavePasswordException(exception.getMessage());
         }
 
@@ -48,7 +48,7 @@ public class PasswordWithFolderDataProvider {
         try {
             result = repository.findByName(name);
         }catch (Exception exception) {
-            log.error("Error when search by name", exception);
+            log.error("Error when search passsword with folder by name", exception);
             throw new ErrorSearchPasswordByName(exception.getMessage());
         }
         return result.map(PasswordWithFolderMapper::forDomain);
@@ -58,7 +58,7 @@ public class PasswordWithFolderDataProvider {
         try {
             repository.deleteById(id);
         } catch (Exception exception) {
-            log.error("Error deleting password", exception);
+            log.error("Error deleting password with folder", exception);
             throw new ErrorDeletePassword(exception.getMessage());
         }
     }
@@ -68,7 +68,7 @@ public class PasswordWithFolderDataProvider {
         try {
             result = repository.findById(id);
         }catch (Exception exception) {
-            log.error("Error when querying password by id", exception);
+            log.error("Error when querying password with folder by id", exception);
             throw new ErrorQueryPasswordByIdException(exception.getMessage());
         }
 

@@ -17,4 +17,11 @@ public class PasswordWithFolder {
     private String content;
     private User user;
     private Folder folder;
+
+    public void setData(PasswordWithFolder newData) {
+        if(newData.getName() != null)
+            this.name = newData.getName();
+        if(newData.getContent() != null)
+            this.content = newData.getContent();
+    }
 }

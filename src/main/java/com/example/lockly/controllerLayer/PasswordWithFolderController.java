@@ -3,7 +3,7 @@ package com.example.lockly.controllerLayer;
 import com.example.lockly.controllerLayer.dtos.PasswordFolderIdsDto;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
-import com.example.lockly.serviceLayer.PasswordWithFolderService;
+import com.example.lockly.serviceLayer.passwords.PasswordWithFolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class PasswordWithFolderController {
 
     @PostMapping("/register")
     public ResponseEntity<PasswordWithFolderDto> registerWithFolder(@RequestBody PasswordWithFolderDto newPassword) {
-        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.registerWithFolder(PasswordWithFolderMapper.forDomainFromDto(newPassword)));
+        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.register(PasswordWithFolderMapper.forDomainFromDto(newPassword)));
         return ResponseEntity
                 .created(UriComponentsBuilder.newInstance().path("/passwords/add/with-pasta/{id}").buildAndExpand(passwordResponse.id()).toUri())
                 .body(passwordResponse);
@@ -42,14 +42,14 @@ public class PasswordWithFolderController {
 
     @GetMapping(value = "/consult/all/{idUser}")
     public ResponseEntity<List<PasswordWithFolderDto>> consultAllByUser(@PathVariable Long idUser) {
-        List<PasswordWithFolderDto> passwordWithFolderResult = PasswordWithFolderMapper.forDtos(service.consultAllWithFolderByUser(idUser));
+        List<PasswordWithFolderDto> passwordWithFolderResult = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUser));
         return ResponseEntity.ok(passwordWithFolderResult);
     }
 
 
     @GetMapping(value = "/consult/{name}")
     public ResponseEntity<PasswordWithFolderDto> queryByName(@PathVariable String name) {
-        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.queryByNameWithFolder(name));
+        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.queryByName(name));
         return ResponseEntity.ok(passwordResult);
     }
 
@@ -59,9 +59,15 @@ public class PasswordWithFolderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/change")
-    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordFolderIdsDto ids) {
-        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeWithFolder(ids.idPassword(), ids.idFolder()));
+    @PutMapping(value = "/change/{idPassword}")
+    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordWithFolderDto newData, @PathVariable Long idPassword) {
+        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.change(PasswordWithFolderMapper.forDomainFromDto(newData), idPassword));
+        return ResponseEntity.ok(passwordResult);
+    }
+
+    @PutMapping("/change-folder")
+    public ResponseEntity<PasswordWithFolderDto> changeFolder(@RequestBody PasswordFolderIdsDto ids) {
+        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeFolder(ids.idPassword(), ids.idFolder()));
         return ResponseEntity.ok(passwordResult);
     }
 }

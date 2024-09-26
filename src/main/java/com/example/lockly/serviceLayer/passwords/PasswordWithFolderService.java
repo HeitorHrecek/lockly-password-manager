@@ -1,9 +1,11 @@
-package com.example.lockly.serviceLayer;
+package com.example.lockly.serviceLayer.passwords;
 
 import com.example.lockly.dataproviderLayer.PasswordWithFolderDataProvider;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
+import com.example.lockly.serviceLayer.FolderService;
+import com.example.lockly.serviceLayer.UserService;
 import com.example.lockly.serviceLayer.exceptions.NoPasswordFoundException;
 import com.example.lockly.serviceLayer.exceptions.PasswordAlreadyRegisteredException;
 import com.example.lockly.serviceLayer.exceptions.PasswordNotFoundException;
@@ -22,13 +24,13 @@ public class PasswordWithFolderService {
     private final UserService userService;
     private final FolderService folderService;
 
-    public PasswordWithFolder registerWithFolder(PasswordWithFolder newPassword) {
+    public PasswordWithFolder register(PasswordWithFolder newPassword) {
         Optional<PasswordWithFolder> resultConsult = dataProvider.queryByName(newPassword.getName());
         resultConsult.ifPresent(password -> {
             throw new PasswordAlreadyRegisteredException();
         });
 
-        newPassword.setContent(encryptPassword(newPassword.getContent()));
+        newPassword.setContent(Encrypt.encryptPassword(newPassword.getContent()));
         newPassword.setUser(userService.consultById(newPassword.getUser().getId()));
         newPassword.setFolder(folderService.consultById(newPassword.getFolder().getId()));
 
@@ -52,7 +54,7 @@ public class PasswordWithFolderService {
     public void removePasswordFolder(Long idPasswordWithFolder) {
         PasswordWithFolder passwordWithFolder = consultById(idPasswordWithFolder);
         deleteWithFolder(passwordWithFolder.getId());
-        passwordWithoutService.registerWithoutFolder(PasswordWithoutFolder.builder()
+        passwordWithoutService.register(PasswordWithoutFolder.builder()
                 .id(passwordWithFolder.getId())
                 .name(passwordWithFolder.getName())
                 .content(passwordWithFolder.getContent())
@@ -60,7 +62,7 @@ public class PasswordWithFolderService {
                 .build());
     }
 
-    public List<PasswordWithFolder> consultAllWithFolderByUser(Long idUser) {
+    public List<PasswordWithFolder> consultAllByUser(Long idUser) {
         List<PasswordWithFolder> passwordWithFolderList = dataProvider.consultAllWithFolderByUser(idUser);
         if (passwordWithFolderList.isEmpty()) {
             throw new NoPasswordFoundException();
@@ -68,7 +70,7 @@ public class PasswordWithFolderService {
         return passwordWithFolderList;
     }
 
-    public PasswordWithFolder queryByNameWithFolder(String name) {
+    public PasswordWithFolder queryByName(String name) {
         Optional<PasswordWithFolder> passwordWithFolder = dataProvider.queryByName(name);
         if (passwordWithFolder.isEmpty()) {
             throw new PasswordNotFoundException();
@@ -81,7 +83,7 @@ public class PasswordWithFolderService {
         dataProvider.delete(id);
     }
 
-    public PasswordWithFolder changeWithFolder(Long idPassword, Long idFolder) {
+    public PasswordWithFolder changeFolder(Long idPassword, Long idFolder) {
         Folder newFolder = folderService.consultById(idFolder);
         PasswordWithFolder password = consultById(idPassword);
         password.setFolder(newFolder);
@@ -89,8 +91,15 @@ public class PasswordWithFolderService {
         return dataProvider.save(password);
     }
 
-    public String encryptPassword(String password) {
+    public PasswordWithFolder change(PasswordWithFolder newData, Long idPassword) {
+        PasswordWithFolder existingPassword = consultById(idPassword);
+        if(newData.getUser() != null)
+            existingPassword.setUser(userService.consultById(newData.getUser().getId()));
+        if(newData.getFolder() != null)
+            existingPassword.setFolder(folderService.consultById(newData.getFolder().getId()));
 
+        existingPassword.setData(newData);
+        return dataProvider.save(existingPassword);
     }
 
     private PasswordWithFolder consultById(Long id) {
