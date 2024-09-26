@@ -48,5 +48,9 @@ public abstract class PasswordWithFolderMapper {
     public static List<PasswordWithFolderDto> forDtos(List<PasswordWithFolder> passwordWithFolderList) {
         return passwordWithFolderList.stream().map(PasswordWithFolderMapper::forDto).toList();
     }
+
+    public static List<PasswordWithFolder> forDomains(List<PasswordWithFolderEntity> passwordWithFolderEntityList) {
+        return passwordWithFolderEntityList.stream().map(PasswordWithFolderMapper::forDomain).toList();
+    }
 }
 

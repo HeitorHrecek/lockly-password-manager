@@ -1,0 +1,37 @@
+package com.example.lockly.controllerLayer;
+
+import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
+import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
+import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
+import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
+import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
+import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
+import com.example.lockly.serviceLayer.PasswordService;
+import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/password/decrypt")
+@AllArgsConstructor
+public class PasswordDecryptController {
+
+    private final PasswordService service;
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<PasswordWithoutFolderDto> decryptWithoutFolder(@PathVariable Long id) {
+        PasswordWithoutFolderDto result = PasswordWithoutFolderMapper.forDto(service.decryptWithoutFolder(id));
+        return ResponseEntity.ok(result);
+    }
+
+
+    @GetMapping(value = "/folder/{id}")
+    public ResponseEntity<PasswordWithFolderDto> decryptWithFolder(@PathVariable Long id) {
+        PasswordWithFolderDto result = PasswordWithFolderMapper.forDto(service.decryptWithFolder(id));
+        return ResponseEntity.ok(result);
+    }
+
+}

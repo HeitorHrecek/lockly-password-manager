@@ -36,7 +36,7 @@ public class PasswordWithoutFolderDataProvider {
             passwordList = repository.consultAllByUser(idUser);
         } catch (Exception exception) {
             log.error("Error when querying all passwords without folders by user", exception);
-            throw new ErrorSearchPasswordAllById(exception.getMessage());
+            throw new ErrorSearchPasswordAllByIdException(exception.getMessage());
         }
         return passwordList.stream().map(PasswordWithoutFolderMapper::forDomain).toList();
     }
@@ -47,7 +47,7 @@ public class PasswordWithoutFolderDataProvider {
             password = repository.findByName(name);
         }catch (Exception exception) {
             log.error("Error when querying password without folder by name", exception);
-            throw new ErrorSearchPasswordByName(exception.getMessage());
+            throw new ErrorSearchPasswordByNameException(exception.getMessage());
         }
         return password.map(PasswordWithoutFolderMapper::forDomain);
     }

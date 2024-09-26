@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public interface PasswordWithoutFolderRepository extends JpaRepository<PasswordWithoutFolderEntity, Long> {
 
-    @Query("SELECT * FROM PasswordWithoutFolder pswtf WHERE pswtf.userEntity.id = :idUser")
+    @Query("SELECT pswtf FROM PasswordWithoutFolder pswtf WHERE pswtf.userEntity.id = :idUser")
     List<PasswordWithoutFolderEntity> consultAllByUser(Long idUser);
 
     Optional<PasswordWithoutFolderEntity> findByName(String name);

@@ -24,32 +24,32 @@ public class PasswordWithFolderDataProvider {
 
         try {
             password = repository.save(password);
-        }catch (Exception exception) {
-            log.error("Error saving password with password.", exception);
+        } catch (Exception exception) {
+            log.error("Error saving password with folder.", exception);
             throw new ErrorSavePasswordException(exception.getMessage());
         }
 
         return PasswordWithFolderMapper.forDomain(password);
     }
 
-    public List<PasswordWithFolder> consultAllWithFolderByUser(Long idUser) {
+    public List<PasswordWithFolder> consultAllByUser(Long idUser) {
         List<PasswordWithFolderEntity> result;
         try {
             result = repository.findByUser(idUser);
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             log.error("", exception);
-            throw new ErrorSearchPasswordAllById(exception.getMessage());
+            throw new ErrorSearchPasswordAllByIdException(exception.getMessage());
         }
-        return result.stream().map(PasswordWithFolderMapper::forDomain).toList();
+        return PasswordWithFolderMapper.forDomains(result);
     }
 
     public Optional<PasswordWithFolder> queryByName(String name) {
         Optional<PasswordWithFolderEntity> result;
         try {
             result = repository.findByName(name);
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             log.error("Error when search passsword with folder by name", exception);
-            throw new ErrorSearchPasswordByName(exception.getMessage());
+            throw new ErrorSearchPasswordByNameException(exception.getMessage());
         }
         return result.map(PasswordWithFolderMapper::forDomain);
     }
@@ -67,11 +67,22 @@ public class PasswordWithFolderDataProvider {
         Optional<PasswordWithFolderEntity> result;
         try {
             result = repository.findById(id);
-        }catch (Exception exception) {
+        } catch (Exception exception) {
             log.error("Error when querying password with folder by id", exception);
             throw new ErrorQueryPasswordByIdException(exception.getMessage());
         }
 
         return result.map(PasswordWithFolderMapper::forDomain);
+    }
+
+    public List<PasswordWithFolder> consultallByFolder(Long idFolder) {
+        List<PasswordWithFolderEntity> result;
+        try {
+            result = repository.findByFolder(idFolder);
+        } catch (Exception exception) {
+            log.error("Erro find passwords with folder by id folder");
+            throw new ErrorSearchPasswordByFolderException(exception.getMessage());
+        }
+        return PasswordWithFolderMapper.forDomains(result);
     }
 }

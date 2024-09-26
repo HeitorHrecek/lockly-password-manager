@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "PasswordWithoutFolder")
-@Table(name = "passwords_withou_folder")
+@Table(name = "tbpassword")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

@@ -13,14 +13,15 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class PasswordWithoutService {
+public class PasswordWithoutFolderService {
 
     private final PasswordWithoutFolderDataProvider dataProvider;
     private final UserService userService;
+    private final EncryptService encryptService;
 
     public PasswordWithoutFolder register(PasswordWithoutFolder newPassword) {
         newPassword.setUser(userService.consultById(newPassword.getUser().getId()));
-        newPassword.setContent(Encrypt.encryptPassword(newPassword.getContent()));
+        newPassword.setContent(encryptService.encrypt(newPassword.getContent()));
         return dataProvider.save(newPassword);
     }
 
