@@ -14,4 +14,13 @@ public class User {
     private String name;
     private String email;
     private String password;
+
+    public void setData(User alteredUser){
+        if (alteredUser.getName() != null){
+            this.name = alteredUser.name;
+        }
+        if (alteredUser.getEmail() != null){
+            this.email = alteredUser.email;
+        }
+    }
 }

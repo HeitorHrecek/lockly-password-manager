@@ -1,8 +1,8 @@
 package com.example.lockly.dataproviderLayer;
 
-import com.example.lockly.dataproviderLayer.exceptions.DeleteUserErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.SaveUserErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.SearchUserByIdErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.DeleteUserErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.SaveUserErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.SearchUserByIdErrorException;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.repositoryLayer.UserRepository;
