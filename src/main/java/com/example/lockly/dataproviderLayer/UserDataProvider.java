@@ -2,6 +2,7 @@ package com.example.lockly.dataproviderLayer;
 
 import com.example.lockly.dataproviderLayer.exceptions.user.DeleteUserErrorException;
 import com.example.lockly.dataproviderLayer.exceptions.user.SaveUserErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.SearchUserByEmailErrorException;
 import com.example.lockly.dataproviderLayer.exceptions.user.SearchUserByIdErrorException;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.mapper.UserMapper;
@@ -39,6 +40,19 @@ public class UserDataProvider {
         }catch (Exception exception){
             log.error("Error while searching user by id.", exception);
             throw new SearchUserByIdErrorException(exception.getMessage());
+        }
+
+        return result.map(UserMapper::forDomain);
+    }
+
+    public Optional<User> searchByEmail(String email){
+        Optional<UserEntity> result;
+
+        try {
+            result = repository.findByEmail(email);
+        }catch (Exception exception){
+            log.error("Error while searching email.", exception);
+            throw new SearchUserByEmailErrorException(exception.getMessage());
         }
 
         return result.map(UserMapper::forDomain);

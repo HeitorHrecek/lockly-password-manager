@@ -2,9 +2,10 @@ package com.example.lockly.serviceLayer;
 
 import com.example.lockly.dataproviderLayer.UserDataProvider;
 import com.example.lockly.domainLayer.User;
-import com.example.lockly.serviceLayer.exceptions.user.NotFoundUserException;
-import com.example.lockly.serviceLayer.exceptions.user.UserAlreadyRegisterException;
+import com.example.lockly.serviceLayer.exceptions.user.UserNotFoundException;
+import com.example.lockly.serviceLayer.exceptions.user.UserAlreadyRegisteredException;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -13,11 +14,12 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
     private final UserDataProvider dataProvider;
+    private final PasswordService passwordService;
 
     public User register(User newUser){
         Optional<User> resultConsult = dataProvider.searchById(newUser.getId());
         resultConsult.ifPresent(user -> {
-            throw new UserAlreadyRegisterException();
+            throw new UserAlreadyRegisteredException();
         });
 
         return dataProvider.save(newUser);
@@ -26,7 +28,7 @@ public class UserService {
     public User consultById(Long id){
         Optional<User> userConsult = dataProvider.searchById(id);
         if (userConsult.isEmpty()){
-            throw new NotFoundUserException();
+            throw new UserNotFoundException();
         }
 
         return userConsult.get();
@@ -42,5 +44,16 @@ public class UserService {
 
         user.setData(alteredUser);
         return dataProvider.save(user);
+    }
+
+    public HttpStatus login (String email, String password){
+
+        Optional<User> user = dataProvider.searchByEmail(email);
+        boolean correctPassword = passwordService.validatePassword(password);
+
+        if (user.isPresent() && correctPassword)
+            return HttpStatus.OK;
+        else
+            return HttpStatus.BAD_REQUEST;
     }
 }

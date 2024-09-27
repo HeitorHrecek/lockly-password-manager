@@ -1,7 +1,7 @@
 package com.example.lockly.serviceLayer.exceptions.user;
 
-public class NotFoundUserException extends RuntimeException{
-    public NotFoundUserException() {
+public class UserNotFoundException extends RuntimeException{
+    public UserNotFoundException() {
         super("User not found.");
     }
 }
