@@ -2,12 +2,11 @@ package com.example.lockly.controllerLayer;
 
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
-import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
-import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
-import com.example.lockly.serviceLayer.PasswordService;
+import com.example.lockly.serviceLayer.passwords.PasswordService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class PasswordDecryptController {
 
+    @Autowired
     private final PasswordService service;
 
     @GetMapping(value = "/{id}")

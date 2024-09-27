@@ -1,10 +1,7 @@
-package com.example.lockly.serviceLayer;
+package com.example.lockly.serviceLayer.passwords;
 
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
-import com.example.lockly.serviceLayer.passwords.EncryptService;
-import com.example.lockly.serviceLayer.passwords.PasswordWithFolderService;
-import com.example.lockly.serviceLayer.passwords.PasswordWithoutFolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

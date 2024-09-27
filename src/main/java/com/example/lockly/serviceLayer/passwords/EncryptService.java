@@ -6,15 +6,11 @@ import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class EncryptService {
 
-    private final TextEncryptor encryptor;
-
     @Autowired
-    public EncryptService(TextEncryptor encryptor) {
-        this.encryptor = encryptor;
-    }
-
+    private final TextEncryptor encryptor;
 
     public String encrypt(String password) {
         return encryptor.encrypt(password);

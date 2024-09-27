@@ -1,19 +1,22 @@
 package com.example.lockly.config;
 
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.jasypt.util.text.TextEncryptor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 
 @Configuration
 public class EncryptionConfig {
+
+    @Value("${ENCRYPTION_PASSWORD}")
+    private String password;
+
+    @Value("${ENCRYPTION_SALT}")
+    private String salt;
+
     @Bean
     public TextEncryptor textEncryptor() {
-        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-        // Defina a senha para a criptografia
-        encryptor.setPassword("sua-senha-secreta-aqui");
-        // Defina o algoritmo desejado, por exemplo, "PBEWithMD5AndDES"
-        encryptor.setAlgorithm("PBEWithMD5AndDES");
-        return encryptor;
+        return Encryptors.text(password, salt);
     }
 }
