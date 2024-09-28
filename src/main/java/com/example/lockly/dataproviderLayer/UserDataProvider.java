@@ -1,9 +1,9 @@
 package com.example.lockly.dataproviderLayer;
 
-import com.example.lockly.dataproviderLayer.exceptions.user.DeleteUserErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.user.SaveUserErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.user.SearchUserByEmailErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.user.SearchUserByIdErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.UserDeleteErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.UserSaveErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.UserSearchByEmailErrorException;
+import com.example.lockly.dataproviderLayer.exceptions.user.UserSearchByIdErrorException;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.repositoryLayer.UserRepository;
@@ -27,7 +27,7 @@ public class UserDataProvider {
             user = repository.save(user);
         }catch (Exception exception){
             log.error("Error while saving the user.", exception);
-            throw new SaveUserErrorException(exception.getMessage());
+            throw new UserSaveErrorException(exception.getMessage());
         }
         return UserMapper.forDomain(user);
     }
@@ -39,7 +39,7 @@ public class UserDataProvider {
             result = repository.findById(id);
         }catch (Exception exception){
             log.error("Error while searching user by id.", exception);
-            throw new SearchUserByIdErrorException(exception.getMessage());
+            throw new UserSearchByIdErrorException(exception.getMessage());
         }
 
         return result.map(UserMapper::forDomain);
@@ -52,7 +52,7 @@ public class UserDataProvider {
             result = repository.findByEmail(email);
         }catch (Exception exception){
             log.error("Error while searching email.", exception);
-            throw new SearchUserByEmailErrorException(exception.getMessage());
+            throw new UserSearchByEmailErrorException(exception.getMessage());
         }
 
         return result.map(UserMapper::forDomain);
@@ -63,7 +63,7 @@ public class UserDataProvider {
             repository.deleteById(id);
         }catch (Exception exception){
             log.error("Error while delete an user.", exception);
-            throw new DeleteUserErrorException(exception.getMessage());
+            throw new UserDeleteErrorException(exception.getMessage());
         }
     }
 }
