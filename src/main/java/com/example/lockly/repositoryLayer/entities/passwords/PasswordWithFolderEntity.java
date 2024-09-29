@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "PasswordWithFolder")
-@Table(name = "tbPasswordFolder")
+@Table(name = "passwords_folder")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -20,10 +20,10 @@ public class PasswordWithFolderEntity {
     private String name;
     private String content;
     @ManyToOne
-    @JoinColumn(name = "user_entity_id", referencedColumnName = "id", nullable = false)
+    //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userEntity;
     @ManyToOne
-    @JoinColumn(name = "folder_entity_id", referencedColumnName = "id", nullable = false)
+    //@JoinColumn(name = "folder_id", referencedColumnName = "id", nullable = false)
     private FolderEntity folderEntity;
 
 }

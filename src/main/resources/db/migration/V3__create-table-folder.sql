@@ -1,7 +1,0 @@
-CREATE TABLE tbFolder (
-		id INT NOT NULL,
-		userId INT NOT NULL,
-		name VARCHAR(255) NOT NULL UNIQUE,
-		CONSTRAINT folderId_PK PRIMARY KEY (id),
-		CONSTRAINT tbFolder_userId_FK FOREIGN KEY (id) REFERENCES tbUser (id)
-);

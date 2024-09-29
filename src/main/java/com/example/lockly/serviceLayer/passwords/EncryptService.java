@@ -3,6 +3,7 @@ package com.example.lockly.serviceLayer.passwords;
 import com.example.lockly.serviceLayer.exceptions.password.ErroDecryptPasswordException;
 import com.example.lockly.serviceLayer.exceptions.password.ErrorEncryptPasswordException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.Cipher;
@@ -17,6 +18,11 @@ import java.util.Base64;
 public class EncryptService {
 
     private SecretKey key;
+    private final PasswordEncoder passwordEncoder;
+
+    public String encryptLogin(String password) {
+        return passwordEncoder.encode(password);
+    }
 
     public String encrypt(String password) {
         try {

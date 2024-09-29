@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "PasswordWithoutFolder")
-@Table(name = "tbPassword")
+@Table(name = "passwords")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -19,7 +19,7 @@ public class PasswordWithoutFolderEntity {
     private String name;
     private String content;
     @ManyToOne
-    //@JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
+    //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userEntity;
 
 }

@@ -28,7 +28,7 @@ public class PasswordService {
         return result;
     }
 
-    public boolean validatePassword(String password, User user){
-        return passwordEncoder.matches(password, user.getPassword());
+    public boolean validatePassword(String password, String passwordUser){
+        return passwordEncoder.matches(password, passwordUser);
     }
 }
