@@ -37,19 +37,19 @@ public class PasswordWithFolderController {
     }
 
     @DeleteMapping(value = "/remove-password-folder/{idPasswordWithFolder}")
-    public ResponseEntity<Void> removePasswordFolder(@PathVariable Long idPasswordWithFolder) {
+    public ResponseEntity<Void> removePasswordFolder(@PathVariable Integer idPasswordWithFolder) {
         service.removePasswordFolder(idPasswordWithFolder);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(value = "/consult/all/{idUser}")
-    public ResponseEntity<List<PasswordWithFolderDto>> consultAllByUser(@PathVariable Long idUser) {
+    public ResponseEntity<List<PasswordWithFolderDto>> consultAllByUser(@PathVariable Integer idUser) {
         List<PasswordWithFolderDto> result = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUser));
         return ResponseEntity.ok(result);
     }
 
     @GetMapping(value = "consult/all/folder/{idFolder}")
-    public ResponseEntity<List<PasswordWithFolderDto>> consultAllByFolder(@PathVariable Long idFolder) {
+    public ResponseEntity<List<PasswordWithFolderDto>> consultAllByFolder(@PathVariable Integer idFolder) {
         List<PasswordWithFolderDto> result = PasswordWithFolderMapper.forDtos(service.consultAllByFolder(idFolder));
         return ResponseEntity.ok(result);
     }
@@ -62,19 +62,19 @@ public class PasswordWithFolderController {
     }
 
     @GetMapping(value = "/consult/{id}")
-    public ResponseEntity<PasswordWithFolderDto> queryById(@PathVariable Long id) {
+    public ResponseEntity<PasswordWithFolderDto> queryById(@PathVariable Integer id) {
         PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.consultById(id));
         return ResponseEntity.ok(passwordResult);
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<PasswordWithFolderDto> delete(@PathVariable Long id) {
+    public ResponseEntity<PasswordWithFolderDto> delete(@PathVariable Integer id) {
         service.deleteWithFolder(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/change/{idPassword}")
-    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordWithFolderDto newData, @PathVariable Long idPassword) {
+    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordWithFolderDto newData, @PathVariable Integer idPassword) {
         PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.change(PasswordWithFolderMapper.forDomainFromDto(newData), idPassword));
         return ResponseEntity.ok(passwordResult);
     }

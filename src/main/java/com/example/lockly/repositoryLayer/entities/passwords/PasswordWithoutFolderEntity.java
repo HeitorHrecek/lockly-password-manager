@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity(name = "PasswordWithoutFolder")
-@Table(name = "tbpassword")
+@Table(name = "tbPassword")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -15,10 +15,11 @@ public class PasswordWithoutFolderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String content;
     @ManyToOne
+    //@JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     private UserEntity userEntity;
 
 }

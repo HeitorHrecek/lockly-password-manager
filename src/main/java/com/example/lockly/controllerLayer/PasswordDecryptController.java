@@ -22,14 +22,14 @@ public class PasswordDecryptController {
     private final PasswordService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PasswordWithoutFolderDto> decryptWithoutFolder(@PathVariable Long id) {
+    public ResponseEntity<PasswordWithoutFolderDto> decryptWithoutFolder(@PathVariable Integer id) {
         PasswordWithoutFolderDto result = PasswordWithoutFolderMapper.forDto(service.decryptWithoutFolder(id));
         return ResponseEntity.ok(result);
     }
 
 
     @GetMapping(value = "/folder/{id}")
-    public ResponseEntity<PasswordWithFolderDto> decryptWithFolder(@PathVariable Long id) {
+    public ResponseEntity<PasswordWithFolderDto> decryptWithFolder(@PathVariable Integer id) {
         PasswordWithFolderDto result = PasswordWithFolderMapper.forDto(service.decryptWithFolder(id));
         return ResponseEntity.ok(result);
     }

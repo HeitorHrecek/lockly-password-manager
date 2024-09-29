@@ -1,6 +1,6 @@
 package com.example.lockly.dataproviderLayer;
 
-import com.example.lockly.dataproviderLayer.exceptions.*;
+import com.example.lockly.dataproviderLayer.exceptions.password.*;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
 import com.example.lockly.repositoryLayer.PasswordWithFolderRepository;
@@ -32,7 +32,7 @@ public class PasswordWithFolderDataProvider {
         return PasswordWithFolderMapper.forDomain(password);
     }
 
-    public List<PasswordWithFolder> consultAllByUser(Long idUser) {
+    public List<PasswordWithFolder> consultAllByUser(Integer idUser) {
         List<PasswordWithFolderEntity> result;
         try {
             result = repository.findByUser(idUser);
@@ -54,7 +54,7 @@ public class PasswordWithFolderDataProvider {
         return result.map(PasswordWithFolderMapper::forDomain);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try {
             repository.deleteById(id);
         } catch (Exception exception) {
@@ -63,7 +63,7 @@ public class PasswordWithFolderDataProvider {
         }
     }
 
-    public Optional<PasswordWithFolder> consultById(Long id) {
+    public Optional<PasswordWithFolder> consultById(Integer id) {
         Optional<PasswordWithFolderEntity> result;
         try {
             result = repository.findById(id);
@@ -75,7 +75,7 @@ public class PasswordWithFolderDataProvider {
         return result.map(PasswordWithFolderMapper::forDomain);
     }
 
-    public List<PasswordWithFolder> consultallByFolder(Long idFolder) {
+    public List<PasswordWithFolder> consultallByFolder(Integer idFolder) {
         List<PasswordWithFolderEntity> result;
         try {
             result = repository.findByFolder(idFolder);

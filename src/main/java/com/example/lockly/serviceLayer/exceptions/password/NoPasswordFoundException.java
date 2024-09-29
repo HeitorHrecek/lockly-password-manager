@@ -1,4 +1,4 @@
-package com.example.lockly.serviceLayer.exceptions;
+package com.example.lockly.serviceLayer.exceptions.password;
 
 public class NoPasswordFoundException extends RuntimeException {
     public NoPasswordFoundException() {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class FolderService {
     private final FolderDataProvider dataProvider;
 
-    public Folder consultById(Long id) {
+    public Folder consultById(Integer id) {
         return dataProvider.consultById(id);
     }
 }

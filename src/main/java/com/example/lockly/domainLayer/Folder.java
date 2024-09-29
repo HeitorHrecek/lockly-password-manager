@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class Folder {
-    private Long id;
+    private Integer id;
     private String name;
     private User user;
 }

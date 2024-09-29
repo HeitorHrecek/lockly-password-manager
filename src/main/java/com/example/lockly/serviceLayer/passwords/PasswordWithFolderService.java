@@ -6,9 +6,9 @@ import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.serviceLayer.FolderService;
 import com.example.lockly.serviceLayer.UserService;
-import com.example.lockly.serviceLayer.exceptions.NoPasswordFoundException;
-import com.example.lockly.serviceLayer.exceptions.PasswordAlreadyRegisteredException;
-import com.example.lockly.serviceLayer.exceptions.PasswordNotFoundException;
+import com.example.lockly.serviceLayer.exceptions.password.NoPasswordFoundException;
+import com.example.lockly.serviceLayer.exceptions.password.PasswordAlreadyRegisteredException;
+import com.example.lockly.serviceLayer.exceptions.password.PasswordNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +38,7 @@ public class PasswordWithFolderService {
         return dataProvider.save(newPassword);
     }
 
-    public PasswordWithFolder putInFolder(Long idPasswordWithoutFolder, Long idFolder) {
+    public PasswordWithFolder putInFolder(Integer idPasswordWithoutFolder, Integer idFolder) {
         PasswordWithoutFolder passwordWithoutFolder = passwordWithoutFolderService.consultById(idPasswordWithoutFolder);
         Folder folder = folderService.consultById(idFolder);
 
@@ -52,7 +52,7 @@ public class PasswordWithFolderService {
         );
     }
 
-    public void removePasswordFolder(Long idPasswordWithFolder) {
+    public void removePasswordFolder(Integer idPasswordWithFolder) {
         PasswordWithFolder passwordWithFolder = consultById(idPasswordWithFolder);
         deleteWithFolder(passwordWithFolder.getId());
         passwordWithoutFolderService.register(PasswordWithoutFolder.builder()
@@ -63,7 +63,7 @@ public class PasswordWithFolderService {
                 .build());
     }
 
-    public List<PasswordWithFolder> consultAllByUser(Long idUser) {
+    public List<PasswordWithFolder> consultAllByUser(Integer idUser) {
         List<PasswordWithFolder> passwordWithFolderList = dataProvider.consultAllByUser(idUser);
         if (passwordWithFolderList.isEmpty()) {
             throw new NoPasswordFoundException();
@@ -79,12 +79,12 @@ public class PasswordWithFolderService {
         return passwordWithFolder.get();
     }
 
-    public void deleteWithFolder(Long id) {
+    public void deleteWithFolder(Integer id) {
         consultById(id);
         dataProvider.delete(id);
     }
 
-    public PasswordWithFolder changeFolder(Long idPassword, Long idFolder) {
+    public PasswordWithFolder changeFolder(Integer idPassword, Integer idFolder) {
         Folder newFolder = folderService.consultById(idFolder);
         PasswordWithFolder password = consultById(idPassword);
         password.setFolder(newFolder);
@@ -92,7 +92,7 @@ public class PasswordWithFolderService {
         return dataProvider.save(password);
     }
 
-    public PasswordWithFolder change(PasswordWithFolder newData, Long idPassword) {
+    public PasswordWithFolder change(PasswordWithFolder newData, Integer idPassword) {
         PasswordWithFolder existingPassword = consultById(idPassword);
         if(newData.getUser() != null)
             existingPassword.setUser(userService.consultById(newData.getUser().getId()));
@@ -103,7 +103,7 @@ public class PasswordWithFolderService {
         return dataProvider.save(existingPassword);
     }
 
-    public PasswordWithFolder consultById(Long id) {
+    public PasswordWithFolder consultById(Integer id) {
         Optional<PasswordWithFolder> resultQuery = dataProvider.consultById(id);
         if (resultQuery.isEmpty()) {
             throw new PasswordNotFoundException();
@@ -111,7 +111,7 @@ public class PasswordWithFolderService {
         return resultQuery.get();
     }
 
-    public List<PasswordWithFolder> consultAllByFolder(Long idFolder) {
+    public List<PasswordWithFolder> consultAllByFolder(Integer idFolder) {
         List<PasswordWithFolder> result = dataProvider.consultallByFolder(idFolder);
         if(result.isEmpty()) {
             throw new NoPasswordFoundException();

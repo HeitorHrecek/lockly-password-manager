@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface PasswordWithoutFolderRepository extends JpaRepository<PasswordWithoutFolderEntity, Long> {
+public interface PasswordWithoutFolderRepository extends JpaRepository<PasswordWithoutFolderEntity, Integer> {
 
     @Query("SELECT pswtf FROM PasswordWithoutFolder pswtf WHERE pswtf.userEntity.id = :idUser")
-    List<PasswordWithoutFolderEntity> consultAllByUser(Long idUser);
+    List<PasswordWithoutFolderEntity> consultAllByUser(Integer idUser);
 
     Optional<PasswordWithoutFolderEntity> findByName(String name);
 }

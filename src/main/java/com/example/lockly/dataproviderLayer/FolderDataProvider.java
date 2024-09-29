@@ -12,7 +12,7 @@ public class FolderDataProvider {
     private final FolderRepository repository;
 
 
-    public Folder consultById(Long id) {
+    public Folder consultById(Integer id) {
         return FolderMapper.forDomain(repository.findById(id).get());
     }
 }

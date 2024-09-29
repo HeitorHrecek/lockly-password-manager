@@ -3,4 +3,4 @@ package com.example.lockly.controllerLayer.dtos;
 import lombok.Builder;
 
 @Builder
-public record PasswordFolderIdsDto(Long idPassword, Long idFolder) {}
+public record PasswordFolderIdsDto(Integer idPassword, Integer idFolder) {}

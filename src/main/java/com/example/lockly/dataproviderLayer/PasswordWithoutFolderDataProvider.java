@@ -1,6 +1,6 @@
 package com.example.lockly.dataproviderLayer;
 
-import com.example.lockly.dataproviderLayer.exceptions.*;
+import com.example.lockly.dataproviderLayer.exceptions.password.*;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
 import com.example.lockly.repositoryLayer.PasswordWithoutFolderRepository;
@@ -30,7 +30,7 @@ public class PasswordWithoutFolderDataProvider {
         return PasswordWithoutFolderMapper.forDomain(password);
     }
 
-    public List<PasswordWithoutFolder> consultAllByUser(Long idUser) {
+    public List<PasswordWithoutFolder> consultAllByUser(Integer idUser) {
         List<PasswordWithoutFolderEntity> passwordList;
         try {
             passwordList = repository.consultAllByUser(idUser);
@@ -52,7 +52,7 @@ public class PasswordWithoutFolderDataProvider {
         return password.map(PasswordWithoutFolderMapper::forDomain);
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try {
             repository.deleteById(id);
         }catch (Exception exception) {
@@ -61,7 +61,7 @@ public class PasswordWithoutFolderDataProvider {
         }
     }
 
-    public Optional<PasswordWithoutFolder> consultById(Long id) {
+    public Optional<PasswordWithoutFolder> consultById(Integer id) {
         Optional<PasswordWithoutFolderEntity> result;
         try {
             result = repository.findById(id);

@@ -1,9 +1,9 @@
 package com.example.lockly.controllerLayer.middleware;
 
-import com.example.lockly.dataproviderLayer.exceptions.*;
-import com.example.lockly.serviceLayer.exceptions.NoPasswordFoundException;
-import com.example.lockly.serviceLayer.exceptions.PasswordAlreadyRegisteredException;
-import com.example.lockly.serviceLayer.exceptions.PasswordNotFoundException;
+import com.example.lockly.dataproviderLayer.exceptions.password.*;
+import com.example.lockly.serviceLayer.exceptions.password.NoPasswordFoundException;
+import com.example.lockly.serviceLayer.exceptions.password.PasswordAlreadyRegisteredException;
+import com.example.lockly.serviceLayer.exceptions.password.PasswordNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

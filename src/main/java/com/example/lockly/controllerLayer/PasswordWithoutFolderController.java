@@ -26,7 +26,7 @@ public class PasswordWithoutFolderController {
     }
 
     @GetMapping(value = "/consult/all-without-folder-by-user/{idUser}")
-    public ResponseEntity<List<PasswordWithoutFolderDto>> consultAllByUser(@PathVariable Long idUser) {
+    public ResponseEntity<List<PasswordWithoutFolderDto>> consultAllByUser(@PathVariable Integer idUser) {
         List<PasswordWithoutFolderDto> passwordWithoutFolderResult = PasswordWithoutFolderMapper.forDtos(service.consultAllByUser(idUser));
         return ResponseEntity.ok(passwordWithoutFolderResult);
     }
@@ -38,19 +38,19 @@ public class PasswordWithoutFolderController {
     }
 
     @GetMapping(value = "/consult/{id}")
-    public ResponseEntity<PasswordWithoutFolderDto> queryById(@PathVariable Long id) {
+    public ResponseEntity<PasswordWithoutFolderDto> queryById(@PathVariable Integer id) {
         PasswordWithoutFolderDto passwordResult = PasswordWithoutFolderMapper.forDto(service.consultById(id));
         return ResponseEntity.ok(passwordResult);
     }
 
     @DeleteMapping(value = "/delete/whitout-folder/{id}")
-    public ResponseEntity<PasswordWithoutFolderDto> delete(@PathVariable Long id) {
+    public ResponseEntity<PasswordWithoutFolderDto> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping(value = "/change/without-folder/{id}")
-    public ResponseEntity<PasswordWithoutFolderDto> change(@RequestBody PasswordWithoutFolderDto newPassword, @PathVariable Long id) {
+    public ResponseEntity<PasswordWithoutFolderDto> change(@RequestBody PasswordWithoutFolderDto newPassword, @PathVariable Integer id) {
         PasswordWithoutFolderDto passwordResult = PasswordWithoutFolderMapper.forDto(service.change(PasswordWithoutFolderMapper.forDomainFromDto(newPassword), id));
         return ResponseEntity.ok(passwordResult);
     }

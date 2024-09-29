@@ -14,7 +14,7 @@ public class UserDataProvier {
     private final UserRepository repository;
 
 
-    public User consultById(Long id) {
+    public User consultById(Integer id) {
         return UserMapper.forDomain(repository.findById(id).get());
     }
 }

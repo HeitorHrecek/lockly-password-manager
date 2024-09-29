@@ -5,5 +5,5 @@ import com.example.lockly.controllerLayer.dtos.UserDto;
 import lombok.Builder;
 
 @Builder
-public record PasswordWithFolderDto(Long id, String name, String content, UserDto userDto, FolderDto folderDto) {
+public record PasswordWithFolderDto(Integer id, String name, String content, UserDto userDto, FolderDto folderDto) {
 }

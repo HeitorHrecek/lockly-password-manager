@@ -11,7 +11,7 @@ public class UserService {
 
     private final UserDataProvier userDataProvider;
 
-    public User consultById(Long id) {
+    public User consultById(Integer id) {
         return userDataProvider.consultById(id);
     }
 }
