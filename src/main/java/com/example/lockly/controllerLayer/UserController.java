@@ -43,13 +43,13 @@ public class UserController {
         return ResponseEntity.ok(loginResult);
     }
 
-    @GetMapping(value = "/consult/{id}")
+    @GetMapping(value = "/consult/id/{id}")
     public ResponseEntity<UserDto> consultById(@PathVariable Long id){
         UserDto userResult = UserMapper.forDto(service.consultById(id));
         return ResponseEntity.ok(userResult);
     }
 
-    @GetMapping(value = "/consult/{email}")
+    @GetMapping(value = "/consult/email/{email}")
     public ResponseEntity<UserDto> consultByEmail(@PathVariable String email){
         UserDto userResult = UserMapper.forDto(service.consultByEmail(email));
         return ResponseEntity.ok(userResult);

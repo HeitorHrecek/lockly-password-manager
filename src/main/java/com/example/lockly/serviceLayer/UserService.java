@@ -20,7 +20,7 @@ public class UserService {
     private final EncryptService encryptService;
 
     public User register(User newUser){
-        Optional<User> resultConsult = dataProvider.searchById(newUser.getId());
+        Optional<User> resultConsult = dataProvider.searchByEmail(newUser.getEmail());
         resultConsult.ifPresent(user -> {
             throw new UserAlreadyRegisteredException();
         });
