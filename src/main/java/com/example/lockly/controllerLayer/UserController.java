@@ -1,10 +1,13 @@
 package com.example.lockly.controllerLayer;
 
 import com.example.lockly.controllerLayer.dtos.UserDto;
+import com.example.lockly.domainLayer.User;
+import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.serviceLayer.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/users")
@@ -13,20 +16,36 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody UserDto ){
-
-        return ;
+    public ResponseEntity<UserDto> register(@RequestBody UserDto newUser){
+        UserDto userResponse = UserMapper.forDto(service.register(UserMapper.forDomainFromDto(newUser)));
+        return ResponseEntity
+                .created(
+                        UriComponentsBuilder
+                                .newInstance()
+                                .path("/users/add/{id}")
+                                .buildAndExpand(userResponse.id())
+                                .toUri()
+                )
+                .body(userResponse);
     }
+
+
 
     @GetMapping(value = "/consult/{id}")
     public ResponseEntity<UserDto> consultById(@PathVariable Long id){
+        UserDto userResult = UserMapper.forDto(service.consultById(id));
+        return ResponseEntity.ok(userResult);
+    }
 
-        return ResponseEntity.ok();
+    @GetMapping(value = "/consult/{email}")
+    public ResponseEntity<UserDto> consultByEmail(@PathVariable String email){
+        UserDto userResult = UserMapper.forDto(service.consultByEmail(email));
+        return ResponseEntity.ok(userResult);
     }
 
     @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<UserDto> delete(@PathVariable Long id){
-
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -34,6 +34,15 @@ public class UserService {
         return userConsult.get();
     }
 
+    public User consultByEmail(String email){
+        Optional<User> userConsult = dataProvider.searchByEmail(email);
+        if (userConsult.isEmpty()){
+            throw new UserNotFoundException();
+        }
+
+        return userConsult.get();
+    }
+
     public void delete(Long id){
         consultById(id);
         dataProvider.delete(id);
