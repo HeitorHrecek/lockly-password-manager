@@ -1,10 +1,12 @@
 package com.example.lockly.controllerLayer;
 
+import com.example.lockly.controllerLayer.dtos.LoginDto;
 import com.example.lockly.controllerLayer.dtos.UserDto;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.serviceLayer.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -29,7 +31,17 @@ public class UserController {
                 .body(userResponse);
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<LoginDto> login(@RequestBody LoginDto loginUser) {
+        LoginDto loginResult = LoginDto
+                .builder()
+                .email(loginUser.email())
+                .password(loginUser.password())
+                .status(service.login(loginUser.email(), loginUser.password()))
+                .build();
 
+        return ResponseEntity.ok(loginResult);
+    }
 
     @GetMapping(value = "/consult/{id}")
     public ResponseEntity<UserDto> consultById(@PathVariable Long id){
@@ -49,8 +61,10 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/change")
-    public ResponseEntity<UserDto> change(@RequestBody ) {
-        return ;
+    @PutMapping("/change/{id}")
+    public ResponseEntity<UserDto> change(@RequestBody UserDto alterUser, @PathVariable Long id) {
+        UserDto userResult = UserMapper.forDto(service.change(UserMapper.forDomainFromDto(alterUser), id));
+
+        return ResponseEntity.ok(userResult);
     }
 }

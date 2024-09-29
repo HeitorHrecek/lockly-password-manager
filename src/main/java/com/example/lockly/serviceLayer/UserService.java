@@ -4,6 +4,8 @@ import com.example.lockly.dataproviderLayer.UserDataProvider;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.serviceLayer.exceptions.user.UserNotFoundException;
 import com.example.lockly.serviceLayer.exceptions.user.UserAlreadyRegisteredException;
+import com.example.lockly.serviceLayer.passwords.EncryptService;
+import com.example.lockly.serviceLayer.passwords.PasswordService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,15 @@ import java.util.Optional;
 public class UserService {
     private final UserDataProvider dataProvider;
     private final PasswordService passwordService;
+    private final EncryptService encryptService;
 
     public User register(User newUser){
         Optional<User> resultConsult = dataProvider.searchById(newUser.getId());
         resultConsult.ifPresent(user -> {
             throw new UserAlreadyRegisteredException();
         });
+
+        newUser.setPassword(encryptService.encryptLogin(newUser.getPassword()));
 
         return dataProvider.save(newUser);
     }
@@ -48,21 +53,17 @@ public class UserService {
         dataProvider.delete(id);
     }
 
-    public User change(User alteredUser){
-        User user = consultById(alteredUser.getId());
+    public User change(User alteredUser, Long id){
+        User user = consultById(id);
 
         user.setData(alteredUser);
         return dataProvider.save(user);
     }
 
     public HttpStatus login (String email, String password){
+        User user = consultByEmail(email);
+        boolean correctPassword = passwordService.validatePassword(password, user.getPassword());
 
-        Optional<User> user = dataProvider.searchByEmail(email);
-        boolean correctPassword = passwordService.validatePassword(password);
-
-        if (user.isPresent() && correctPassword)
-            return HttpStatus.OK;
-        else
-            return HttpStatus.BAD_REQUEST;
+        return correctPassword ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
     }
 }
