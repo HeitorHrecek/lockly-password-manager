@@ -72,7 +72,7 @@ public class PasswordWithFolderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/change")
+    @PutMapping("/change-name")
     public ResponseEntity<PasswordWithFolderDto> changeName(@RequestBody ChangeDto newData) {
         PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeName(newData.name(), newData.id()));
         return ResponseEntity.ok(passwordResult);
