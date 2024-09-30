@@ -15,6 +15,7 @@ public abstract class PasswordWithoutFolderMapper {
                 .name(entity.getName())
                 .content(entity.getContent())
                 .user(UserMapper.forDomain(entity.getUserEntity()))
+                .encryptionKey(entity.getEncryptionKey())
                 .build();
 
     }
@@ -25,6 +26,7 @@ public abstract class PasswordWithoutFolderMapper {
                 .name(domain.getName())
                 .content(domain.getContent())
                 .userEntity(UserMapper.forEntity(domain.getUser()))
+                .encryptionKey(domain.getEncryptionKey())
                 .build();
     }
 

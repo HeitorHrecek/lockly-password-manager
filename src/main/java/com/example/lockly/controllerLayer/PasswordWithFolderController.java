@@ -1,10 +1,9 @@
 package com.example.lockly.controllerLayer;
 
+import com.example.lockly.controllerLayer.dtos.ChangeDto;
 import com.example.lockly.controllerLayer.dtos.PasswordFolderIdsDto;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
-import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
 import com.example.lockly.serviceLayer.passwords.PasswordWithFolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -55,13 +54,13 @@ public class PasswordWithFolderController {
     }
 
 
-    @GetMapping(value = "/consult/{name}")
+    @GetMapping(value = "/consult/name/{name}")
     public ResponseEntity<PasswordWithFolderDto> queryByName(@PathVariable String name) {
         PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.queryByName(name));
         return ResponseEntity.ok(passwordResult);
     }
 
-    @GetMapping(value = "/consult/{id}")
+    @GetMapping(value = "/consult/id/{id}")
     public ResponseEntity<PasswordWithFolderDto> queryById(@PathVariable Integer id) {
         PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.consultById(id));
         return ResponseEntity.ok(passwordResult);
@@ -73,9 +72,9 @@ public class PasswordWithFolderController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/change/{idPassword}")
-    public ResponseEntity<PasswordWithFolderDto> change(@RequestBody PasswordWithFolderDto newData, @PathVariable Integer idPassword) {
-        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.change(PasswordWithFolderMapper.forDomainFromDto(newData), idPassword));
+    @PutMapping("/change")
+    public ResponseEntity<PasswordWithFolderDto> changeName(@RequestBody ChangeDto newData) {
+        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeName(newData.name(), newData.id()));
         return ResponseEntity.ok(passwordResult);
     }
 

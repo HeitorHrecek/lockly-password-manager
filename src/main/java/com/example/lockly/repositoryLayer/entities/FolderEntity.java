@@ -13,7 +13,6 @@ public class FolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Integer userId;
     private String name;
     @ManyToOne
     //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)

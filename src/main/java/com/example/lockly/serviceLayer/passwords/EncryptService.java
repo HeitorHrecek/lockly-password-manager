@@ -10,6 +10,7 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.IvParameterSpec;
+import java.security.Key;
 import java.security.SecureRandom;
 import java.util.Base64;
 
@@ -17,27 +18,24 @@ import java.util.Base64;
 @RequiredArgsConstructor
 public class EncryptService {
 
-    private SecretKey key;
     private final PasswordEncoder passwordEncoder;
 
     public String encryptLogin(String password) {
         return passwordEncoder.encode(password);
     }
 
-    public String encrypt(String password) {
+    public PasswordAndKey encrypt(String password) {
         try {
-            key = generateKey(256);
-            //String keyStr = Base64.getEncoder().encodeToString(key.getEncoded());
+            SecretKey key = generateKey(256);
             IvParameterSpec iv = generateIV();
-            return encryptPassword(password, key, iv);
+            return PasswordAndKey.builder().key(key).passswordEncrypt(encryptPassword(password, key, iv)).build();
         }catch (Exception exception) {
             throw new ErrorEncryptPasswordException(exception.getMessage());
         }
     }
 
-    public String decrypt(String password) {
+    public String decrypt(String password, SecretKey key) {
         try {
-            key = generateKey(256);
             return decryptPassword(password, key);
         }catch (Exception exception) {
             throw new ErroDecryptPasswordException(exception.getMessage());

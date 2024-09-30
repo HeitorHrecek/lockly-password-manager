@@ -16,6 +16,8 @@ public abstract class PasswordWithFolderMapper {
                 .name(entity.getName())
                 .content(entity.getContent())
                 .user(UserMapper.forDomain(entity.getUserEntity()))
+                .folder(FolderMapper.forDomain(entity.getFolderEntity()))
+                .encryptionKey(entity.getEncryptionKey())
                 .build();
     }
 
@@ -25,6 +27,8 @@ public abstract class PasswordWithFolderMapper {
                 .name(domain.getName())
                 .content(domain.getContent())
                 .userEntity(UserMapper.forEntity(domain.getUser()))
+                .folderEntity(FolderMapper.forEntity(domain.getFolder()))
+                .encryptionKey(domain.getEncryptionKey())
                 .build();
     }
 
@@ -42,6 +46,7 @@ public abstract class PasswordWithFolderMapper {
                 .name(dto.name())
                 .content(dto.content())
                 .user(UserMapper.forDomainFromDto(dto.userDto()))
+                .folder(FolderMapper.forDomainFromDto(dto.folderDto()))
                 .build();
     }
 

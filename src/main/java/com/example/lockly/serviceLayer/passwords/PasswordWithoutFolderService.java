@@ -21,7 +21,9 @@ public class PasswordWithoutFolderService {
 
     public PasswordWithoutFolder register(PasswordWithoutFolder newPassword) {
         newPassword.setUser(userService.consultById(newPassword.getUser().getId()));
-        newPassword.setContent(encryptService.encrypt(newPassword.getContent()));
+        PasswordAndKey passwordAndKey = encryptService.encrypt(newPassword.getContent());
+        newPassword.setContent(passwordAndKey.passswordEncrypt());
+        newPassword.setEncryptionKey(passwordAndKey.key());
         return dataProvider.save(newPassword);
     }
 
@@ -46,11 +48,9 @@ public class PasswordWithoutFolderService {
         dataProvider.delete(id);
     }
 
-    public PasswordWithoutFolder change(PasswordWithoutFolder newData, Integer id) {
+    public PasswordWithoutFolder changeName(String newName, Integer id) {
         PasswordWithoutFolder existingPassword = consultById(id);
-        if(newData.getUser() != null)
-            existingPassword.setUser(newData.getUser());
-        existingPassword.setData(existingPassword);
+        existingPassword.setName(newName);
         return dataProvider.save(existingPassword);
     }
 

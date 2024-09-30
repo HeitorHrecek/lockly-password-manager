@@ -1,5 +1,6 @@
 package com.example.lockly.controllerLayer;
 
+import com.example.lockly.controllerLayer.dtos.ChangeDto;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
 import com.example.lockly.serviceLayer.passwords.PasswordWithoutFolderService;
@@ -17,7 +18,7 @@ public class PasswordWithoutFolderController {
 
     private final PasswordWithoutFolderService service;
 
-    @PostMapping("/add/without-folder")
+    @PostMapping("/register")
     public ResponseEntity<PasswordWithoutFolderDto> register(@RequestBody PasswordWithoutFolderDto passwordWithoutFolderDto) {
         PasswordWithoutFolderDto passwordResponse = PasswordWithoutFolderMapper.forDto(service.register(PasswordWithoutFolderMapper.forDomainFromDto(passwordWithoutFolderDto)));
         return ResponseEntity
@@ -25,13 +26,13 @@ public class PasswordWithoutFolderController {
                 .body(passwordResponse);
     }
 
-    @GetMapping(value = "/consult/all-without-folder-by-user/{idUser}")
+    @GetMapping(value = "/consult/all-by-user/{idUser}")
     public ResponseEntity<List<PasswordWithoutFolderDto>> consultAllByUser(@PathVariable Integer idUser) {
         List<PasswordWithoutFolderDto> passwordWithoutFolderResult = PasswordWithoutFolderMapper.forDtos(service.consultAllByUser(idUser));
         return ResponseEntity.ok(passwordWithoutFolderResult);
     }
 
-    @GetMapping(value = "/consult/by-name-without-folder/{name}")
+    @GetMapping(value = "/consult/by-name/{name}")
     public ResponseEntity<PasswordWithoutFolderDto> queryByName(@PathVariable String name) {
         PasswordWithoutFolderDto passwordResult = PasswordWithoutFolderMapper.forDto(service.queryByName(name));
         return ResponseEntity.ok(passwordResult);
@@ -43,15 +44,15 @@ public class PasswordWithoutFolderController {
         return ResponseEntity.ok(passwordResult);
     }
 
-    @DeleteMapping(value = "/delete/whitout-folder/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<PasswordWithoutFolderDto> delete(@PathVariable Integer id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping(value = "/change/without-folder/{id}")
-    public ResponseEntity<PasswordWithoutFolderDto> change(@RequestBody PasswordWithoutFolderDto newPassword, @PathVariable Integer id) {
-        PasswordWithoutFolderDto passwordResult = PasswordWithoutFolderMapper.forDto(service.change(PasswordWithoutFolderMapper.forDomainFromDto(newPassword), id));
+    @PutMapping("/change-name")
+    public ResponseEntity<PasswordWithoutFolderDto> changeName(@RequestBody ChangeDto newData) {
+        PasswordWithoutFolderDto passwordResult = PasswordWithoutFolderMapper.forDto(service.changeName(newData.name(), newData.id()));
         return ResponseEntity.ok(passwordResult);
     }
 }

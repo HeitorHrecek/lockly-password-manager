@@ -31,7 +31,9 @@ public class PasswordWithFolderService {
             throw new PasswordAlreadyRegisteredException();
         });
 
-        newPassword.setContent(encryptService.encrypt(newPassword.getContent()));
+        PasswordAndKey passwordAndKey = encryptService.encrypt(newPassword.getContent());
+        newPassword.setContent(passwordAndKey.passswordEncrypt());
+        newPassword.setEncryptionKey(passwordAndKey.key());
         newPassword.setUser(userService.consultById(newPassword.getUser().getId()));
         newPassword.setFolder(folderService.consultById(newPassword.getFolder().getId()));
 
@@ -42,7 +44,7 @@ public class PasswordWithFolderService {
         PasswordWithoutFolder passwordWithoutFolder = passwordWithoutFolderService.consultById(idPasswordWithoutFolder);
         Folder folder = folderService.consultById(idFolder);
 
-        return dataProvider.save(PasswordWithFolder.builder()
+        PasswordWithFolder password = dataProvider.save(PasswordWithFolder.builder()
                 .id(passwordWithoutFolder.getId())
                 .name(passwordWithoutFolder.getName())
                 .content(passwordWithoutFolder.getContent())
@@ -50,17 +52,21 @@ public class PasswordWithFolderService {
                 .folder(folder)
                 .build()
         );
+
+        passwordWithoutFolderService.delete(idPasswordWithoutFolder);
+
+        return password;
     }
 
     public void removePasswordFolder(Integer idPasswordWithFolder) {
         PasswordWithFolder passwordWithFolder = consultById(idPasswordWithFolder);
-        deleteWithFolder(passwordWithFolder.getId());
         passwordWithoutFolderService.register(PasswordWithoutFolder.builder()
                 .id(passwordWithFolder.getId())
                 .name(passwordWithFolder.getName())
                 .content(passwordWithFolder.getContent())
                 .user(passwordWithFolder.getUser())
                 .build());
+        deleteWithFolder(passwordWithFolder.getId());
     }
 
     public List<PasswordWithFolder> consultAllByUser(Integer idUser) {
@@ -92,14 +98,9 @@ public class PasswordWithFolderService {
         return dataProvider.save(password);
     }
 
-    public PasswordWithFolder change(PasswordWithFolder newData, Integer idPassword) {
+    public PasswordWithFolder changeName(String name, Integer idPassword) {
         PasswordWithFolder existingPassword = consultById(idPassword);
-        if(newData.getUser() != null)
-            existingPassword.setUser(userService.consultById(newData.getUser().getId()));
-        if(newData.getFolder() != null)
-            existingPassword.setFolder(folderService.consultById(newData.getFolder().getId()));
-
-        existingPassword.setData(newData);
+        existingPassword.setName(name);
         return dataProvider.save(existingPassword);
     }
 
