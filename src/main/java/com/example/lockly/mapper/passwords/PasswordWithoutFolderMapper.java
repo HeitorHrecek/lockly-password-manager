@@ -31,10 +31,12 @@ public abstract class PasswordWithoutFolderMapper {
     }
 
     public static PasswordWithoutFolderDto forDto(PasswordWithoutFolder domain) {
-        return new PasswordWithoutFolderDto(domain.getId(),
-                domain.getName(),
-                domain.getContent(),
-                UserMapper.forDto(domain.getUser()));
+        return PasswordWithoutFolderDto.builder()
+                .id(domain.getId())
+                .name(domain.getName())
+                .content(domain.getContent())
+                .userDto(UserMapper.forDto(domain.getUser()))
+                .build();
     }
 
     public static PasswordWithoutFolder forDomainFromDto(PasswordWithoutFolderDto dto) {

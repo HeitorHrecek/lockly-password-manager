@@ -1,4 +1,4 @@
-package com.example.lockly.controllerLayer;
+package com.example.lockly.controllerLayer.password;
 
 import com.example.lockly.controllerLayer.dtos.ChangeDto;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;

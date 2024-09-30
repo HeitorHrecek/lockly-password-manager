@@ -2,7 +2,7 @@ package com.example.lockly.dataproviderLayer;
 
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.mapper.UserMapper;
-import com.example.lockly.repositoryLayer.UserRepository;
+import com.example.lockly.repositoryLayer.password.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,5 +1,6 @@
-package com.example.lockly.controllerLayer.middleware;
+package com.example.lockly.controllerLayer.middleware.password;
 
+import com.example.lockly.controllerLayer.middleware.MessageErrorException;
 import com.example.lockly.dataproviderLayer.exceptions.password.*;
 import com.example.lockly.serviceLayer.exceptions.password.NoPasswordFoundException;
 import com.example.lockly.serviceLayer.exceptions.password.PasswordAlreadyRegisteredException;

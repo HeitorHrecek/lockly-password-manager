@@ -2,7 +2,7 @@ package com.example.lockly.dataproviderLayer;
 
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.mapper.FolderMapper;
-import com.example.lockly.repositoryLayer.FolderRepository;
+import com.example.lockly.repositoryLayer.password.FolderRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

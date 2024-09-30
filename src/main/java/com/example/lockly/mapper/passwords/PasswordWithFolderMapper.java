@@ -33,11 +33,13 @@ public abstract class PasswordWithFolderMapper {
     }
 
     public static PasswordWithFolderDto forDto(PasswordWithFolder domain) {
-        return new PasswordWithFolderDto(domain.getId(),
-                domain.getName(),
-                domain.getContent(),
-                UserMapper.forDto(domain.getUser()),
-                FolderMapper.forDto(domain.getFolder()));
+        return PasswordWithFolderDto.builder()
+                .id(domain.getId())
+                .name(domain.getName())
+                .content(domain.getContent())
+                .userDto(UserMapper.forDto(domain.getUser()))
+                .folderDto(FolderMapper.forDto(domain.getFolder()))
+                .build();
     }
 
     public static PasswordWithFolder forDomainFromDto(PasswordWithFolderDto dto) {

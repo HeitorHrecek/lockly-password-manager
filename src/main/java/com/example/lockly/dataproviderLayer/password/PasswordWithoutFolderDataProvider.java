@@ -1,9 +1,9 @@
-package com.example.lockly.dataproviderLayer;
+package com.example.lockly.dataproviderLayer.password;
 
 import com.example.lockly.dataproviderLayer.exceptions.password.*;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
-import com.example.lockly.repositoryLayer.PasswordWithoutFolderRepository;
+import com.example.lockly.repositoryLayer.password.PasswordWithoutFolderRepository;
 import com.example.lockly.repositoryLayer.entities.passwords.PasswordWithoutFolderEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

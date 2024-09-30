@@ -1,6 +1,6 @@
 package com.example.lockly.serviceLayer.passwords;
 
-import com.example.lockly.dataproviderLayer.PasswordWithFolderDataProvider;
+import com.example.lockly.dataproviderLayer.password.PasswordWithFolderDataProvider;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
