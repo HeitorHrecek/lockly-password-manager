@@ -3,7 +3,6 @@ package com.example.lockly.mapper.passwords;
 import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.mapper.UserMapper;
-import com.example.lockly.repositoryLayer.entities.UserEntity;
 import com.example.lockly.repositoryLayer.entities.passwords.PasswordWithoutFolderEntity;
 
 import java.util.List;
@@ -16,6 +15,7 @@ public abstract class PasswordWithoutFolderMapper {
                 .name(entity.getName())
                 .content(entity.getContent())
                 .user(UserMapper.forDomain(entity.getUserEntity()))
+                .encryptionKey(entity.getEncryptionKey())
                 .build();
 
     }
@@ -26,6 +26,7 @@ public abstract class PasswordWithoutFolderMapper {
                 .name(domain.getName())
                 .content(domain.getContent())
                 .userEntity(UserMapper.forEntity(domain.getUser()))
+                .encryptionKey(domain.getEncryptionKey())
                 .build();
     }
 

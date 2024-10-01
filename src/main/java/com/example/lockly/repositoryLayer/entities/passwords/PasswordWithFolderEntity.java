@@ -6,6 +6,8 @@ import com.example.lockly.repositoryLayer.entities.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import javax.crypto.SecretKey;
+
 @Entity(name = "PasswordWithFolder")
 @Table(name = "passwords_folder")
 @AllArgsConstructor
@@ -16,9 +18,10 @@ import lombok.*;
 public class PasswordWithFolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     private String content;
+    private SecretKey encryptionKey;
     @ManyToOne
     private UserEntity userEntity;
     @ManyToOne

@@ -2,7 +2,6 @@ package com.example.lockly.repositoryLayer.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 @Entity(name = "Folder")
 @Table(name = "folders")
 @AllArgsConstructor
@@ -13,8 +12,9 @@ import lombok.*;
 public class FolderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String name;
     @ManyToOne
+    //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userEntity;
 }

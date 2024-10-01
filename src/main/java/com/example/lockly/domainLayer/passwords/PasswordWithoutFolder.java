@@ -6,13 +6,16 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.crypto.SecretKey;
+
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
 public class PasswordWithoutFolder {
-    private Long id;
+    private Integer id;
     private String name;
     private String content;
     private User user;
+    private SecretKey encryptionKey;
 }

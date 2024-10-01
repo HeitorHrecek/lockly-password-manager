@@ -69,5 +69,4 @@ public class UserService {
             throw new EmailPasswordInvalidException();
         }
     }
-
 }
