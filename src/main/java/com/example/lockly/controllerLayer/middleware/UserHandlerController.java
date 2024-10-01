@@ -4,6 +4,7 @@ import com.example.lockly.dataproviderLayer.exceptions.user.UserDeleteErrorExcep
 import com.example.lockly.dataproviderLayer.exceptions.user.UserSaveErrorException;
 import com.example.lockly.dataproviderLayer.exceptions.user.UserSearchByEmailErrorException;
 import com.example.lockly.dataproviderLayer.exceptions.user.UserSearchByIdErrorException;
+import com.example.lockly.serviceLayer.exceptions.user.EmailPasswordInvalidException;
 import com.example.lockly.serviceLayer.exceptions.user.UserAlreadyRegisteredException;
 import com.example.lockly.serviceLayer.exceptions.user.UserNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,16 @@ public class UserHandlerController {
     private ResponseEntity<MessageErrorException> alreadyRegisteredHandler(UserAlreadyRegisteredException exception){
         MessageErrorException message = MessageErrorException.builder()
                 .status(STATUS_400)
+                .message(exception.getMessage())
+                .build();
+
+        return ResponseEntity.status(message.status()).body(message);
+    }
+
+    @ExceptionHandler(EmailPasswordInvalidException.class)
+    private ResponseEntity<MessageErrorException> dateInvalidHandler (EmailPasswordInvalidException exception){
+        MessageErrorException message = MessageErrorException.builder()
+                .status(STATUS_500)
                 .message(exception.getMessage())
                 .build();
 

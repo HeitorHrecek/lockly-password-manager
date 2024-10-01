@@ -32,15 +32,10 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginDto> login(@RequestBody LoginDto loginUser) {
-        LoginDto loginResult = LoginDto
-                .builder()
-                .email(loginUser.email())
-                .password(loginUser.password())
-                .status(service.login(loginUser.email(), loginUser.password()))
-                .build();
+    public ResponseEntity<Void> login(@RequestBody LoginDto loginUser) {
+        service.login(loginUser.email(), loginUser.password());
 
-        return ResponseEntity.ok(loginResult);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/consult/id/{id}")

@@ -2,6 +2,7 @@ package com.example.lockly.serviceLayer;
 
 import com.example.lockly.dataproviderLayer.UserDataProvider;
 import com.example.lockly.domainLayer.User;
+import com.example.lockly.serviceLayer.exceptions.user.EmailPasswordInvalidException;
 import com.example.lockly.serviceLayer.exceptions.user.UserNotFoundException;
 import com.example.lockly.serviceLayer.exceptions.user.UserAlreadyRegisteredException;
 import com.example.lockly.serviceLayer.passwords.EncryptService;
@@ -60,10 +61,13 @@ public class UserService {
         return dataProvider.save(user);
     }
 
-    public HttpStatus login (String email, String password){
+    public void login (String email, String password){
         User user = consultByEmail(email);
         boolean correctPassword = passwordService.validatePassword(password, user.getPassword());
 
-        return correctPassword ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        if (!correctPassword){
+            throw new EmailPasswordInvalidException();
+        }
     }
+
 }
