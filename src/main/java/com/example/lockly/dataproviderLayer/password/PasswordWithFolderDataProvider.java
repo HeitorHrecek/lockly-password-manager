@@ -38,7 +38,7 @@ public class PasswordWithFolderDataProvider {
             result = repository.findByUser(idUser);
         } catch (Exception exception) {
             log.error("", exception);
-            throw new ErrorSearchPasswordAllByIdException(exception.getMessage());
+            throw new ErrorSearchAllPasswordById(exception.getMessage());
         }
         return PasswordWithFolderMapper.forDomains(result);
     }

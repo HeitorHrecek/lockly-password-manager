@@ -34,8 +34,8 @@ public class PasswordHandlerController {
         return ResponseEntity.status(message.status()).body(message);
     }
 
-    @ExceptionHandler(ErrorSearchPasswordAllByIdException.class)
-    private ResponseEntity<MessageErrorException> errorSearchPasswordAllByIdHandler(ErrorSearchPasswordAllByIdException exception) {
+    @ExceptionHandler(ErrorSearchAllPasswordById.class)
+    private ResponseEntity<MessageErrorException> errorSearchPasswordAllByIdHandler(ErrorSearchAllPasswordById exception) {
         MessageErrorException message = MessageErrorException.builder().status(STATUS_500).message(exception.getMessage()).build();
         return ResponseEntity.status(message.status()).body(message);
     }
