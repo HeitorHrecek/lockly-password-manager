@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/consult/id/{id}")
-    public ResponseEntity<UserDto> consultById(@PathVariable Long id){
+    public ResponseEntity<UserDto> consultById(@PathVariable Integer id){
         UserDto userResult = UserMapper.forDto(service.consultById(id));
         return ResponseEntity.ok(userResult);
     }
@@ -51,13 +51,13 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<UserDto> delete(@PathVariable Long id){
+    public ResponseEntity<UserDto> delete(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/change/{id}")
-    public ResponseEntity<UserDto> change(@RequestBody UserDto alterUser, @PathVariable Long id) {
+    public ResponseEntity<UserDto> change(@RequestBody UserDto alterUser, @PathVariable Integer id) {
         UserDto userResult = UserMapper.forDto(service.change(UserMapper.forDomainFromDto(alterUser), id));
 
         return ResponseEntity.ok(userResult);

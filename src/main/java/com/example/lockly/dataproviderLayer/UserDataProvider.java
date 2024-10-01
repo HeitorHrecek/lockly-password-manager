@@ -32,7 +32,7 @@ public class UserDataProvider {
         return UserMapper.forDomain(user);
     }
 
-    public Optional<User> searchById(Long id){
+    public Optional<User> searchById(Integer id){
         Optional<UserEntity> result;
 
         try{
@@ -58,7 +58,7 @@ public class UserDataProvider {
         return result.map(UserMapper::forDomain);
     }
 
-    public void delete(Long id){
+    public void delete(Integer id){
         try {
             repository.deleteById(id);
         }catch (Exception exception){

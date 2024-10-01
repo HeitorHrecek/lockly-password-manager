@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,7 @@ public class UserService {
         return dataProvider.save(newUser);
     }
 
-    public User consultById(Long id){
+    public User consultById(Integer id){
         Optional<User> userConsult = dataProvider.searchById(id);
         if (userConsult.isEmpty()){
             throw new UserNotFoundException();
@@ -49,12 +50,12 @@ public class UserService {
         return userConsult.get();
     }
 
-    public void delete(Long id){
+    public void delete(Integer id){
         consultById(id);
         dataProvider.delete(id);
     }
 
-    public User change(User alteredUser, Long id){
+    public User change(User alteredUser, Integer id){
         User user = consultById(id);
 
         user.setData(alteredUser);
