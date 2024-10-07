@@ -4,23 +4,20 @@ import com.example.lockly.controllerLayer.dtos.FolderDto;
 import com.example.lockly.dataproviderLayer.FolderDataProvider;
 import com.example.lockly.mapper.FolderMapper;
 import com.example.lockly.domainLayer.Folder;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Service
 public class FolderService {
 
     private final FolderDataProvider dataProvider;
     private final FolderMapper mapper;
 
-    @Autowired
-    public FolderService(FolderDataProvider dataProvider, FolderMapper mapper) {
-        this.dataProvider = dataProvider;
-        this.mapper = mapper;
-    }
 
     public FolderDto register(FolderDto folderDto) {
         Folder folder = mapper.forDomainFromDto(folderDto);
