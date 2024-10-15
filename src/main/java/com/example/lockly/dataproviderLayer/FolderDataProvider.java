@@ -34,33 +34,33 @@ public class FolderDataProvider {
         }
     }
 
-    public List<Folder> consultAllByUser(Long idUser) {
+    public List<Folder> consultAllByUser(Integer idUser) {
         try {
             List<FolderEntity> entities = repository.consultAllByUser(idUser);
             return entities.stream()
                     .map(FolderMapper::forDomain)
                     .collect(Collectors.toList());
         } catch (Exception exception) {
-            log.error("Error while consulting folders by user ID: " + idUser, exception);
+            log.error("Error while consulting folders by user", exception);
             throw new ConsultAllFolderByUserErroException(exception.getMessage());
         }
     }
 
-    public Optional<Folder> consultById(Long id) {
+    public Optional<Folder> consultById(Integer id) {
         try {
             Optional<FolderEntity> entity = repository.findById(id);
             return entity.map(FolderMapper::forDomain);
         } catch (Exception exception) {
-            log.error("Error while consulting folder by ID: " + id, exception);
+            log.error("Error while consulting folder by", exception);
             throw new FolderConsultByIdErrorException(exception.getMessage());
         }
     }
 
-    public void delete(Long id) {
+    public void delete(Integer id) {
         try {
             repository.deleteById(id);
         } catch (Exception exception) {
-            log.error("Error while deleting folder with ID: " + id, exception);
+            log.error("Error while deleting folder" + id, exception);
             throw new DeleteFolderErroException(exception.getMessage());
         }
     }

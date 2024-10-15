@@ -16,7 +16,6 @@ public class FolderController {
 
     private final FolderService service;
 
-    // Método register ajustado para criar URI e seguir o padrão
     @PostMapping("/register")
     public ResponseEntity<FolderDto> register(@RequestBody FolderDto folderDto) {
         FolderDto savedFolder = service.register(folderDto);
@@ -31,23 +30,20 @@ public class FolderController {
                 .body(savedFolder);
     }
 
-    // Consultar todas as pastas do usuário
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<FolderDto>> consultAllByUser(@PathVariable Long userId) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FolderDto>> consultAllByUser(@PathVariable Integer userId) {
         List<FolderDto> folders = service.consultAllByUser(userId);
         return ResponseEntity.ok(folders);
     }
 
-    // Excluir pasta por ID
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Integer id) {
         service.delete(id);
-        return ResponseEntity.noContent().build(); // Alterado para 204 No Content
+        return ResponseEntity.noContent().build();
     }
 
-    // Alterar o nome da pasta
-    @PutMapping("/{id}/change-name")
-    public ResponseEntity<FolderDto> changeName(@RequestBody FolderDto folderDto, @PathVariable Long id) {
+    @PutMapping("/change-name/{id}")
+    public ResponseEntity<FolderDto> changeName(@RequestBody FolderDto folderDto, @PathVariable Integer id) {
         FolderDto updatedFolder = service.changeName(folderDto, id);
         return ResponseEntity.ok(updatedFolder);
     }
