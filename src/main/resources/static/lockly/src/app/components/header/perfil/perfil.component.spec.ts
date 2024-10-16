@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FolderSectionComponent } from './folder-section.component';
+import { PerfilComponent } from './perfil.component';
 
-describe('FolderSectionComponent', () => {
-  let component: FolderSectionComponent;
-  let fixture: ComponentFixture<FolderSectionComponent>;
+describe('PerfilComponent', () => {
+  let component: PerfilComponent;
+  let fixture: ComponentFixture<PerfilComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FolderSectionComponent]
+      imports: [PerfilComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(FolderSectionComponent);
+    fixture = TestBed.createComponent(PerfilComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
