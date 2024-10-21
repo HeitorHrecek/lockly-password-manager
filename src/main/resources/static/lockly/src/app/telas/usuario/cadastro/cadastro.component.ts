@@ -1,12 +1,17 @@
 import { Component } from '@angular/core';
-import { CadastroUsuarioService } from '../cadastroUsuario.service';
-import { Route, Router } from '@angular/router';
 import { Usuario } from '../usuario';
+import { CadastroUsuarioService } from '../cadastro.service';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro',
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './cadastro.component.html',
-  styleUrl: './cadastro.component.css'
+  styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent {
 
@@ -27,3 +32,4 @@ export class CadastroComponent {
     });
   }
 }
+

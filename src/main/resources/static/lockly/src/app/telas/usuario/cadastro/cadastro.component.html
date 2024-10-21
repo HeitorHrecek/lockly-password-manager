@@ -18,9 +18,9 @@
                     [(ngModel)]="usuario.name"
                     #nomeUsuario="ngModel"
                 >
-                <div *ngIf="nomeUsuario.invalid && (nomeUsuario.dirty || nomeUsuario.touched)">
+                <!-- <div *ngIf="nomeUsuario.invalid && (nomeUsuario.dirty || nomeUsuario.touched)">
                     <small *ngIf="nomeUsuario.errors?.required">Nome é obrigatório.</small>
-                </div>
+                </div> -->
             </div>
 
             <div>
@@ -35,10 +35,10 @@
                     [(ngModel)]="usuario.email"
                     #emailUsuario="ngModel"
                 >
-                <div *ngIf="emailUsuario.invalid && (emailUsuario.dirty || emailUsuario.touched)">
+                <!-- <div *ngIf="emailUsuario.invalid && (emailUsuario.dirty || emailUsuario.touched)">
                     <small *ngIf="emailUsuario.errors?.required">Email é obrigatório.</small>
                     <small *ngIf="emailUsuario.errors?.email">Formato de email inválido.</small>
-                </div>
+                </div> -->
             </div>
 
             <div>
@@ -53,12 +53,12 @@
                     [(ngModel)]="usuario.password"
                     #senhaUsuario="ngModel"
                 >
-                <div *ngIf="senhaUsuario.invalid && (senhaUsuario.dirty || senhaUsuario.touched)">
+                <!-- <div *ngIf="senhaUsuario.invalid && (senhaUsuario.dirty || senhaUsuario.touched)">
                     <small *ngIf="senhaUsuario.errors?.required">Senha é obrigatória.</small>
                     <small *ngIf="senhaUsuario.errors?.minlength">
                         A senha deve ter pelo menos 6 caracteres.
                     </small>
-                </div>
+                </div> -->
             </div>
         </section>
 
