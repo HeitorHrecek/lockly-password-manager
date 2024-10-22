@@ -1,15 +1,14 @@
-
-<main class="flex flex-col justify-center">
-    <header>
-        <h1>Lockly</h1>
+<main class="flex flex-col justify-center h-screen">
+    <header class="text-center">
+        <h1 class="text-3xl font-bold text-white">Lockly</h1>
     </header>
 
-    <form>
-        <h2>CADASTRE-SE</h2>
+    <form class="w-full max-w-md mx-auto p-4">
+        <h2 class="text-center mb-4 text-2xl text-white">CADASTRE-SE</h2>
 
-        <section>
+        <section class="space-y-6">
             <div>
-                <label for="nomeUsuario">Nome</label>
+                <label for="nomeUsuario" class="sr-only">Nome</label>
                 <input
                     type="text"
                     id="nomeUsuario"
@@ -18,11 +17,12 @@
                     required
                     [(ngModel)]="usuario.name"
                     #nomeUsuario="ngModel"
+                    class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
                 >
             </div>
 
             <div>
-                <label for="emailUsuario">Email</label>
+                <label for="emailUsuario" class="sr-only">Email</label>
                 <input
                     type="email"
                     id="emailUsuario"
@@ -32,11 +32,12 @@
                     email
                     [(ngModel)]="usuario.email"
                     #emailUsuario="ngModel"
+                    class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
                 >
             </div>
 
             <div>
-                <label for="senhaUsuario">Senha</label>
+                <label for="senhaUsuario" class="sr-only">Senha</label>
                 <input
                     type="password"
                     id="senhaUsuario"
@@ -46,11 +47,14 @@
                     minlength="6"
                     [(ngModel)]="usuario.password"
                     #senhaUsuario="ngModel"
+                    class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
                 >
             </div>
         </section>
 
-        <button (click)="cadastrar()">CONTINUAR</button>
+        <button (click)="cadastrar()" class="w-full mt-4 p-2 rounded bg-gray-700 text-white hover:bg-gray-600 transition">CONTINUAR</button>
     </form>
 </main>
+
+
 
