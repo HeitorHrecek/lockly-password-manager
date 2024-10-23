@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="de1f2dfc-eb12-44d1-af8b-8261e05beb12" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/controllerLayer/FolderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/controllerLayer/middleware/FolderHandlerController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/dataproviderLayer/exceptions/folder/ConsultAllFolderByUserErroException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/dataproviderLayer/exceptions/folder/DeleteFolderErroException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/dataproviderLayer/exceptions/folder/FolderConsultByIdErrorException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/dataproviderLayer/exceptions/folder/FolderSaveErrorException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/serviceLayer/exceptions/folder/FolderAlreadyRegisteredException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/serviceLayer/exceptions/folder/NoFolderFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/.vscode/extensions.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/.vscode/launch.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/.vscode/tasks.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/front-end/src/app/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/dataproviderLayer/FolderDataProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/dataproviderLayer/FolderDataProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/repositoryLayer/FolderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/repositoryLayer/FolderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/repositoryLayer/password/FolderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/repositoryLayer/password/FolderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/serviceLayer/FolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/serviceLayer/FolderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/serviceLayer/passwords/PasswordWithFolderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/back-end/src/main/java/com/example/lockly/serviceLayer/passwords/PasswordWithFolderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/app/app.config.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/app/app.config.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/front-end/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/front-end/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/lockly/repositoryLayer/password/FolderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/lockly/repositoryLayer/password/FolderRepository.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="workspaceImportEnabled" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2nktxwmXyWzBt3YLUu3Pc7x0URC" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/REPOSITÓRIOS/lockly-password-manager"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="de1f2dfc-eb12-44d1-af8b-8261e05beb12" name="Changes" comment="" />
+      <created>1729529155556</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1729529155556</updated>
+    </task>
+    <servers />
+  </component>
+</project>
