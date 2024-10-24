@@ -5,11 +5,20 @@
 .botao-entrar {
     background-color: rgba(41, 41, 41, 1);
     border: solid white 1px;
-    height: 30px;
-    width: 100px;
+    width: 120px;
+    height: 34px;
     border-radius: 5px;
+    font-size: 20px;
 }
 
 .botao-cadastrar {
+    background-color: #D9D9D9;
+    color: black;
+    width: 150px;
+    height: 34px;
+    font-size: 20px;
+}
 
+.botoes {
+    margin-right: 20px;
 }
