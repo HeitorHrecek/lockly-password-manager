@@ -1,5 +1,4 @@
 package com.example.lockly.dataproviderLayer;
-
 import com.example.lockly.dataproviderLayer.exceptions.folder.ConsultAllFolderByUserErroException;
 import com.example.lockly.dataproviderLayer.exceptions.folder.DeleteFolderErroException;
 import com.example.lockly.dataproviderLayer.exceptions.folder.FolderSaveErrorException;

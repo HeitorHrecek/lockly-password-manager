@@ -1,6 +1,18 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
+import { provideRouter, Route } from '@angular/router';
+import { CadastroComponent } from './app/telas/usuario/cadastro/cadastro.component';
+import { HttpClientModule } from '@angular/common/http';
+import { importProvidersFrom } from '@angular/core';
 
-bootstrapApplication(AppComponent, appConfig)
+const routes: Route[] = [
+  { path: 'cadastro', component: CadastroComponent },
+];
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideRouter(routes),
+    importProvidersFrom(HttpClientModule) 
+  ]
+})
   .catch((err) => console.error(err));
