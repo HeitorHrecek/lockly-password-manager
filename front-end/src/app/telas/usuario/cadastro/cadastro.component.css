@@ -1,0 +1,45 @@
+* {
+    background-color: rgba(41, 41, 41, 1);
+}
+
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #666;
+    background-color: transparent;
+    color: #ccc;
+    font-size: 1rem;
+    outline: none;
+}
+
+button {
+    background-color: rgba(63, 63, 63, 1);
+    width: 30%;
+    height: 60px;
+    width: 200px;
+    font-size: 20px;
+    margin-top: 60px;
+}
+
+h1 {
+    font-size: 90px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+.aviao::before {
+    content: "";
+    position: absolute;
+    top: 20px; /* Ajuste conforme a necessidade */
+    left: 0;
+    width: 400px; /* Tamanho da curva */
+    height: 150px; /* Altura da curva */
+    border-top: 2px solid white; /* Cor da linha */
+    border-radius: 200px; /* Curva */
+    z-index: -1; /* Coloca a linha atrás do avião */
+  }
+  
