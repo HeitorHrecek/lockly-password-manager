@@ -1,24 +1,123 @@
-* {
-    background-color: rgba(41, 41, 41, 1);
+main {
+    background-color: #3F3F3F;
+    padding: 30px;
+}
+
+header {
+    background-color: #222222;
+    padding: 20px;
+    box-shadow: 0 0 0 100px rgba(0, 0, 0, 0.3);
+}
+
+h1 {
+    font-size: 76px;
+    text-align: center;
 }
 
 .botao-entrar {
-    background-color: rgba(41, 41, 41, 1);
+    background-color: #222222;
     border: solid white 1px;
-    width: 120px;
-    height: 34px;
-    border-radius: 5px;
-    font-size: 20px;
+    width: auto;
+    height: auto;
+}
+
+.botao-entrar:hover {
+    background-color: #313131;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
+}
+
+.botao-entrar:active {
+    background-color: #484848; 
 }
 
 .botao-cadastrar {
     background-color: #D9D9D9;
     color: black;
-    width: 150px;
-    height: 34px;
-    font-size: 20px;
+    width: auto;
+    height: auto;
+}
+
+.botao-cadastrar:hover {
+    background-color: #b5b4b4;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 1);
+}
+
+.botao-cadastrar:active {
+    background-color: #9a9a9a;
 }
 
 .botoes {
     margin-right: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.botao-entrar, .botao-cadastrar {
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 10px 20px;
+}
+
+.lockly {
+    margin-left: 20px;
+    margin-top: 0;
+    font-size: 50px;
+}
+
+.div-sec-1 {
+    width: 1273px;
+    height: 657px;
+    background-color: #222222;
+    border-radius: 30px;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.3);
+}
+
+.div-sec-1, .div-sec-2 {
+    gap: 20px; 
+}
+
+.img-pastas-sec1, .img-busca-sec2, .img-cript-sec3 {
+    max-width: 90%; 
+    height: auto;
+}
+
+.img-pastas-sec1 {
+    width: 891px;
+    height: 479px;
+    border-radius: 10px;
+}
+
+.h2-sec1 {
+    background-color: #222222;
+    font-size: 40px;
+}
+
+.h2-sec2 {
+    background-color: #606060;
+    font-size: 40px;
+}
+
+.div-sec-2 {
+    width: 1273px;
+    height: 657px;
+    background-color: #606060;
+    border-radius: 30px;
+    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.3);
+}
+
+.img-busca-sec2 {
+    width: 643px;
+    height: 443px;
+    border-radius: 10px;
+}
+
+.img-cript-sec3 {
+    width: 301px;
+    height: 223px;
+    background-color: #222222;
+}
+
+.h2-sec3 {
+    background-color: #222222;
+    font-size: 40px;
 }
