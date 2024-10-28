@@ -1,0 +1,61 @@
+<main class="flex flex-col justify-center h-screen">
+    
+    <header class="text-center">
+        <h1 class="text-white">Lockly</h1>
+    </header>
+
+    <form class="w-full max-w-md mx-auto p-4 flex flex-col">
+        <h2 class="text-center mb-4 text-white">CADASTRE-SE</h2>
+
+        <section class="space-y-6">
+            <div>
+                <label for="nomeUsuario" class="sr-only">Nome</label>
+                <input
+                    type="text"
+                    id="nomeUsuario"
+                    name="nomeUsuario"
+                    placeholder="NOME"
+                    required
+                    [(ngModel)]="usuario.name"
+                    #nomeUsuario="ngModel"
+                    class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
+                >
+            </div>
+
+            <div>
+                <label for="emailUsuario" class="sr-only">Email</label>
+                <input
+                    type="email"
+                    id="emailUsuario"
+                    name="emailUsuario"
+                    placeholder="EMAIL"
+                    required
+                    email
+                    [(ngModel)]="usuario.email"
+                    #emailUsuario="ngModel"
+                    class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
+                >
+            </div>
+
+            <div>
+                <label for="senhaUsuario" class="sr-only">Senha</label>
+                <input
+                    type="password"
+                    id="senhaUsuario"
+                    name="senhaUsuario"
+                    placeholder="SENHA"
+                    required
+                    minlength="6"
+                    [(ngModel)]="usuario.password"
+                    #senhaUsuario="ngModel"
+                    class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
+                >
+            </div>
+        </section>
+
+        <button (click)="cadastrar()" class="self-center rounded bg-gray-700 text-white hover:bg-gray-600 transition">CONTINUAR</button>
+    </form>
+</main>
+
+
+
