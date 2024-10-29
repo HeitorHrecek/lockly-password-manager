@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-create-button',
+  selector: 'app-create-button-pastas',
   standalone: true,
   imports: [],
   templateUrl: './create-button.component.html',
