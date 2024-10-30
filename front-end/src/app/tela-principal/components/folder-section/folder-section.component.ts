@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CreateButtonComponent, CreateButtonPastaComponent } from '../create-button-pasta/create-button.component';
+import { CreateButtonPastaComponent } from '../create-button-pasta/create-button.component';
 import { FolderComponent } from './folder/folder.component';
 import { Folder } from './folder';
 import { CommonModule } from '@angular/common';

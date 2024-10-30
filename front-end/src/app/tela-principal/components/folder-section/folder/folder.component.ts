@@ -11,8 +11,8 @@ import { FormsModule } from '@angular/forms';
 })
 export class FolderComponent {
 
-  @Input() nome: string = '';  // Propriedade de entrada
-  @Output() nomeChange = new EventEmitter<string>();  // Evento de saída
+  @Input() nome: string = '';  
+  @Output() nomeChange = new EventEmitter<string>();  
   @Input() isEditing: boolean = false;
 
 
@@ -22,6 +22,6 @@ export class FolderComponent {
 
   salvarNome() {
     this.isEditing = false;
-    this.nomeChange.emit(this.nome);  // Emite o novo valor
+    this.nomeChange.emit(this.nome);  
   }
 }
