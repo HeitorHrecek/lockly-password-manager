@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CreateButtonComponent } from '../create-button-pasta/create-button.component';
+import { CreateButtonComponent, CreateButtonPastaComponent } from '../create-button-pasta/create-button.component';
 import { FolderComponent } from './folder/folder.component';
 import { Folder } from './folder';
 import { CommonModule } from '@angular/common';
@@ -11,7 +11,7 @@ import { LocalStorageService } from '../../local-storage.service';
 @Component({
   selector: 'app-folder-section',
   standalone: true,
-  imports: [CommonModule, CreateButtonComponent, FolderComponent],
+  imports: [CommonModule, CreateButtonPastaComponent, FolderComponent],
   templateUrl: './folder-section.component.html',
   styleUrl: './folder-section.component.css'
 })

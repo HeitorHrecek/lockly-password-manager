@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
   templateUrl: './create-button.component.html',
   styleUrl: './create-button.component.css'
 })
-export class CreateButtonComponent {
+export class CreateButtonSenhaComponent {
 
 
   criarPasta() {
