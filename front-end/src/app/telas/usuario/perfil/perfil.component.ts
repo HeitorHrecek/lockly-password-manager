@@ -16,13 +16,18 @@ export class PerfilComponent {
 
   constructor(
     private service: PerfilService,
+    private localStorageService: LocalStorageService
   ){}
 
+  ngOnInit(): void {
+    this.usuario = this.localStorageService.getItem<{ usuario: Usuario}>('usuario');
+  }
+
   usuario: Usuario = {
-    id: 4,
-    name: 'Pedro',
-    email: 'pedroteste@gmail.com',
-    password: '123456jvwnfownfnwf!'
+    id: 0,
+    name: '',
+    email: '',
+    password: ''
   }
 
   showButtons = false;
