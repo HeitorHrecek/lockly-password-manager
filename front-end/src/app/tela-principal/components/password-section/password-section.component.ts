@@ -21,7 +21,7 @@ export class PasswordSectionComponent {
   ){}
 
   senhas: { nome: string; conteudo:string; isEditing: boolean }[] = [];
-
+  
   criarPasta() {
     this.senhas.push({ nome: '', conteudo: '' , isEditing: true });
   }
@@ -33,8 +33,10 @@ export class PasswordSectionComponent {
     const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario')
 
     if(usuario != null) {
-      // this.service.criar(new PasswordWithoutFolder(0, this.senhas[index].nome, '' , new Usuario(usuario.id, '', '', ''))).subscribe(() =>{});
+      this.service.criar(new PasswordWithoutFolder(0, this.senhas[index].nome, '' , new Usuario(usuario.id, '', '', ''))).subscribe(() =>{});
     }
 
   }
+
+  
 }

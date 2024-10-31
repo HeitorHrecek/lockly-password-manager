@@ -1,0 +1,31 @@
+.modal {
+    background-color: #2C2C2C;
+    width: 50%;
+    height: 70%;
+    display: flex;
+    flex-direction: column; /* Certifique-se de que os filhos fiquem empilhados verticalmente */
+}
+
+header {
+    background-color: #222222;
+    padding: 10px;
+    width: 100%;  
+}
+
+.div-inputs {
+    flex-grow: 1; /* Faz com que esta div ocupe o espaço restante */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    gap: 4; /* Adiciona espaço entre os inputs */
+}
+
+.botao-continuar {
+    background-color: rgba(63, 63, 63, 1);
+    width: 30%;
+    height: 60px;
+    width: 200px;
+    font-size: 20px;
+    margin-top: 60px;
+}
