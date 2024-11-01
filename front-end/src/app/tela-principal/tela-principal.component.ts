@@ -5,7 +5,6 @@ import { FolderSectionComponent } from "./components/folder-section/folder-secti
 import { PasswordSectionComponent } from "./components/password-section/password-section.component";
 import { TelaPrincipalService } from './tela-principal.service';
 import { LocalStorageService } from './local-storage.service';
-import { Usuario } from './components/folder-section/usuario';
 import { ModalService } from './modal.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -17,9 +16,9 @@ import { ModalSenhaComponent } from './components/modal-senha/modal-senha.compon
   standalone: true,
   imports: [HeaderComponent, FolderSectionComponent, PasswordSectionComponent, CommonModule, FormsModule, ModalSenhaComponent],
   templateUrl: './tela-principal.component.html',
-  styleUrl: './tela-principal.component.css'
+  styleUrls: ['./tela-principal.component.css']
 })
-export class TelaPrincipalComponent implements OnInit {
+export class TelaPrincipalComponent {
 
   constructor(
     private service: TelaPrincipalService,
@@ -28,6 +27,8 @@ export class TelaPrincipalComponent implements OnInit {
   ) {}
 
   modalAberto = false;
+
+ 
 
   ngOnInit(): void {
     const emailUsuario = this.localStorageService.getItem<{ email: string }>('email-usuario');

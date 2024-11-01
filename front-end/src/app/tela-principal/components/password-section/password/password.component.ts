@@ -1,6 +1,8 @@
+import { ModalService } from './../../../modal.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-password',
@@ -10,11 +12,16 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './password.component.css'
 })
 export class PasswordComponent {
-salvarConteudo() {
-throw new Error('Method not implemented.');
-}
-  @Input() nome: string = '';  // Propriedade de entrada
-  @Output() nomeChange = new EventEmitter<string>();  // Evento de saída
+
+  constructor(
+    private modalService: ModalService
+  ) { }
+
+  // private senhaData = new BehaviorSubject<{ nome: string; conteudo: string } | null>(null);
+  // senhaData$ = this.senhaData.asObservable();
+
+  @Input() nome: string = '';
+  @Output() nomeChange = new EventEmitter<string>();
   @Input() content: string = '';
   @Output() contentChange = new EventEmitter<string>();
   @Input() isEditing: boolean = false;
@@ -26,6 +33,10 @@ throw new Error('Method not implemented.');
 
   salvarNome() {
     this.isEditing = false;
-    this.nomeChange.emit(this.nome);  // Emite o novo valor
+    this.nomeChange.emit(this.nome);
+  }
+
+  abrirModal() {
+    this.modalService.openModalComDados(0, this.nome, this.content);
   }
 }

@@ -29,7 +29,10 @@
             class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
         >
 
-        <button (click)="salvar()" class="botao-continuar self-center rounded bg-gray-700 text-white hover:bg-gray-600 transition">CONFIRMAR</button>
+        <div class="flex flex-wrap justify-center items-center gap-10">
+            <button (click)="salvar()" class="botao-continuar rounded bg-gray-700 text-white hover:bg-gray-600 transition">CONFIRMAR</button>
+            <button (click)="deletar()" *ngIf="buttonDeletar" class="botao-continuar rounded bg-gray-700 text-white hover:bg-gray-600 transition">DELETAR</button>        
+        </div>
     </form>
 
 

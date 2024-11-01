@@ -19,10 +19,28 @@ export class ModalSenhaComponent {
   constructor(
     private modalService: ModalService,
     private senhaService: SenhaService,
-    private passwordSection: PasswordSectionComponent
-  ){}
+  ) { }
+
+  buttonDeletar = false;
+
+  ngOnInit() {
+    this.modalService.senhaData$.subscribe((data) => {
+      if (data) {
+        this.senha.name = data.nome;
+        this.senha.content = data.conteudo;
+        this.senha.id = data.id;
+      }
+    });
+
+    this.modalService.modalPassword$.subscribe((aberto) => {
+      if (aberto) {
+        this.buttonDeletar = true;
+      }
+    })
+  }
 
   senha: SenhaSemPasta = {
+    id: 0,
     name: '',
     content: '',
     userDto: {
@@ -37,9 +55,26 @@ export class ModalSenhaComponent {
     this.modalService.closeModal();
   }
 
-  salvar(){
-    this.senhaService.criar(this.senha).subscribe(() => {
-      this.fecharModal();
-    })
+  salvar() {
+    if (this.buttonDeletar) {
+      if (this.senha.id != undefined) {
+        this.senhaService.alterar(this.senha.id, this.senha);
+      }
+    } else {
+      this.senhaService.criar(this.senha).subscribe((novaSenha) => {
+        if (novaSenha.id != undefined) {
+          this.senhaService.criarSenha(novaSenha.id, this.senha.name, this.senha.content);
+          this.fecharModal();
+        }
+      })
+    }
+  }
+
+  deletar() {
+    this.buttonDeletar = false;
+    this.modalService.closeModal()
+    if (this.senha.id != undefined) {
+      this.senhaService.deletar(this.senha.id);
+    }
   }
 }
