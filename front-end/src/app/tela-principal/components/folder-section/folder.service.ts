@@ -13,7 +13,6 @@ export class FolderService {
     constructor(private http: HttpClient){}
     
     criar(folder: Folder): Observable<Folder> {
-        console.log('request criar' + folder);
         return this.http.post<Folder>(this.API + '/register', folder);
     }
 }

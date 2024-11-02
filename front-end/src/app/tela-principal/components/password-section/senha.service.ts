@@ -11,6 +11,9 @@ import { LocalStorageService } from '../../local-storage.service';
   providedIn: 'root'
 })
 export class SenhaService {
+  consultarSenhasPorPasta() {
+    throw new Error('Method not implemented.');
+  }
 
   private readonly API = 'http://localhost:8080/passwords';
   private senhas = new BehaviorSubject<{id: number, nome: string; conteudo: string; isEditing: boolean }[]>([]);

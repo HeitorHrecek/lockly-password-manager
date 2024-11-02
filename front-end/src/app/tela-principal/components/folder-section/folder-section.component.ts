@@ -31,10 +31,11 @@ export class FolderSectionComponent {
   salvarNome(index: number, nome: string) {
     this.pastas[index].nome = nome;
     this.pastas[index].isEditing = false;
-    const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario')
+    // const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario')
+    const usuario = {id: 4}
 
     if(usuario != null) {
-      this.service.criar(new Folder(0, this.pastas[index].nome, new Usuario(usuario.id, '', '', ''))).subscribe(() =>{});
+      this.service.criar(new Folder(0, this.pastas[index].nome, new Usuario(usuario.id, '', '', ''))).subscribe(() => {});
     }
   }
 }

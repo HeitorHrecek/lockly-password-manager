@@ -1,4 +1,4 @@
-import { ModalService } from './../../../modal.service';
+import { ModalService } from '../../../modal.senha.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';

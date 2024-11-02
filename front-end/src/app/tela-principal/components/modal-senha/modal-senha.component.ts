@@ -1,6 +1,6 @@
 import { PasswordSectionComponent } from './../password-section/password-section.component';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { ModalService } from '../../modal.service';
+import { ModalService } from '../../modal.senha.service';
 import { SenhaService } from '../password-section/senha.service';
 import { SenhaSemPasta } from '../../senhaSemPasta';
 import { CommonModule } from '@angular/common';
