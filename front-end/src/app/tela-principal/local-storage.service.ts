@@ -1,4 +1,4 @@
-// local-storage.service.ts
+
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -14,7 +14,10 @@ export class LocalStorageService {
 
   getItem<T>(key: string): T | null {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : null;
+    if(item != undefined) {
+      return JSON.parse(item);
+    }
+    return null;
   }
 
   removeItem(key: string): void {

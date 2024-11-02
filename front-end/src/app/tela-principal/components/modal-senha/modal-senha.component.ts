@@ -5,6 +5,7 @@ import { SenhaService } from '../password-section/senha.service';
 import { SenhaSemPasta } from '../../senhaSemPasta';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Component({
   selector: 'app-modal-senha',
@@ -19,6 +20,7 @@ export class ModalSenhaComponent {
   constructor(
     private modalService: ModalService,
     private senhaService: SenhaService,
+    private localStorageService: LocalStorageService
   ) { }
 
   buttonDeletar = false;
@@ -29,6 +31,7 @@ export class ModalSenhaComponent {
         this.senha.name = data.nome;
         this.senha.content = data.conteudo;
         this.senha.id = data.id;
+        console.log(data.id);
       }
     });
 
@@ -59,9 +62,11 @@ export class ModalSenhaComponent {
     if (this.buttonDeletar) {
       if (this.senha.id != undefined) {
         this.senhaService.alterar(this.senha.id, this.senha);
+        this.fecharModal();
       }
     } else {
       this.senhaService.criar(this.senha).subscribe((novaSenha) => {
+        this.localStorageService.setItem('senha', {id: novaSenha.id, nome: novaSenha.name, conteudo: novaSenha.content});
         if (novaSenha.id != undefined) {
           this.senhaService.criarSenha(novaSenha.id, this.senha.name, this.senha.content);
           this.fecharModal();
@@ -71,10 +76,10 @@ export class ModalSenhaComponent {
   }
 
   deletar() {
-    this.buttonDeletar = false;
-    this.modalService.closeModal()
     if (this.senha.id != undefined) {
       this.senhaService.deletar(this.senha.id);
     }
+    this.buttonDeletar = false;
+    this.modalService.closeModal()
   }
 }

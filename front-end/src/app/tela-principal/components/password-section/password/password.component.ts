@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
+import { SenhaSemPasta } from 'src/app/tela-principal/senhaSemPasta';
+import { SenhaService } from '../senha.service';
+import { LocalStorageService } from 'src/app/tela-principal/local-storage.service';
 
 @Component({
   selector: 'app-password',
@@ -14,12 +17,19 @@ import { BehaviorSubject } from 'rxjs';
 export class PasswordComponent {
 
   constructor(
-    private modalService: ModalService
+    private modalService: ModalService,
+    private localStorageService: LocalStorageService
   ) { }
 
-  // private senhaData = new BehaviorSubject<{ nome: string; conteudo: string } | null>(null);
-  // senhaData$ = this.senhaData.asObservable();
+  ngOnInit() {
+    let senha = this.localStorageService.getItem<{id: number, nome: string, conteudo: string}>('senha');
 
+    if(senha != undefined) {
+      this.id = senha.id;
+    }
+  }
+
+  id?: number;
   @Input() nome: string = '';
   @Output() nomeChange = new EventEmitter<string>();
   @Input() content: string = '';
@@ -37,6 +47,8 @@ export class PasswordComponent {
   }
 
   abrirModal() {
-    this.modalService.openModalComDados(0, this.nome, this.content);
+    if(this.id != undefined){
+      this.modalService.openModalComDados(this.id, this.nome, this.content);
+    }
   }
 }
