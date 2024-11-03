@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CreateButtonPastaComponent } from '../create-button-pasta/create-button.component';
 import { FolderComponent } from './folder/folder.component';
 import { Folder } from './folder';
@@ -15,27 +15,26 @@ import { LocalStorageService } from '../../local-storage.service';
   templateUrl: './folder-section.component.html',
   styleUrl: './folder-section.component.css'
 })
-export class FolderSectionComponent {
+export class FolderSectionComponent implements OnInit {
 
   constructor(
     private service:FolderService,
-    private localStorageService:LocalStorageService
   ){}
 
-  pastas: { nome: string; isEditing: boolean }[] = [];
+  pastas: {id: number; nome: string; isEditing: boolean }[] = [];
 
-  criarPasta() {
-    this.pastas.push({ nome: '', isEditing: true });
+  ngOnInit(){
+    this.service.consultarPastas();
+    this.service.pastas$.subscribe((pastasBack) => {
+      this.pastas = pastasBack;
+    })
   }
 
   salvarNome(index: number, nome: string) {
-    this.pastas[index].nome = nome;
-    this.pastas[index].isEditing = false;
-    // const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario')
-    const usuario = {id: 4}
+    this.service.salvarNome(index, nome);
+  }
 
-    if(usuario != null) {
-      this.service.criar(new Folder(0, this.pastas[index].nome, new Usuario(usuario.id, '', '', ''))).subscribe(() => {});
-    }
+  criarPasta(index: number, nome: string) {
+    
   }
 }

@@ -6,33 +6,31 @@ import { SenhaSemPasta } from '../../senhaSemPasta';
 import { PasswordWithoutFolder } from './passwords/password-without-folder';
 import { Usuario } from '../folder-section/usuario';
 import { LocalStorageService } from '../../local-storage.service';
+import { Token } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SenhaService {
-  consultarSenhasPorPasta() {
-    throw new Error('Method not implemented.');
-  }
 
   private readonly API = 'http://localhost:8080/passwords';
-  private senhas = new BehaviorSubject<{id: number, nome: string; conteudo: string; isEditing: boolean }[]>([]);
+  private senhas = new BehaviorSubject<{ id: number, nome: string; conteudo: string; isEditing: boolean }[]>([]);
   senhas$ = this.senhas.asObservable();
 
   constructor(
     private http: HttpClient,
     private localStorageService: LocalStorageService
-  ) {}
+  ) { }
 
   criar(senha: SenhaSemPasta): Observable<SenhaSemPasta> {
     return this.http.post<SenhaSemPasta>(this.API + '/register', senha);
   }
 
-  criarSenha(id: number, nome: string, conteudo: string) {
-    const senhasAtual = this.senhas.getValue();
-    const novaSenha = { id, nome, conteudo, isEditing: true };
-    this.senhas.next([...senhasAtual, novaSenha]);
-  }
+  // criarSenha(id: number, nome: string, conteudo: string) {
+  //   const senhasAtual = this.senhas.getValue();
+  //   const novaSenha = { id, nome, conteudo, isEditing: true };
+  //   this.senhas.next([...senhasAtual, novaSenha]);
+  // }
 
   salvarNome(index: number, nome: string, conteudo: string) {
     const senhasAtualizadas = [...this.senhas.getValue()];
@@ -69,7 +67,7 @@ export class SenhaService {
   }
 
   consultarSenhas() {
-    const usuario = {id: 4};
+    const usuario = { id: 4 };
     if (usuario != null) {
       this.http.get<{ id: number, name: string; content: string }[]>(`${this.API}/consult/all-by-user/${usuario.id}`)
         .pipe(
@@ -80,7 +78,7 @@ export class SenhaService {
             isEditing: false
           }))),
           tap(senhasMapeadas => this.senhas.next(senhasMapeadas)),
-          switchMap(senhasMapeadas => 
+          switchMap(senhasMapeadas =>
             this.http.get<SenhaSemPasta[]>(`http://localhost:8080/password/decrypt`)
               .pipe(
                 map(decryptedPasswords => {

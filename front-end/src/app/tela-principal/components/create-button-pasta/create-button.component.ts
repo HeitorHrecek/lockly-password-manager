@@ -13,8 +13,4 @@ export class CreateButtonPastaComponent {
   constructor(
     private folderService:FolderService
   ){}
-
-  criarPasta() {
-    
-  }
 }

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   templateUrl: './password-section.component.html',
   styleUrls: ['./password-section.component.css']
 })
-export class PasswordSectionComponent implements OnInit{
+export class PasswordSectionComponent implements OnInit {
 
   constructor(
     private service:SenhaService
