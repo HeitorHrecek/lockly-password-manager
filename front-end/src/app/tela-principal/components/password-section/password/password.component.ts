@@ -22,11 +22,11 @@ export class PasswordComponent {
   ) { }
 
   ngOnInit() {
-    let senha = this.localStorageService.getItem<{id: number, nome: string, conteudo: string}>('senha');
+    // let senha = this.localStorageService.getItem<{id: number, nome: string, conteudo: string}>('senha');
 
-    if(senha != undefined) {
-      this.id = senha.id;
-    }
+    // if(senha != undefined) {
+    //   this.id = senha.id;
+    // }
   }
 
   id?: number;
@@ -47,8 +47,6 @@ export class PasswordComponent {
   }
 
   abrirModal() {
-    if(this.id != undefined){
-      this.modalService.openModalComDados(this.id, this.nome, this.content);
-    }
+    this.modalService.openModalComDados(this.nome, this.content); 
   }
 }

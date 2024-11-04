@@ -19,6 +19,7 @@ export class FolderSectionComponent implements OnInit {
 
   constructor(
     private service:FolderService,
+    private localStorageService: LocalStorageService
   ){}
 
   pastas: {id: number; nome: string; isEditing: boolean }[] = [];
@@ -30,11 +31,13 @@ export class FolderSectionComponent implements OnInit {
     })
   }
 
+  //this.localStorageService.setItem('senha', {id: novaSenha.id, nome: novaSenha.name, conteudo: novaSenha.content});
+
   salvarNome(index: number, nome: string) {
-    this.service.salvarNome(index, nome);
+    this.service.salvarPasta(index, nome);
   }
 
-  criarPasta(index: number, nome: string) {
-    
+  criarPasta() {
+    this.pastas.push({id: 0, nome: '', isEditing: true});
   }
 }

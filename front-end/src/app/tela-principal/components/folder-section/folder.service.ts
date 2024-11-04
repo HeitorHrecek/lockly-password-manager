@@ -1,19 +1,16 @@
+import { SenhaSemPasta } from 'src/app/tela-principal/senhaSemPasta';
 import { LocalStorageService } from './../../local-storage.service';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, take, map, tap, switchMap, } from "rxjs";
 import { Folder } from "./folder";
-import { SenhaSemPasta } from "../../senhaSemPasta";
 import { Usuario } from './usuario';
+import { SenhaComPasta } from '../../senhaComPasta';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FolderService {
-    salvarNome(index: number, nome: string) {
-      throw new Error('Method not implemented.');
-    }
-
     private readonly API = 'http://localhost:8080/folders'
 
     constructor(
@@ -27,21 +24,23 @@ export class FolderService {
     private pastas = new BehaviorSubject<{ id: number, nome: string; isEditing: boolean }[]>([]);
     pastas$ = this.pastas.asObservable();
 
-    criar(folder: Folder): Observable<Folder> {
-        return this.http.post<Folder>(this.API + '/register', folder);
-    }
+    // criar(folder: Folder): Observable<Folder> {
+
+    // }
 
     salvarPasta(index: number, nome: string) {
         const pastasAtualizadas = [...this.pastas.getValue()];
         pastasAtualizadas[index] = { ...pastasAtualizadas[index], nome, isEditing: false };
         this.pastas.next(pastasAtualizadas);
 
-        const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
+        // const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
+        const usuario = { id: 4 };
 
         if (usuario != null) {
-            this.criar(new Folder(0, nome, new Usuario(usuario.id, '', '', '')))
-                .pipe(take(1))
-                .subscribe();
+            this.http.post<Folder>(this.API + '/register', new Folder(0, nome, new Usuario(usuario.id, '', '', '')))
+                .subscribe(novaPasta => {
+                    this.localStorageService.setItem('pasta', { id: novaPasta.id, nome: novaPasta.name });
+                });
         }
     }
 
@@ -74,9 +73,9 @@ export class FolderService {
 
     consultarPastas() {
         // const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
-        const usuario = {id: 4};
+        const usuario = { id: 4 };
 
-        this.http.get<{id: number, name: string}[]>(`${this.API}/consult/all/${usuario.id}`)
+        this.http.get<{ id: number, name: string }[]>(`${this.API}/${usuario.id}`)
             .pipe(
                 map(pastasBack => pastasBack.map(pasta => ({
                     id: pasta.id,
@@ -84,6 +83,14 @@ export class FolderService {
                     isEditing: false,
                 }))),
                 tap(pastasMapeadas => this.pastas.next(pastasMapeadas))
-            );
+            )
+            .subscribe(pastasBack => {
+                this.pastas.next(pastasBack);
+            })
+    }
+
+    cadastrarSenhaComPasta(senha: SenhaComPasta):Observable<SenhaComPasta> {
+        const api = 'http://localhost:8080/passwords/folders/register';
+        return this.http.post<SenhaComPasta>(api, senha);
     }
 }

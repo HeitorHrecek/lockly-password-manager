@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap, take } from 'rxjs/operators';
 import { SenhaSemPasta } from '../../senhaSemPasta';
@@ -26,11 +26,11 @@ export class SenhaService {
     return this.http.post<SenhaSemPasta>(this.API + '/register', senha);
   }
 
-  // criarSenha(id: number, nome: string, conteudo: string) {
-  //   const senhasAtual = this.senhas.getValue();
-  //   const novaSenha = { id, nome, conteudo, isEditing: true };
-  //   this.senhas.next([...senhasAtual, novaSenha]);
-  // }
+  criarSenha(id: number, nome: string, conteudo: string) {
+    const senhasAtual = this.senhas.getValue();
+    const novaSenha = { id, nome, conteudo, isEditing: true };
+    this.senhas.next([...senhasAtual, novaSenha]);
+  }
 
   salvarNome(index: number, nome: string, conteudo: string) {
     const senhasAtualizadas = [...this.senhas.getValue()];
@@ -68,6 +68,7 @@ export class SenhaService {
 
   consultarSenhas() {
     const usuario = { id: 4 };
+    
     if (usuario != null) {
       this.http.get<{ id: number, name: string; content: string }[]>(`${this.API}/consult/all-by-user/${usuario.id}`)
         .pipe(
@@ -79,19 +80,25 @@ export class SenhaService {
           }))),
           tap(senhasMapeadas => this.senhas.next(senhasMapeadas)),
           switchMap(senhasMapeadas =>
-            this.http.get<SenhaSemPasta[]>(`http://localhost:8080/password/decrypt`)
-              .pipe(
-                map(decryptedPasswords => {
-                  const updatedSenhas = senhasMapeadas.map((senha, index) => ({
-                    ...senha,
-                    conteudo: decryptedPasswords[index].content
-                  }));
-                  this.senhas.next(updatedSenhas);
-                })
+            forkJoin(
+              senhasMapeadas.map(senha => 
+                this.http.get<SenhaSemPasta>(`http://localhost:8080/password/decrypt/${senha.id}`)
+                  .pipe(
+                    map(decryptedSenha => ({
+                      ...senha,
+                      conteudo: decryptedSenha.content
+                    }))
+                  )
               )
+            )
           ),
+          tap(updatedSenhas => this.senhas.next(updatedSenhas)),
           take(1)
-        ).subscribe();
+        ).subscribe(() => {});
     }
+  }  
+
+  consultarPorNome(nome: string): Observable<{id: number, name: string, content: string}> {
+    return this.http.get<{id: number, name: string, content: string}>(`${this.API}/consult/by-name/${nome}`);
   }
 }

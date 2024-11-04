@@ -9,16 +9,18 @@ export class ModalPastaService {
     private modalState = new BehaviorSubject<boolean>(false);
     modalState$ = this.modalState.asObservable();
 
+    private pastaData = new BehaviorSubject<{ id: number, nome: string;} | null>(null);
+    pastaData$ = this.pastaData.asObservable();
 
-    openModal() {
+
+    openModal(id: number, nome: string) {
         this.modalState.next(true);
-    }
+        this.pastaData.next({id, nome});
 
-    openModalComDados(id: number, nome: string, conteudo: string) {
-        
     }
 
     closeModal() {
         this.modalState.next(false);
+        this.pastaData.next(null);
     }
 }

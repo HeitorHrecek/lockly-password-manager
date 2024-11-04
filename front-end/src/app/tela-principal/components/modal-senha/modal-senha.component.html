@@ -1,7 +1,7 @@
 <div class="modal flex flex-col flex-wrap content-between">
     <header class="flex justify-between items-center">
         <img src="../../../../assets/senha-2.png" alt="senha">
-        <h1 class="text-3xl">SENHA</h1>
+        <h1 class="text-3xl">{{senha.name}}</h1>
         <button (click)="fecharModal()">
             <img src="../../../../assets/close.png" alt="sair">
         </button>
@@ -15,6 +15,7 @@
             required minlength="6"
             [(ngModel)]="senha.name"
             #nomeUsuario="ngModel"
+            *ngIf="!criarSenhaComPasta"
             class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
         >
 
@@ -26,6 +27,31 @@
             required minlength="6"
             [(ngModel)]="senha.content"
             #nomeUsuario="ngModel"
+            *ngIf="!criarSenhaComPasta"
+            class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
+        >
+
+        <input 
+            type="text" 
+            id="nomeSenha" 
+            name="nomeSenha" 
+            placeholder="NOME" 
+            required minlength="6"
+            [(ngModel)]="senhaComPasta.name"
+            #nomeUsuario="ngModel"
+            *ngIf="criarSenhaComPasta"
+            class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
+        >
+
+        <input 
+            type="text" 
+            id="conteudoSenha" 
+            name="conteudoSenha" 
+            placeholder="CONTEUDO" 
+            required minlength="6"
+            [(ngModel)]="senhaComPasta.content"
+            #nomeUsuario="ngModel"
+            *ngIf="criarSenhaComPasta"
             class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
         >
 
