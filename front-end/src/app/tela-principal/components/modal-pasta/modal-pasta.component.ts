@@ -62,6 +62,7 @@ export class ModalPastaComponent {
   }
 
   abrirModalSenha() {
+    this.modalPastaService.closeModal();
     this.modalSenhaService.openModalComPasta();
     this.localStorageService.setItem('pasta', {id: this.pasta.id, nome: this.pasta.name});
   }

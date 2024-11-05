@@ -24,6 +24,7 @@ export class FolderComponent {
 
     if(pasta != null) {
       this.id = pasta.id;
+      this.nome = pasta.nome;
     }
 
   }

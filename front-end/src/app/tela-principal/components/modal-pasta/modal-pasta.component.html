@@ -7,11 +7,14 @@
         </button>
     </header>
 
-    <app-password *ngFor="let senha of senhas; let i = index" 
-        [(nome)]="senhas[i].nome"
-        [(content)]="senhas[i].conteudo"
-        [isEditing]="senhas[i].isEditing" 
-    ></app-password>
+    <main class="flex flex-wrap p-5 gap-5">
+        <app-password *ngFor="let senha of senhas; let i = index" 
+            [(nome)]="senhas[i].nome"
+            [(content)]="senhas[i].conteudo"
+            [isEditing]="senhas[i].isEditing" 
+        >
+        </app-password>
+    </main>
 
     <button (click)="abrirModalSenha()" class="self-center botao-continuar rounded bg-gray-700 text-white hover:bg-gray-600 transition">CADASTRAR SENHA</button>
 </div>

@@ -2,7 +2,7 @@ import { SenhaSemPasta } from 'src/app/tela-principal/senhaSemPasta';
 import { LocalStorageService } from './../../local-storage.service';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, take, map, tap, switchMap, } from "rxjs";
+import { BehaviorSubject, Observable, take, map, tap, switchMap, forkJoin, } from "rxjs";
 import { Folder } from "./folder";
 import { Usuario } from './usuario';
 import { SenhaComPasta } from '../../senhaComPasta';
@@ -12,6 +12,7 @@ import { SenhaComPasta } from '../../senhaComPasta';
 })
 export class FolderService {
     private readonly API = 'http://localhost:8080/folders'
+    private readonly API_PASSWORDS = 'http://localhost:8080/passwords/folders'
 
     constructor(
         private http: HttpClient,
@@ -45,8 +46,7 @@ export class FolderService {
     }
 
     consultarSenhasPorPasta(id: number) {
-
-        this.http.get<{ id: number, name: string; content: string }[]>(`${this.API}/consult/all/folder/${id}`)
+        this.http.get<{ id: number, name: string; content: string }[]>(`${this.API_PASSWORDS}/consult/all/folder/${id}`)
             .pipe(
                 map(senhasBack => senhasBack.map(senha => ({
                     id: senha.id,
@@ -56,19 +56,20 @@ export class FolderService {
                 }))),
                 tap(senhasMapeadas => this.senhas.next(senhasMapeadas)),
                 switchMap(senhasMapeadas =>
-                    this.http.get<SenhaSemPasta[]>('http://localhost:8080/password/decrypt/folder')
-                        .pipe(
-                            map(decryptedPasswords => {
-                                const updatedSenhas = senhasMapeadas.map((senha, index) => ({
+                    forkJoin(senhasMapeadas.map(senha =>
+                        this.http.get<SenhaSemPasta>(`http://localhost:8080/password/decrypt/folder/${senha.id}`)
+                            .pipe(
+                                map(decryptedPassword => ({
                                     ...senha,
-                                    conteudo: decryptedPasswords[index].content
-                                }));
-                                this.senhas.next(updatedSenhas);
-                            })
-                        )
+                                    conteudo: decryptedPassword.content
+                                }))
+                            )
+                    ))
                 ),
+                tap(updatedSenhas => this.senhas.next(updatedSenhas)),
                 take(1)
             ).subscribe();
+
     }
 
     consultarPastas() {
@@ -89,8 +90,7 @@ export class FolderService {
             })
     }
 
-    cadastrarSenhaComPasta(senha: SenhaComPasta):Observable<SenhaComPasta> {
-        const api = 'http://localhost:8080/passwords/folders/register';
-        return this.http.post<SenhaComPasta>(api, senha);
+    cadastrarSenhaComPasta(senha: SenhaComPasta): Observable<SenhaComPasta> {
+        return this.http.post<SenhaComPasta>(this.API_PASSWORDS + '/register', senha);
     }
 }

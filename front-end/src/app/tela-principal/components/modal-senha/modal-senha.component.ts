@@ -112,6 +112,7 @@ export class ModalSenhaComponent implements OnInit{
 
       if(pasta != null) {
         this.folderService.cadastrarSenhaComPasta(this.senhaComPasta).subscribe(() => {});
+        this.fecharModal();
       }
 
     } else {
@@ -120,7 +121,7 @@ export class ModalSenhaComponent implements OnInit{
           this.senhaService.criarSenha(novaSenha.id, this.senha.name, this.senha.content);
           this.fecharModal();
         }
-      })
+      });
     }
   }
 
