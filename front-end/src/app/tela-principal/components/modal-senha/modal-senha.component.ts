@@ -9,6 +9,9 @@ import { LocalStorageService } from '../../local-storage.service';
 import { FolderService } from '../folder-section/folder.service';
 import { SenhaComPasta } from '../../senhaComPasta';
 import { Usuario } from '../folder-section/usuario';
+import { ModalPastaService } from '../../modal.pasta.service';
+import { switchMap, take, tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-senha',
@@ -17,48 +20,78 @@ import { Usuario } from '../folder-section/usuario';
   templateUrl: './modal-senha.component.html',
   styleUrl: './modal-senha.component.css'
 })
-export class ModalSenhaComponent implements OnInit{
+export class ModalSenhaComponent implements OnInit {
   @Output() fechar = new EventEmitter<void>();
 
   constructor(
     private modalService: ModalService,
     private senhaService: SenhaService,
     private localStorageService: LocalStorageService,
+    private modalPastaService: ModalPastaService,
     private folderService: FolderService
   ) { }
 
-  buttonDeletar = false;
-  criarSenhaComPasta = false;
+  buttonDeletar: Boolean = false;
+  criarSenhaComPasta: Boolean = false;
 
   ngOnInit() {
-    console.log("123");
+    this.modalService.modalSatateFolder$.pipe(
+      take(1),
+      switchMap((aberto) => {
+        if (aberto) {
+          return this.modalService.senhaComPastaData$.pipe(tap(data => {
+            if (data) {
+              this.senhaComPasta.name = data.nome;
+              this.senhaComPasta.content = data.conteudo;
+            }
+          }));
+        } else {
+          return this.modalService.senhaData$.pipe(tap(data => {
+            if (data) {
+              this.senha.name = data.nome;
+              this.senha.content = data.conteudo;
+            }
+          }));
+        }
+      }),
+      take(1)
+    ).subscribe();
 
-    this.modalService.senhaData$.subscribe((data) => {
-      if (data) {
-        this.senha.name = data.nome;
-        this.senha.content = data.conteudo;
-      }
+    this.modalService.modalPassword$.pipe(take(1)).subscribe((aberto) => {
+      this.buttonDeletar = aberto;
     });
 
-    this.modalService.modalPassword$.subscribe((aberto) => {
-      if (aberto) {
-        this.buttonDeletar = true;
-      }
-    })
+    this.modalPastaService.modalStateParaSenhas$.pipe(
+      take(1),
+      switchMap((aberto) => {
+        if (aberto) {
+          return this.folderService.consultarSenhaPorNome(this.senhaComPasta.name).pipe(
+            tap(senha => {
+              if (senha) {
+                this.senhaComPasta.id = senha.id;
+                this.senhaComPasta.userDto = senha.userDto;
+                this.senhaComPasta.folderDto = senha.folderDto;
+              }
+            })
+          );
+        } else {
+          return this.senhaService.consultarPorNome(this.senha.name).pipe(
+            tap(senha => {
+              if (senha) {
+                this.senha.id = senha.id;
+              }
+            })
+          );
+        }
+      })
+    ).subscribe();
 
-
-    this.senhaService.consultarPorNome(this.senha.name).subscribe(senha => {
-      if (senha != null){
-        this.senha.id = senha.id;
-      }
-    })
-
-    this.modalService.modalSatateFolder$.subscribe(verdadeiro => {
-      if(verdadeiro) {
-        this.criarSenhaComPasta = true;
-      }
-    })
+    this.modalService.modalSatateFolder$.pipe(take(1)).subscribe(verdadeiro => {
+      this.criarSenhaComPasta = verdadeiro;
+    });
   }
+
+
 
   senha: SenhaSemPasta = {
     id: 0,
@@ -72,7 +105,7 @@ export class ModalSenhaComponent implements OnInit{
     }
   }
 
-  
+
   senhaComPasta: SenhaComPasta = {
     id: 0,
     name: '',
@@ -96,22 +129,37 @@ export class ModalSenhaComponent implements OnInit{
   }
 
   fecharModal() {
-    this.modalService.closeModal();
+    this.modalPastaService.modalStateParaSenhas$.subscribe(aberto => {
+      if (aberto) {
+        this.modalPastaService.fecharModalStateParaSenhas();
+        this.modalService.closeModal();
+      } else {
+        this.modalService.closeModal();
+      }
+    })
+
   }
+
+
 
   salvar() {
     if (this.buttonDeletar) {
-      if (this.senha.id != undefined) {
+      if (this.senha.id != null && this.senha.id != 0) {
+        console.log('teste 2');
         this.senhaService.alterar(this.senha.id, this.senha);
+        this.fecharModal();
+      } else if (this.senhaComPasta.id != null && this.senhaComPasta.id != 0) {
+        console.log('teste');
+        this.folderService.alterarSenha(this.senhaComPasta.id, this.senhaComPasta);
         this.fecharModal();
       }
     } else if (this.criarSenhaComPasta) {
-      let pasta = this.localStorageService.getItem<{id: number, nome: string}>('pasta');
+      let pasta = this.localStorageService.getItem<{ id: number, nome: string }>('pasta');
 
       this.senhaComPasta.folderDto.id = pasta?.id;
 
-      if(pasta != null) {
-        this.folderService.cadastrarSenhaComPasta(this.senhaComPasta).subscribe(() => {});
+      if (pasta != null) {
+        this.folderService.cadastrarSenhaComPasta(this.senhaComPasta).subscribe(() => { });
         this.fecharModal();
       }
 
@@ -126,8 +174,10 @@ export class ModalSenhaComponent implements OnInit{
   }
 
   deletar() {
-    if (this.senha.id != undefined) {
+    if (this.senha.id != null && this.senha.id != 0) {
       this.senhaService.deletar(this.senha.id);
+    } else if (this.senhaComPasta.id != null && this.senhaComPasta.id != 0) {
+      this.folderService.deletar(this.senhaComPasta.id);
     }
     this.buttonDeletar = false;
     this.modalService.closeModal()

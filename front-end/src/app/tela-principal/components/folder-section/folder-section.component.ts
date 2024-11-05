@@ -37,7 +37,7 @@ export class FolderSectionComponent implements OnInit {
     this.service.salvarPasta(index, nome);
   }
 
-  // criarPasta() {
-  //   this.pastas.push({id: 0, nome: '', isEditing: true});
-  // }
+  criarPasta() {
+    this.pastas.push({id: 0, nome: '', isEditing: true});
+  }
 }

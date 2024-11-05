@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { SenhaSemPasta } from 'src/app/tela-principal/senhaSemPasta';
 import { SenhaService } from '../senha.service';
 import { LocalStorageService } from 'src/app/tela-principal/local-storage.service';
+import { ModalPastaComponent } from '../../modal-pasta/modal-pasta.component';
+import { ModalPastaService } from 'src/app/tela-principal/modal.pasta.service';
 
 @Component({
   selector: 'app-password',
@@ -18,6 +20,7 @@ export class PasswordComponent {
 
   constructor(
     private modalService: ModalService,
+    private modalPastaService: ModalPastaService,
     private localStorageService: LocalStorageService
   ) { }
 
@@ -47,6 +50,13 @@ export class PasswordComponent {
   }
 
   abrirModal() {
-    this.modalService.openModalComDados(this.nome, this.content); 
+    this.modalPastaService.modalState$.subscribe(aberto => {
+      if(aberto) { 
+        this.modalService.openModalComDados(this.nome, this.content, true);
+        this.modalPastaService.closeModal();
+      } else {
+        this.modalService.openModalComDados(this.nome, this.content, false); 
+      }
+    })
   }
 }

@@ -11,6 +11,7 @@ import { SenhaComPasta } from '../../senhaComPasta';
     providedIn: 'root'
 })
 export class FolderService {
+
     private readonly API = 'http://localhost:8080/folders'
     private readonly API_PASSWORDS = 'http://localhost:8080/passwords/folders'
 
@@ -24,10 +25,6 @@ export class FolderService {
 
     private pastas = new BehaviorSubject<{ id: number, nome: string; isEditing: boolean }[]>([]);
     pastas$ = this.pastas.asObservable();
-
-    // criar(folder: Folder): Observable<Folder> {
-
-    // }
 
     salvarPasta(index: number, nome: string) {
         const pastasAtualizadas = [...this.pastas.getValue()];
@@ -92,5 +89,32 @@ export class FolderService {
 
     cadastrarSenhaComPasta(senha: SenhaComPasta): Observable<SenhaComPasta> {
         return this.http.post<SenhaComPasta>(this.API_PASSWORDS + '/register', senha);
+    }
+
+    consultarSenhaPorNome(nome: string): Observable<SenhaComPasta> {
+        return this.http.get<{ id: number, name: string, content: string, userDto: Usuario, folderDto: Folder }>(`${this.API_PASSWORDS}/consult/name/${nome}`);
+    }
+
+    alterarSenha(id: number, senhaComPasta: SenhaComPasta) {
+        this.http.put<SenhaComPasta>(`${this.API_PASSWORDS}/change-name`, { name: senhaComPasta.name, id })
+            .pipe(
+                tap(senhaAtualizada => {
+                    const senhasAtualizadas = this.senhas.getValue().map(s => s.id === id ? { ...s, nome: senhaAtualizada.name } : s);
+                    this.senhas.next(senhasAtualizadas);
+                }),
+                take(1)
+            ).subscribe();
+
+        console.log(this.senhas.getValue());
+    }
+
+    deletar(id: number) {
+        this.http.delete(`${this.API_PASSWORDS}/delete/${id}`).pipe(
+            tap(() => {
+                const senhasAtualizadas = this.senhas.getValue().filter(senha => senha.id !== id);
+                this.senhas.next(senhasAtualizadas);
+            }),
+            take(1)
+        ).subscribe();
     }
 }

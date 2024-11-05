@@ -1,16 +1,15 @@
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "./components/header/header.component";
 import { FolderSectionComponent } from "./components/folder-section/folder-section.component";
 import { PasswordSectionComponent } from "./components/password-section/password-section.component";
-import { TelaPrincipalService } from './tela-principal.service';
-import { LocalStorageService } from './local-storage.service';
 import { ModalService } from './modal.senha.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ModalSenhaComponent } from './components/modal-senha/modal-senha.component';
 import { ModalPastaComponent } from "./components/modal-pasta/modal-pasta.component";
 import { ModalPastaService } from './modal.pasta.service';
+import { Subject, takeUntil } from 'rxjs';
+import { Route, Router } from '@angular/router';
 
 
 @Component({
@@ -20,43 +19,59 @@ import { ModalPastaService } from './modal.pasta.service';
   templateUrl: './tela-principal.component.html',
   styleUrls: ['./tela-principal.component.css']
 })
-export class TelaPrincipalComponent {
+export class TelaPrincipalComponent implements OnInit{
 
   constructor(
-    private service: TelaPrincipalService,
-    private localStorageService: LocalStorageService,
     private modalService: ModalService,
-    private modalPastaService: ModalPastaService
+    private modalPastaService: ModalPastaService,
+    private router: Router
   ) { }
 
-  modalAbertoSenha = false;
-  modalAbertoPasta = false;
+  modalAbertoSenha: boolean = false;
+  modalAbertoPasta: boolean = false;
 
 
+
+  // ngOnInit(): void {
+  //   // const emailUsuario = this.localStorageService.getItem<{ email: string }>('email-usuario');
+  //   // if (emailUsuario != null) {
+  //   //   const usuario = this.service.consultarUsuario(emailUsuario.email).subscribe(() => {});
+  //   //   this.localStorageService.setItem('usuario', usuario);
+  //   // } else {
+  //   //   console.log('Usuario é null');
+  //   // }
+
+  //   this.modalService.modalState$.subscribe((aberto) => {
+  //     if (aberto) {
+  //       this.modalAbertoSenha = true;
+  //     } else {
+  //       this.modalAbertoSenha = false;
+  //     }
+  //   });
+
+  //   this.modalPastaService.modalState$.subscribe((aberto) => {
+  //     if (aberto) {
+  //       this.modalAbertoPasta = true;
+  //     } else {
+  //       this.modalAbertoPasta = false;
+  //     }
+  //   })
+  // }
+
+  private unsubscribe$ = new Subject<void>();
 
   ngOnInit(): void {
-    // const emailUsuario = this.localStorageService.getItem<{ email: string }>('email-usuario');
-    // if (emailUsuario != null) {
-    //   const usuario = this.service.consultarUsuario(emailUsuario.email).subscribe(() => {});
-    //   this.localStorageService.setItem('usuario', usuario);
-    // } else {
-    //   console.log('Usuario é null');
-    // }
-
-    this.modalService.modalState$.subscribe((aberto) => {
-      if (aberto) {
-        this.modalAbertoSenha = true;
-      } else {
-        this.modalAbertoSenha = false;
-      }
+    this.modalService.modalState$.pipe(takeUntil(this.unsubscribe$)).subscribe((aberto) => {
+      this.modalAbertoSenha = aberto;
     });
 
-    this.modalPastaService.modalState$.subscribe((aberto) => {
-      if (aberto) {
-        this.modalAbertoPasta = true;
-      } else {
-        this.modalAbertoPasta = false;
-      }
-    })
+    this.modalPastaService.modalState$.pipe(takeUntil(this.unsubscribe$)).subscribe((aberto) => {
+      this.modalAbertoPasta = aberto;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }
