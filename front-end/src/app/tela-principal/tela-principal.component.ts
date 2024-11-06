@@ -32,46 +32,41 @@ export class TelaPrincipalComponent implements OnInit{
 
 
 
-  // ngOnInit(): void {
-  //   // const emailUsuario = this.localStorageService.getItem<{ email: string }>('email-usuario');
-  //   // if (emailUsuario != null) {
-  //   //   const usuario = this.service.consultarUsuario(emailUsuario.email).subscribe(() => {});
-  //   //   this.localStorageService.setItem('usuario', usuario);
-  //   // } else {
-  //   //   console.log('Usuario é null');
-  //   // }
+  ngOnInit(): void {
+    // const emailUsuario = this.localStorageService.getItem<{ email: string }>('email-usuario');
+    // if (emailUsuario != null) {
+    //   const usuario = this.service.consultarUsuario(emailUsuario.email).subscribe(() => {});
+    //   this.localStorageService.setItem('usuario', usuario);
+    // } else {
+    //   console.log('Usuario é null');
+    // }
 
-  //   this.modalService.modalState$.subscribe((aberto) => {
-  //     if (aberto) {
-  //       this.modalAbertoSenha = true;
-  //     } else {
-  //       this.modalAbertoSenha = false;
-  //     }
+    this.modalService.modalState$.subscribe((aberto) => {
+      if (aberto) {
+        this.modalAbertoSenha = true;
+      } else {
+        this.modalAbertoSenha = false;
+      }
+    });
+
+    this.modalPastaService.modalState$.subscribe((aberto) => {
+      if (aberto) {
+        this.modalAbertoPasta = true;
+      } else {
+        this.modalAbertoPasta = false;
+      }
+    })
+  }
+
+  // private unsubscribe$ = new Subject<void>();
+
+  // ngOnInit(): void {
+  //   this.modalService.modalState$.pipe(takeUntil(this.unsubscribe$)).subscribe((aberto) => {
+  //     this.modalAbertoSenha = aberto;
   //   });
 
-  //   this.modalPastaService.modalState$.subscribe((aberto) => {
-  //     if (aberto) {
-  //       this.modalAbertoPasta = true;
-  //     } else {
-  //       this.modalAbertoPasta = false;
-  //     }
-  //   })
+  //   this.modalPastaService.modalState$.pipe(takeUntil(this.unsubscribe$)).subscribe((aberto) => {
+  //     this.modalAbertoPasta = aberto;
+  //   });
   // }
-
-  private unsubscribe$ = new Subject<void>();
-
-  ngOnInit(): void {
-    this.modalService.modalState$.pipe(takeUntil(this.unsubscribe$)).subscribe((aberto) => {
-      this.modalAbertoSenha = aberto;
-    });
-
-    this.modalPastaService.modalState$.pipe(takeUntil(this.unsubscribe$)).subscribe((aberto) => {
-      this.modalAbertoPasta = aberto;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
-  }
 }

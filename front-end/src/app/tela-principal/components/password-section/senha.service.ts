@@ -101,4 +101,8 @@ export class SenhaService {
   consultarPorNome(nome: string): Observable<{id: number, name: string, content: string}> {
     return this.http.get<{id: number, name: string, content: string}>(`${this.API}/consult/by-name/${nome}`);
   }
+
+  decriptografarSenha(id: number): Observable<{id: number, name: string, content: string}> {
+    return this.http.get<{id: number, name: string, content: string}>(`http://localhost:8080/password/decrypt/${id}`);
+  }
 }

@@ -30,7 +30,7 @@
             #nomeUsuario="ngModel"
             *ngIf="!criarSenhaComPasta"
             class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
-            disabled="true"
+            [disabled]="inputSenha"
         >
 
         <input 
@@ -55,7 +55,7 @@
             #nomeUsuario="ngModel"
             *ngIf="criarSenhaComPasta"
             class="w-3/4 bg-transparent text-gray-300 placeholder-gray-500 border-b border-gray-500 focus:outline-none focus:border-white transition duration-300"
-            disabled="true"
+            [disabled]="inputSenha"
         >
 
         <div class="flex flex-wrap justify-center items-center gap-10">

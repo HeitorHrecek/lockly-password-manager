@@ -5,5 +5,5 @@
 
     <span *ngIf="!isEditing" (click)="editarNome()">{{ nome || 'Sem nome' }}</span>
 
-    <input *ngIf="isEditing" type="text" [(ngModel)]="nome" (blur)="salvarNome()" (keyup.enter)="salvarNome()" placeholder="Nome da pasta">
+    <input *ngIf="isEditing" type="text" [(ngModel)]="nome" (keyup.enter)="salvarNome()" placeholder="Nome da pasta">
 </div>

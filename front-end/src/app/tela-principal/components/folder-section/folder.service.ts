@@ -36,11 +36,19 @@ export class FolderService {
 
         if (usuario != null) {
             this.http.post<Folder>(this.API + '/register', new Folder(0, nome, new Usuario(usuario.id, '', '', '')))
-                .subscribe(novaPasta => {
+                .pipe(take(1)).subscribe(novaPasta => {
                     this.localStorageService.setItem('pasta', { id: novaPasta.id, nome: novaPasta.name });
                 });
         }
     }
+
+    editar(index: number, nome: string, id: number) {
+        this.http.put<Folder>(`${this.API}/change-name/${id}`, {id: 0, name: nome, userDto: {id: 0, name: '', email: '', password: ''}})
+            .pipe(take(1)).subscribe(novaPasta => {
+                this.pastas.getValue()[index].nome = novaPasta.name;
+            });
+    }
+
 
     consultarSenhasPorPasta(id: number) {
         this.http.get<{ id: number, name: string; content: string }[]>(`${this.API_PASSWORDS}/consult/all/folder/${id}`)
@@ -116,5 +124,9 @@ export class FolderService {
             }),
             take(1)
         ).subscribe();
+    }
+
+    decriptografarSenha(id: number): Observable<{ id: number, name: string, content: string }> {
+        return this.http.get<{ id: number, name: string, content: string }>(`http://localhost:8080/password/decrypt/folder/${id}`);
     }
 }

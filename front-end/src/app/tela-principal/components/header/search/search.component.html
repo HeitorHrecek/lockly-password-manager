@@ -1,5 +1,11 @@
 <div id="searchForm" class="flex items-center gap-3">
-    <input placeholder="Buscar senhas..." type="text" class="bg-custom-gray-606060 px-2 rounded-md">
+    <input
+        placeholder="Buscar senhas..."
+        type="text"
+        class="bg-custom-gray-606060 px-2 rounded-md"
+        [(ngModel)]="nomeSenha"     
+        (keyup.enter)="queryByName()"
+    >
     <button (click)="queryByName()" class="w-6">
         <img src="assets/search.png" alt="lupa de busca">
     </button>

@@ -33,6 +33,7 @@ export class ModalSenhaComponent implements OnInit {
 
   buttonDeletar: Boolean = false;
   criarSenhaComPasta: Boolean = false;
+  inputSenha: boolean = false;
 
   ngOnInit() {
     this.modalService.modalSatateFolder$.pipe(
@@ -59,6 +60,8 @@ export class ModalSenhaComponent implements OnInit {
 
     this.modalService.modalPassword$.pipe(take(1)).subscribe((aberto) => {
       this.buttonDeletar = aberto;
+      if(this.buttonDeletar)
+        this.inputSenha = true;
     });
 
     this.modalPastaService.modalStateParaSenhas$.pipe(
@@ -145,7 +148,6 @@ export class ModalSenhaComponent implements OnInit {
   salvar() {
     if (this.buttonDeletar) {
       if (this.senha.id != null && this.senha.id != 0) {
-        console.log('teste 2');
         this.senhaService.alterar(this.senha.id, this.senha);
         this.fecharModal();
       } else if (this.senhaComPasta.id != null && this.senhaComPasta.id != 0) {
@@ -159,7 +161,7 @@ export class ModalSenhaComponent implements OnInit {
       this.senhaComPasta.folderDto.id = pasta?.id;
 
       if (pasta != null) {
-        this.folderService.cadastrarSenhaComPasta(this.senhaComPasta).subscribe(() => { });
+        this.folderService.cadastrarSenhaComPasta(this.senhaComPasta).pipe(take(1)).subscribe(() => { });
         this.fecharModal();
       }
 

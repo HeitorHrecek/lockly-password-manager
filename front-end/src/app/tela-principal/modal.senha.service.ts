@@ -26,6 +26,7 @@ export class ModalService {
   }
 
   openModalComDados(nome: string, conteudo: string, comPasta: boolean) {
+    console.log(nome);
     if (comPasta) {
       this.senhaComPastaData.next({ nome, conteudo });
       this.modalSatateFolder.next(true);
