@@ -35,14 +35,14 @@ public class PasswordWithFolderService {
         newPassword.setContent(passwordAndKey.passswordEncrypt());
         newPassword.setEncryptionKey(passwordAndKey.key());
         newPassword.setUser(userService.consultById(newPassword.getUser().getId()));
-        newPassword.setFolder(folderService.consultById(newPassword.getFolder().getId()));
+        newPassword.setFolder(folderService.findFolderById(newPassword.getFolder().getId()));
 
         return dataProvider.save(newPassword);
     }
 
     public PasswordWithFolder putInFolder(Integer idPasswordWithoutFolder, Integer idFolder) {
         PasswordWithoutFolder passwordWithoutFolder = passwordWithoutFolderService.consultById(idPasswordWithoutFolder);
-        Folder folder = folderService.consultById(idFolder);
+        Folder folder = folderService.findFolderById(idFolder);
 
         PasswordWithFolder password = dataProvider.save(PasswordWithFolder.builder()
                 .id(passwordWithoutFolder.getId())
@@ -91,7 +91,7 @@ public class PasswordWithFolderService {
     }
 
     public PasswordWithFolder changeFolder(Integer idPassword, Integer idFolder) {
-        Folder newFolder = folderService.consultById(idFolder);
+        Folder newFolder = folderService.findFolderById(idFolder);
         PasswordWithFolder password = consultById(idPassword);
         password.setFolder(newFolder);
 

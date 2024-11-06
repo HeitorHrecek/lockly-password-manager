@@ -4,4 +4,4 @@ import lombok.Builder;
 import org.springframework.http.HttpStatus;
 
 @Builder
-public record LoginDto(String email, String password, HttpStatus status) {}
+public record LoginDto(String email, String password) {}

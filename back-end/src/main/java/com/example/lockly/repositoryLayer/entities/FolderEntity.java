@@ -15,6 +15,5 @@ public class FolderEntity {
     private Integer id;
     private String name;
     @ManyToOne
-    //@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private UserEntity userEntity;
 }

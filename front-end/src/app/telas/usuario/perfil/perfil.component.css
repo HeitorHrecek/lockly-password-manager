@@ -1,0 +1,34 @@
+* {
+    background-color: rgba(41, 41, 41, 1);
+}
+
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #666;
+    background-color: transparent;
+    color: #ccc;
+    font-size: 1rem;
+    outline: none;
+}
+
+button {
+    background-color: rgba(63, 63, 63, 1);
+    height: 40px;
+    width: 110px;
+    font-size: 15px;
+    margin-top: 60px;
+}
+
+h1 {
+    font-size: 90px;
+}
+
+h2 {
+    font-size: 30px;
+}
+  
+  
+  
