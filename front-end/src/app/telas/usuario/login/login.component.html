@@ -3,7 +3,7 @@
         <h1 class=" text-white">Lockly</h1>
     </header>
 
-    <form class="w-full max-w-md mx-auto p-4 flex flex-col">
+    <form class="w-full max-w-md mx-auto p-4 flex flex-col" (ngSubmit)="entrar()">
         <h2 class="text-center mb-4 text-white">LOGIN</h2>
 
         <section class="space-y-6">
@@ -12,27 +12,30 @@
                 <input 
                     type="email" 
                     id="email" 
+                    name="email"
                     placeholder="EMAIL"
                     required
                     [(ngModel)]="usuario.email"
-                    #nome="ngModel"
+                    #emailUsuario="ngModel"
                     class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
                 >
             </div>
 
             <div>
-                <label for="senha" class="sr-only">SENHA</label>
+                <label for="password" class="sr-only">SENHA</label>
                 <input
                     type="password"
-                    id="senha"
+                    id="password"
+                    name="password"
                     placeholder="SENHA"
                     required
-                    [(ngModel)] = "usuario.password"
+                    [(ngModel)]="usuario.password"
+                    #password="ngModel"
                     class="w-full bg-transparent text-gray-300 placeholder-gray-500 focus:outline-none focus:border-white transition duration-300"
                 >
             </div>
         </section>
 
-        <button (click)="entrar()" class="self-center rounded bg-gray-700 text-white hover:bg-gray-600 transition">ENTRAR</button>
+        <button type="submit" class="self-center rounded bg-gray-700 text-white hover:bg-gray-600 transition">ENTRAR</button>
     </form>
 </main>

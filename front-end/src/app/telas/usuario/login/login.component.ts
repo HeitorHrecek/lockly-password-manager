@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Usuario } from '../usuario';
 import { LoginUsuarioService } from '../login.service';
+import { Login } from '../login';
 
 @Component({
   selector: 'app-login',
@@ -13,8 +14,7 @@ import { LoginUsuarioService } from '../login.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  usuario: Usuario = {
-    name: '',
+  usuario: Login = {
     email: '',
     password: ''
   }
@@ -26,7 +26,7 @@ export class LoginComponent {
 
   entrar() {
     this.service.logar(this.usuario).subscribe(() => {
-      this.router.navigate(['/'])
+      this.router.navigate(['/home'])
     });
   }
 }
