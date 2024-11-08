@@ -1,11 +1,10 @@
-import { SenhaSemPasta } from 'src/app/tela-principal/senhaSemPasta';
-import { LocalStorageService } from './../../local-storage.service';
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, take, map, tap, switchMap, forkJoin, } from "rxjs";
 import { Folder } from "./folder";
 import { Usuario } from './usuario';
-import { SenhaComPasta } from '../../senhaComPasta';
+import { LocalStorageService } from "../../local-storage.service";
+import { SenhaComPasta } from "../../senhaComPasta";
 
 @Injectable({
     providedIn: 'root'
@@ -19,15 +18,8 @@ export class FolderService {
         private localStorageService: LocalStorageService
     ) { }
 
-    // private senhas = new BehaviorSubject<{ id: number, nome: string; conteudo: string; isEditing: boolean }[]>([]);
-    // senhas$ = this.senhas.asObservable();
-
     private pastas = new BehaviorSubject<{ id: number, nome: string; isEditing: boolean }[]>([]);
     pastas$ = this.pastas.asObservable();
-
-    // getSenhasPorIdPasta(id: number): Array<{ id: number, nome: string; conteudo: string; isEditing: boolean }> {
-    //     return this.senhas.getValue().filter(senha => senha.)
-    // }
 
     salvarPasta(index: number, nome: string) {
         const pastasAtualizadas = [...this.pastas.getValue()];

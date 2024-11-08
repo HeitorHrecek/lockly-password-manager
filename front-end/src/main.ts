@@ -3,7 +3,7 @@ import { AppComponent } from './app/app.component';
 import { provideRouter, Route } from '@angular/router';
 import { importProvidersFrom } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { TelaPrincipalComponent } from './app/tela-principal/tela-principal.component';
+import { TelaPrincipalComponent } from './app/telas/tela-principal.component';
 
 const routes: Route[] = [
   { path: 'home', component: TelaPrincipalComponent}

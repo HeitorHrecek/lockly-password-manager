@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Usuario } from "./components/folder-section/usuario";
+import { Usuario } from "../tela-principal/components/folder-section/usuario";
 import { Observable } from "rxjs";
 
 @Injectable({

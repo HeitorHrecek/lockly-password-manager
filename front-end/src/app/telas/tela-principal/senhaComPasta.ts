@@ -1,5 +1,5 @@
-import { Folder } from "./components/folder-section/folder";
-import { Usuario } from "./components/folder-section/usuario";
+import { Folder } from "../tela-principal/components/folder-section/folder";
+import { Usuario } from "../tela-principal/components/folder-section/usuario";
 
 export class SenhaComPasta {
 

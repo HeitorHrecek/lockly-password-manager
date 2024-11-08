@@ -1,12 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CreateButtonPastaComponent } from '../create-button-pasta/create-button.component';
 import { FolderComponent } from './folder/folder.component';
-import { Folder } from './folder';
 import { CommonModule } from '@angular/common';
 import { FolderService } from './folder.service';
-import { Usuario } from './usuario';
-import { LocalStorageService } from '../../local-storage.service';
-import { BehaviorSubject, take } from 'rxjs';
+import { LocalStorageService } from '../../../telas/local-storage.service';
 
 
 @Component({

@@ -1,4 +1,4 @@
-import { Usuario } from "./components/folder-section/usuario"
+import { Usuario } from "../tela-principal/components/folder-section/usuario"
 
 export class SenhaSemPasta {
 

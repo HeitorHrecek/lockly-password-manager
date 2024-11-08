@@ -1,11 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalPastaComponent } from '../../modal-pasta/modal-pasta.component';
-import { ModalPastaService } from 'src/app/tela-principal/modal.pasta.service';
-import { LocalStorageService } from 'src/app/tela-principal/local-storage.service';
 import { FolderService } from '../folder.service';
 import { take } from 'rxjs';
+import { ModalPastaService } from '../../../modal.pasta.service';
 
 @Component({
   selector: 'app-folder',
@@ -18,7 +16,6 @@ export class FolderComponent {
 
   constructor(
     private modalPastaService:ModalPastaService,
-    private localStorageService: LocalStorageService,
     private folderService: FolderService
   ){}
 
@@ -30,11 +27,6 @@ export class FolderComponent {
   @Input() nome: string = '';
   @Output() nomeChange = new EventEmitter<string>();
   @Input() isEditing: boolean = false;
-
-
-  // editarNome() {
-  //   this.isEditing = true;
-  // }
 
   salvarNome() {
     this.isEditing = false;

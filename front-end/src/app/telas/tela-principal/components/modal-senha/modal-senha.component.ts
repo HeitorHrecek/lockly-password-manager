@@ -1,17 +1,14 @@
-import { PasswordSectionComponent } from './../password-section/password-section.component';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ModalService } from '../../modal.senha.service';
 import { SenhaService } from '../password-section/senha.service';
-import { SenhaSemPasta } from '../../senhaSemPasta';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LocalStorageService } from '../../local-storage.service';
 import { FolderService } from '../folder-section/folder.service';
-import { SenhaComPasta } from '../../senhaComPasta';
-import { Usuario } from '../folder-section/usuario';
-import { ModalPastaService } from '../../modal.pasta.service';
 import { switchMap, take, tap } from 'rxjs';
-import { Router } from '@angular/router';
+import { ModalService } from '../../modal.senha.service';
+import { LocalStorageService } from '../../local-storage.service';
+import { ModalPastaService } from '../../modal.pasta.service';
+import { SenhaComPasta } from '../../senhaComPasta';
+import { SenhaSemPasta } from '../../senhaSemPasta';
 
 @Component({
   selector: 'app-modal-senha',

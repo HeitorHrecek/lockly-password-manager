@@ -1,20 +1,17 @@
-import { LocalStorageService } from './../../local-storage.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Folder } from '../folder-section/folder';
-import { ModalPastaService } from '../../modal.pasta.service';
-import { SenhaService } from '../password-section/senha.service';
-import { FolderComponent } from "../folder-section/folder/folder.component";
-import { PasswordComponent } from '../password-section/password/password.component';
 import { FolderService } from '../folder-section/folder.service';
+import { forkJoin, map, switchMap, take } from 'rxjs';
+import { ModalPastaService } from '../../modal.pasta.service';
 import { ModalService } from '../../modal.senha.service';
-import { BehaviorSubject, forkJoin, map, switchMap, take } from 'rxjs';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Component({
   selector: 'app-modal-pasta',
   standalone: true,
-  imports: [FormsModule, CommonModule, FolderComponent, PasswordComponent],
+  imports: [FormsModule, CommonModule],
   templateUrl: './modal-pasta.component.html',
   styleUrl: './modal-pasta.component.css'
 })

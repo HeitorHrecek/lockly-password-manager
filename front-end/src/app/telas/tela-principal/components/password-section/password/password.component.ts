@@ -1,13 +1,10 @@
-import { ModalService } from '../../../modal.senha.service';
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
-import { SenhaSemPasta } from 'src/app/tela-principal/senhaSemPasta';
-import { SenhaService } from '../senha.service';
-import { LocalStorageService } from 'src/app/tela-principal/local-storage.service';
-import { ModalPastaComponent } from '../../modal-pasta/modal-pasta.component';
-import { ModalPastaService } from 'src/app/tela-principal/modal.pasta.service';
+import { ModalService } from '../../../modal.senha.service';
+import { ModalPastaService } from '../../../modal.pasta.service';
+import { LocalStorageService } from '../../../local-storage.service';
+
 
 @Component({
   selector: 'app-password',

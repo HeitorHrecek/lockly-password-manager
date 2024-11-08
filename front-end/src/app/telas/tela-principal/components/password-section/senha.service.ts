@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap, take } from 'rxjs/operators';
-import { SenhaSemPasta } from '../../senhaSemPasta';
-import { PasswordWithoutFolder } from './passwords/password-without-folder';
 import { Usuario } from '../folder-section/usuario';
 import { LocalStorageService } from '../../local-storage.service';
-import { Token } from '@angular/compiler';
+import { SenhaSemPasta } from '../../senhaSemPasta';
 
 @Injectable({
   providedIn: 'root'
@@ -39,7 +37,7 @@ export class SenhaService {
 
     const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
     if (usuario != null) {
-      this.criar(new PasswordWithoutFolder(0, nome, '', new Usuario(usuario.id, '', '', '')))
+      this.criar(new SenhaSemPasta(0, nome, '', new Usuario(usuario.id, '', '', '')))
         .pipe(take(1))
         .subscribe();
     }

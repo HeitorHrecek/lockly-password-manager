@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { SenhaService } from './../../password-section/senha.service';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ModalService } from 'src/app/tela-principal/modal.senha.service';
 import { FolderService } from '../../folder-section/folder.service';
 import { catchError, of, take } from 'rxjs';
+import { ModalService } from '../../../modal.senha.service';
 
 @Component({
   selector: 'app-search',
@@ -22,8 +22,6 @@ export class SearchComponent {
   ) { }
 
   nomeSenha?: string;
-
-  private consultaEmAndamento = false;
 
   queryByName() {
 
