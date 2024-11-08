@@ -27,7 +27,7 @@ export class CadastroComponent {
 
   cadastrar() {
     this.service.criar(this.usuario).subscribe(() => {
-      this.router.navigate(['/'])
+      this.router.navigate(['/login'])
     });
   }
 }

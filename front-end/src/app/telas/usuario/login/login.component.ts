@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Usuario } from '../usuario';
 import { LoginUsuarioService } from '../login.service';
 import { Login } from '../login';
+import { LocalStorageService } from '../local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -21,12 +22,14 @@ export class LoginComponent {
 
   constructor(
       private service: LoginUsuarioService,
+      private localStorageService: LocalStorageService,
       private router: Router
   ){}  
 
   entrar() {
     this.service.logar(this.usuario).subscribe(() => {
-      this.router.navigate(['/home'])
+      this.router.navigate(['/home']);
+      this.localStorageService.setItem('usuario', {id: 0, name: '', email: this.usuario.email, password: ''});
     });
   }
 }

@@ -13,7 +13,6 @@ export class LoginUsuarioService{
     ){}
 
     logar(usuario: Login): Observable<Login> {
-        console.log(usuario);
         return this.http.post<Login>(this.API, usuario);
     }
 }
