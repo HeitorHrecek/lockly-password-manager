@@ -16,11 +16,11 @@ export class PerfilComponent {
 
   constructor(
     private service: PerfilService,
-    private localStorageService: LocalStorageService
+    //private localStorageService: LocalStorageService
   ){}
 
   ngOnInit(): void {
-    this.usuario = this.localStorageService.getItem<{ usuario: Usuario}>('usuario');
+    //this.usuario = this.localStorageService.getItem<{ usuario: Usuario}>('usuario');
   }
 
   usuario: Usuario = {

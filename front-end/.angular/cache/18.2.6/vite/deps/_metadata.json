@@ -1,34 +1,58 @@
 {
-  "hash": "ebb05d13",
-  "configHash": "3a2b95f4",
-  "lockfileHash": "6048ed4b",
-  "browserHash": "a64adcf3",
+  "hash": "be71c2e0",
+  "configHash": "64abaaab",
+  "lockfileHash": "1244d288",
+  "browserHash": "ff09ac9d",
   "optimized": {
+    "@angular/common": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",
+      "file": "@angular_common.js",
+      "fileHash": "9459e06e",
+      "needsInterop": false
+    },
+    "@angular/common/http": {
+      "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
+      "file": "@angular_common_http.js",
+      "fileHash": "9140c56e",
+      "needsInterop": false
+    },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "ede10ca2",
+      "fileHash": "45c13c48",
+      "needsInterop": false
+    },
+    "@angular/forms": {
+      "src": "../../../../../node_modules/@angular/forms/fesm2022/forms.mjs",
+      "file": "@angular_forms.js",
+      "fileHash": "a3a67602",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "81471b7a",
+      "fileHash": "b6e35591",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "39355381",
+      "fileHash": "2e6a3f38",
       "needsInterop": false
     }
   },
   "chunks": {
-    "chunk-BDIY6QCY": {
-      "file": "chunk-BDIY6QCY.js"
+    "chunk-WKN4LDDL": {
+      "file": "chunk-WKN4LDDL.js"
     },
-    "chunk-WG46EH6R": {
-      "file": "chunk-WG46EH6R.js"
+    "chunk-ASOBLGOV": {
+      "file": "chunk-ASOBLGOV.js"
+    },
+    "chunk-QT7HCO3S": {
+      "file": "chunk-QT7HCO3S.js"
+    },
+    "chunk-LYVJBHJR": {
+      "file": "chunk-LYVJBHJR.js"
     }
   }
 }
