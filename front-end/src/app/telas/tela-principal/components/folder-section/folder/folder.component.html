@@ -1,0 +1,9 @@
+<div class="flex flex-col items-center gap-3">
+    <button (click)="abrirModal()">
+        <img src="assets/pasta.png" alt="pasta">
+    </button>
+
+    <span *ngIf="!isEditing">{{ nome || 'Sem nome' }}</span>
+
+    <input *ngIf="isEditing" type="text" [(ngModel)]="nome" (keyup.enter)="salvarNome()" placeholder="Nome da pasta">
+</div>

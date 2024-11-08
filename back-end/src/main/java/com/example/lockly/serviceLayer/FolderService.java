@@ -4,12 +4,14 @@ import com.example.lockly.dataproviderLayer.FolderDataProvider;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.mapper.FolderMapper;
+import com.example.lockly.serviceLayer.exceptions.folder.NotFoudFolderException;
 import com.example.lockly.serviceLayer.exceptions.folder.FolderAlreadyRegisteredException;
 import com.example.lockly.serviceLayer.exceptions.folder.NoFolderFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -61,5 +63,15 @@ public class FolderService {
         Folder folder = findFolderById(id);
         folder.setName(folderDto.name());
         return FolderMapper.forDto(dataProvider.save(folder));
+    }
+
+    public FolderDto consultByName(String name) {
+        Optional<Folder> folder = dataProvider.consultByName(name);
+
+        if(folder.isEmpty()) {
+            throw new NotFoudFolderException("Not found folder");
+        }
+
+        return FolderMapper.forDto(folder.get());
     }
 }

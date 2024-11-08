@@ -1,0 +1,13 @@
+
+<header class="flex justify-between items-center px-5">
+    <h1>Pastas: </h1>
+    <app-create-button-pastas (click)="criarPasta()"></app-create-button-pastas>
+</header>
+<main class="flex flex-wrap p-5 gap-5">
+    <app-folder
+      *ngFor="let pasta of pastas; let i = index"
+      [(nome)]="pastas[i].nome"
+      [isEditing]="pastas[i].isEditing"
+      (nomeChange)="salvarNome(i, $event)"
+    ></app-folder>
+</main>

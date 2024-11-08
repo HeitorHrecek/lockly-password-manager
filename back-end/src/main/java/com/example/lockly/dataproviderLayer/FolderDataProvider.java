@@ -1,8 +1,6 @@
 package com.example.lockly.dataproviderLayer;
-import com.example.lockly.dataproviderLayer.exceptions.folder.ConsultAllFolderByUserErroException;
-import com.example.lockly.dataproviderLayer.exceptions.folder.DeleteFolderErroException;
-import com.example.lockly.dataproviderLayer.exceptions.folder.FolderSaveErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.folder.FolderConsultByIdErrorException;
+
+import com.example.lockly.dataproviderLayer.exceptions.folder.*;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.mapper.FolderMapper;
 import com.example.lockly.repositoryLayer.FolderRepository;
@@ -63,4 +61,20 @@ public class FolderDataProvider {
             throw new DeleteFolderErroException(exception.getMessage());
         }
     }
+
+
+
+    public Optional<Folder> consultByName(String name) {
+        Optional<FolderEntity> folderEntity;
+
+        try {
+            folderEntity = repository.findByName(name);
+        } catch (Exception exception) {
+            log.error("Error while consulting folder by name", exception);
+            throw new ConsultFolderByNameError(exception.getMessage());
+        }
+
+        return folderEntity.map(FolderMapper::forDomain);
+    }
 }
+

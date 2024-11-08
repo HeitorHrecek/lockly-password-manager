@@ -15,9 +15,12 @@ module.exports = {
         success: '#2ECC71',
         white: '#FFFFFF', 
         lightGray2: '#4E4D4D',
+        'custom-gray-292929': '#292929',
+        'custom-gray-3F3F3F': '#3F3F3F',
+        'custom-gray-606060': '#606060',
+        'custom-gray-646464': '#646464',
       }
     },
   },
   plugins: [],
 }
-

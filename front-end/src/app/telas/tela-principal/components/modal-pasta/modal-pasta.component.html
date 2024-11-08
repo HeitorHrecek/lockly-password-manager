@@ -1,0 +1,24 @@
+<div class="modal flex flex-col flex-wrap content-between">
+    <header class="flex justify-between items-center">
+        <img src="../../../../assets/pasta.png" alt="senha">
+        <h1 class="text-3xl" *ngIf="!isEditing" (click)="editarNome()">{{pasta.name}}</h1>
+        <input *ngIf="isEditing" type="text" [(ngModel)]="pasta.name" (keyup.enter)="salvarNome()" placeholder="Nome da pasta">
+        <button (click)="fecharModal()">
+            <img src="../../../../assets/close.png" alt="sair">
+        </button>
+    </header>
+
+    <main class="flex flex-wrap p-5 gap-5">
+        <app-password *ngFor="let senha of senhas; let i = index" 
+            [(nome)]="senhas[i].nome"
+            [(content)]="senhas[i].conteudo"
+            [isEditing]="senhas[i].isEditing" 
+        >
+        </app-password>
+    </main>
+
+    <div class="flex flex-wrap justify-center items-center gap-10">
+        <button (click)="abrirModalSenha()" class="self-center botao-continuar rounded bg-gray-700 text-white hover:bg-gray-600 transition">CADASTRAR SENHA</button>
+        <button (click)="deletarPasta()" class="self-center botao-continuar rounded bg-gray-700 text-white hover:bg-gray-600 transition">DELETAR PASTA</button>
+    </div>
+</div>

@@ -42,6 +42,12 @@ public class FolderController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/name/{name}")
+    public ResponseEntity<FolderDto> consultByName(@PathVariable String name) {
+        FolderDto folder = service.consultByName(name);
+        return ResponseEntity.ok(folder);
+    }
+
     @PutMapping("/change-name/{id}")
     public ResponseEntity<FolderDto> changeName(@RequestBody FolderDto folderDto, @PathVariable Integer id) {
         FolderDto updatedFolder = service.changeName(folderDto, id);
