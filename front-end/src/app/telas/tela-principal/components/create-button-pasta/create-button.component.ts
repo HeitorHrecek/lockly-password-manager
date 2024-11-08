@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FolderService } from '../folder-section/folder.service';
 
 @Component({
   selector: 'app-create-button-pastas',
@@ -10,7 +9,5 @@ import { FolderService } from '../folder-section/folder.service';
 })
 export class CreateButtonPastaComponent {
 
-  constructor(
-    private folderService:FolderService
-  ){}
+  constructor(){}
 }

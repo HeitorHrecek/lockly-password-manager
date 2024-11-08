@@ -24,7 +24,6 @@ export class SearchComponent {
   nomeSenha?: string;
 
   queryByName() {
-
     if (this.nomeSenha != null) {
       this.senhaService.consultarPorNome(this.nomeSenha).pipe(
         take(1),

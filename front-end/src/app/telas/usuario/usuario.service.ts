@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
     providedIn: 'root'
 })
-export class PerfilService {
+export class UsuarioService {
     private readonly API = 'http://localhost:8080/users';
 
     constructor(private http: HttpClient){}
@@ -17,6 +17,6 @@ export class PerfilService {
     }
 
     buscarPorEmail(email: string): Observable<Usuario> {
-        return this.http.get<Usuario>(`${this.API}/${email}`);
+        return this.http.get<Usuario>(`${this.API}/consult/email/${email}`);
     }
 }

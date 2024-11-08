@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { FolderService } from '../folder-section/folder.service';
 import { switchMap, take, tap } from 'rxjs';
 import { ModalService } from '../../modal.senha.service';
-import { LocalStorageService } from '../../local-storage.service';
+import { LocalStorageService } from '../../../local-storage.service';
 import { ModalPastaService } from '../../modal.pasta.service';
 import { SenhaComPasta } from '../../senhaComPasta';
 import { SenhaSemPasta } from '../../senhaSemPasta';
@@ -98,7 +98,7 @@ export class ModalSenhaComponent implements OnInit {
     name: '',
     content: '',
     userDto: {
-      id: 4,
+      id: 0,
       name: '',
       email: '',
       password: ''
@@ -164,7 +164,7 @@ export class ModalSenhaComponent implements OnInit {
 
     } else {
       this.senhaService.criar(this.senha).subscribe((novaSenha) => {
-        if (novaSenha.id != undefined) {
+        if (novaSenha && novaSenha.id) {
           this.senhaService.criarSenha(novaSenha.id, this.senha.name, this.senha.content);
           this.fecharModal();
         }

@@ -1,9 +1,7 @@
 package com.example.lockly.serviceLayer.passwords;
 
 import com.example.lockly.dataproviderLayer.password.PasswordWithFolderDataProvider;
-import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
-import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.serviceLayer.FolderService;
 import com.example.lockly.serviceLayer.UserService;
 import com.example.lockly.serviceLayer.exceptions.password.NoPasswordFoundException;
@@ -20,7 +18,6 @@ import java.util.Optional;
 public class PasswordWithFolderService {
 
     private final PasswordWithFolderDataProvider dataProvider;
-    private final PasswordWithoutFolderService passwordWithoutFolderService;
     private final UserService userService;
     private final FolderService folderService;
     private final EncryptService encryptService;
@@ -40,34 +37,6 @@ public class PasswordWithFolderService {
         return dataProvider.save(newPassword);
     }
 
-    public PasswordWithFolder putInFolder(Integer idPasswordWithoutFolder, Integer idFolder) {
-        PasswordWithoutFolder passwordWithoutFolder = passwordWithoutFolderService.consultById(idPasswordWithoutFolder);
-        Folder folder = folderService.findFolderById(idFolder);
-
-        PasswordWithFolder password = dataProvider.save(PasswordWithFolder.builder()
-                .id(passwordWithoutFolder.getId())
-                .name(passwordWithoutFolder.getName())
-                .content(passwordWithoutFolder.getContent())
-                .user(passwordWithoutFolder.getUser())
-                .folder(folder)
-                .build()
-        );
-
-        passwordWithoutFolderService.delete(idPasswordWithoutFolder);
-
-        return password;
-    }
-
-    public void removePasswordFolder(Integer idPasswordWithFolder) {
-        PasswordWithFolder passwordWithFolder = consultById(idPasswordWithFolder);
-        passwordWithoutFolderService.register(PasswordWithoutFolder.builder()
-                .id(passwordWithFolder.getId())
-                .name(passwordWithFolder.getName())
-                .content(passwordWithFolder.getContent())
-                .user(passwordWithFolder.getUser())
-                .build());
-        deleteWithFolder(passwordWithFolder.getId());
-    }
 
     public List<PasswordWithFolder> consultAllByUser(Integer idUser) {
         List<PasswordWithFolder> passwordWithFolderList = dataProvider.consultAllByUser(idUser);
@@ -88,14 +57,6 @@ public class PasswordWithFolderService {
     public void deleteWithFolder(Integer id) {
         consultById(id);
         dataProvider.delete(id);
-    }
-
-    public PasswordWithFolder changeFolder(Integer idPassword, Integer idFolder) {
-        Folder newFolder = folderService.findFolderById(idFolder);
-        PasswordWithFolder password = consultById(idPassword);
-        password.setFolder(newFolder);
-
-        return dataProvider.save(password);
     }
 
     public PasswordWithFolder changeName(String name, Integer idPassword) {

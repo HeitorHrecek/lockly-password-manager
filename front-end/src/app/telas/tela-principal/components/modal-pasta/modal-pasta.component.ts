@@ -6,12 +6,13 @@ import { FolderService } from '../folder-section/folder.service';
 import { forkJoin, map, switchMap, take } from 'rxjs';
 import { ModalPastaService } from '../../modal.pasta.service';
 import { ModalService } from '../../modal.senha.service';
-import { LocalStorageService } from '../../local-storage.service';
+import { LocalStorageService } from '../../../local-storage.service';
+import { PasswordComponent } from '../password-section/password/password.component';
 
 @Component({
   selector: 'app-modal-pasta',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, PasswordComponent],
   templateUrl: './modal-pasta.component.html',
   styleUrl: './modal-pasta.component.css'
 })
@@ -65,14 +66,12 @@ export class ModalPastaComponent {
     id: 0,
     name: '',
     userDto: {
-      id: 4,
+      id: 0,
       name: '',
       email: '',
       password: ''
     }
   }
-
-  // nome?: string
 
   @Input() isEditing: boolean = false;
 

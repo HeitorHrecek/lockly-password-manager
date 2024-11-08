@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Usuario } from '../usuario';
-import { PerfilService } from '../perfil.service';
-import { LocalStorageService } from '../local-storage.service';
+import { UsuarioService } from '../usuario.service';
 import { take } from 'rxjs';
+import { LocalStorageService } from '../../local-storage.service';
 
 @Component({
   selector: 'app-perfil',
@@ -17,7 +17,7 @@ export class PerfilComponent {
 
 
   constructor(
-    private service: PerfilService,
+    private service: UsuarioService,
     private localStorageService: LocalStorageService
   ){}
 
@@ -25,9 +25,7 @@ export class PerfilComponent {
     const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario');
 
     if(usuario) {
-      this.service.buscarPorEmail(usuario.email).pipe(take(1)).subscribe(usuarioBack => {
-        this.usuario = usuarioBack;
-      });
+      this.usuario = usuario;
     }
   }
 
@@ -52,9 +50,12 @@ export class PerfilComponent {
   }
 
   confirmar() {
-    this.service.editar(this.usuario).subscribe(() => {
+    this.service.editar(this.usuario).pipe(take(1)).subscribe((novoUsuario) => {
       this.showButtons = false;
       this.isEditable = false;
+      if(novoUsuario) {
+        this.localStorageService.setItem('usuario', novoUsuario);
+      }
     })
   }
 }

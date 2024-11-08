@@ -10,7 +10,7 @@ export class TelaPrincipalService {
     
     constructor(private http: HttpClient){}
 
-    private readonly API = 'http://localhost:3000/users/consult/email'
+    private readonly API = 'http://localhost:8080/users/consult/email'
 
     consultarUsuario(email: string): Observable<Usuario> {
         return this.http.get<Usuario>(this.API + `/${email}`);

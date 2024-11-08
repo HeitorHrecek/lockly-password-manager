@@ -27,20 +27,6 @@ public class PasswordWithFolderController {
                 .body(passwordResponse);
     }
 
-    @PostMapping("/put-in-folder")
-    public ResponseEntity<PasswordWithFolderDto> putInFolder(@RequestBody PasswordFolderIdsDto ids) {
-        PasswordWithFolderDto passwordResponse = PasswordWithFolderMapper.forDto(service.putInFolder(ids.idPassword(), ids.idFolder()));
-        return ResponseEntity
-                .created(UriComponentsBuilder.newInstance().path("/passwords/put-in-folder/{id}").buildAndExpand(passwordResponse.id()).toUri())
-                .body(passwordResponse);
-    }
-
-    @DeleteMapping(value = "/remove-password-folder/{idPasswordWithFolder}")
-    public ResponseEntity<Void> removePasswordFolder(@PathVariable Integer idPasswordWithFolder) {
-        service.removePasswordFolder(idPasswordWithFolder);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping(value = "/consult/all/{idUser}")
     public ResponseEntity<List<PasswordWithFolderDto>> consultAllByUser(@PathVariable Integer idUser) {
         List<PasswordWithFolderDto> result = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUser));
@@ -75,12 +61,6 @@ public class PasswordWithFolderController {
     @PutMapping("/change-name")
     public ResponseEntity<PasswordWithFolderDto> changeName(@RequestBody ChangeDto newData) {
         PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeName(newData.name(), newData.id()));
-        return ResponseEntity.ok(passwordResult);
-    }
-
-    @PutMapping("/change-folder")
-    public ResponseEntity<PasswordWithFolderDto> changeFolder(@RequestBody PasswordFolderIdsDto ids) {
-        PasswordWithFolderDto passwordResult = PasswordWithFolderMapper.forDto(service.changeFolder(ids.idPassword(), ids.idFolder()));
         return ResponseEntity.ok(passwordResult);
     }
 }

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map, tap, switchMap, take } from 'rxjs/operators';
 import { Usuario } from '../folder-section/usuario';
-import { LocalStorageService } from '../../local-storage.service';
+import { LocalStorageService } from '../../../local-storage.service';
 import { SenhaSemPasta } from '../../senhaSemPasta';
 
 @Injectable({
@@ -20,8 +20,15 @@ export class SenhaService {
     private localStorageService: LocalStorageService
   ) { }
 
-  criar(senha: SenhaSemPasta): Observable<SenhaSemPasta> {
-    return this.http.post<SenhaSemPasta>(this.API + '/register', senha);
+  criar(senha: SenhaSemPasta): Observable<SenhaSemPasta | null> {
+    const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
+
+    if(usuario) {
+      senha.userDto = usuario;
+      return this.http.post<SenhaSemPasta>(this.API + '/register', senha);
+    }
+
+    return of(null);
   }
 
   criarSenha(id: number, nome: string, conteudo: string) {
@@ -36,8 +43,9 @@ export class SenhaService {
     this.senhas.next(senhasAtualizadas);
 
     const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
+     
     if (usuario != null) {
-      this.criar(new SenhaSemPasta(0, nome, '', new Usuario(usuario.id, '', '', '')))
+      this.criar(new SenhaSemPasta(0, nome, '', usuario))
         .pipe(take(1))
         .subscribe();
     }
@@ -65,9 +73,9 @@ export class SenhaService {
   }
 
   consultarSenhas() {
-    const usuario = { id: 4 };
+    const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario');
     
-    if (usuario != null) {
+    if (usuario) {
       this.http.get<{ id: number, name: string; content: string }[]>(`${this.API}/consult/all-by-user/${usuario.id}`)
         .pipe(
           map(senhasBack => senhasBack.map(senha => ({

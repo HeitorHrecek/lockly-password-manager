@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ModalService } from '../../../modal.senha.service';
 import { ModalPastaService } from '../../../modal.pasta.service';
-import { LocalStorageService } from '../../../local-storage.service';
+import { LocalStorageService } from '../../../../local-storage.service';
 
 
 @Component({
@@ -21,13 +21,7 @@ export class PasswordComponent {
     private localStorageService: LocalStorageService
   ) { }
 
-  ngOnInit() {
-    // let senha = this.localStorageService.getItem<{id: number, nome: string, conteudo: string}>('senha');
-
-    // if(senha != undefined) {
-    //   this.id = senha.id;
-    // }
-  }
+  ngOnInit() {}
 
   id?: number;
   @Input() nome: string = '';

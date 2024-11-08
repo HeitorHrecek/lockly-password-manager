@@ -12,6 +12,6 @@ export class PerfilComponent {
   constructor(private router: Router){}
 
   irParaPerfil(){
-    this.router.navigate(['#'])
+    this.router.navigate(['/perfil'])
   }
 }

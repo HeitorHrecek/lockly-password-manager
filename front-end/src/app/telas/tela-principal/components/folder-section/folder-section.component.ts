@@ -3,7 +3,7 @@ import { CreateButtonPastaComponent } from '../create-button-pasta/create-button
 import { FolderComponent } from './folder/folder.component';
 import { CommonModule } from '@angular/common';
 import { FolderService } from './folder.service';
-import { LocalStorageService } from '../../../telas/local-storage.service';
+import { LocalStorageService } from 'src/app/telas/local-storage.service';
 
 
 @Component({
@@ -16,8 +16,7 @@ import { LocalStorageService } from '../../../telas/local-storage.service';
 export class FolderSectionComponent implements OnInit {
 
   constructor(
-    private service:FolderService,
-    private localStorageService: LocalStorageService
+    private service:FolderService
   ){}
 
   pastas: {id: number; nome: string; isEditing: boolean }[] = [];
@@ -28,8 +27,6 @@ export class FolderSectionComponent implements OnInit {
       this.pastas = pastasBack;
     })
   }
-
-  //this.localStorageService.setItem('senha', {id: novaSenha.id, nome: novaSenha.name, conteudo: novaSenha.content});
 
   salvarNome(index: number, nome: string) {
     this.service.salvarPasta(index, nome);

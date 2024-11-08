@@ -1,9 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable, take, map, tap, switchMap, forkJoin, } from "rxjs";
+import { BehaviorSubject, Observable, take, map, tap, switchMap, forkJoin, of, } from "rxjs";
 import { Folder } from "./folder";
 import { Usuario } from './usuario';
-import { LocalStorageService } from "../../local-storage.service";
+import { LocalStorageService } from "../../../local-storage.service";
 import { SenhaComPasta } from "../../senhaComPasta";
 
 @Injectable({
@@ -26,8 +26,7 @@ export class FolderService {
         pastasAtualizadas[index] = { ...pastasAtualizadas[index], nome, isEditing: false };
         this.pastas.next(pastasAtualizadas);
 
-        // const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
-        const usuario = { id: 4 };
+        const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario');
 
         if (usuario != null) {
             this.http.post<Folder>(this.API + '/register', new Folder(0, nome, new Usuario(usuario.id, '', '', '')))
@@ -54,10 +53,10 @@ export class FolderService {
     }
 
     consultarPastas() {
-        // const usuario = this.localStorageService.getItem<{ id: number, name: string, email: string, password: string }>('usuario');
-        const usuario = { id: 4 };
+        const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario');
 
-        this.http.get<{ id: number, name: string }[]>(`${this.API}/${usuario.id}`)
+        if(usuario) {
+            this.http.get<{ id: number, name: string }[]>(`${this.API}/${usuario.id}`)
             .pipe(
                 map(pastasBack => pastasBack.map(pasta => ({
                     id: pasta.id,
@@ -69,10 +68,18 @@ export class FolderService {
             .subscribe(pastasBack => {
                 this.pastas.next(pastasBack);
             })
+        }
     }
 
-    cadastrarSenhaComPasta(senha: SenhaComPasta): Observable<SenhaComPasta> {
-        return this.http.post<SenhaComPasta>(this.API_PASSWORDS + '/register', senha);
+    cadastrarSenhaComPasta(senha: SenhaComPasta): Observable<SenhaComPasta | null> {
+        const usuario = this.localStorageService.getItem<{id: number, name: string, email: string, password: string}>('usuario');
+
+        if(usuario) {
+            senha.userDto = usuario;
+            return this.http.post<SenhaComPasta>(this.API_PASSWORDS + '/register', senha);
+        }
+
+        return of(null);
     }
 
     consultarSenhaPorNome(nome: string): Observable<SenhaComPasta> {
