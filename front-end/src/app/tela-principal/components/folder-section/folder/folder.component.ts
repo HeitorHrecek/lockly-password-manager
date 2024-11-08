@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { ModalPastaComponent } from '../../modal-pasta/modal-pasta.component';
 import { ModalPastaService } from 'src/app/tela-principal/modal.pasta.service';
 import { LocalStorageService } from 'src/app/tela-principal/local-storage.service';
+import { FolderService } from '../folder.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-folder',
@@ -16,16 +18,12 @@ export class FolderComponent {
 
   constructor(
     private modalPastaService:ModalPastaService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private folderService: FolderService
   ){}
 
   ngOnInit() {
-    let pasta = this.localStorageService.getItem<{id: number, nome: string}>('pasta');
-
-    if(pasta != null) {
-      this.id = pasta.id;
-    }
-
+    this.folderService.consultarPastaPorNome(this.nome).pipe(take(1)).subscribe(pasta => this.id = pasta.id);
   }
 
   id?: number;
@@ -34,9 +32,9 @@ export class FolderComponent {
   @Input() isEditing: boolean = false;
 
 
-  editarNome() {
-    this.isEditing = true;
-  }
+  // editarNome() {
+  //   this.isEditing = true;
+  // }
 
   salvarNome() {
     this.isEditing = false;

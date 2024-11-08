@@ -152,7 +152,7 @@ export class ModalSenhaComponent implements OnInit {
         this.fecharModal();
       } else if (this.senhaComPasta.id != null && this.senhaComPasta.id != 0) {
         console.log('teste');
-        this.folderService.alterarSenha(this.senhaComPasta.id, this.senhaComPasta);
+        this.folderService.alterarSenha(this.senhaComPasta.id, this.senhaComPasta).pipe(take(1)).subscribe();
         this.fecharModal();
       }
     } else if (this.criarSenhaComPasta) {

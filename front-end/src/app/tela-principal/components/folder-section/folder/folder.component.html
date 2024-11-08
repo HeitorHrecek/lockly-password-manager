@@ -3,7 +3,7 @@
         <img src="assets/pasta.png" alt="pasta">
     </button>
 
-    <span *ngIf="!isEditing" (click)="editarNome()">{{ nome || 'Sem nome' }}</span>
+    <span *ngIf="!isEditing">{{ nome || 'Sem nome' }}</span>
 
     <input *ngIf="isEditing" type="text" [(ngModel)]="nome" (keyup.enter)="salvarNome()" placeholder="Nome da pasta">
 </div>

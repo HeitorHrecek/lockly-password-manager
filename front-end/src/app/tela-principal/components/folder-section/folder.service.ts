@@ -11,7 +11,6 @@ import { SenhaComPasta } from '../../senhaComPasta';
     providedIn: 'root'
 })
 export class FolderService {
-
     private readonly API = 'http://localhost:8080/folders'
     private readonly API_PASSWORDS = 'http://localhost:8080/passwords/folders'
 
@@ -20,11 +19,15 @@ export class FolderService {
         private localStorageService: LocalStorageService
     ) { }
 
-    private senhas = new BehaviorSubject<{ id: number, nome: string; conteudo: string; isEditing: boolean }[]>([]);
-    senhas$ = this.senhas.asObservable();
+    // private senhas = new BehaviorSubject<{ id: number, nome: string; conteudo: string; isEditing: boolean }[]>([]);
+    // senhas$ = this.senhas.asObservable();
 
     private pastas = new BehaviorSubject<{ id: number, nome: string; isEditing: boolean }[]>([]);
     pastas$ = this.pastas.asObservable();
+
+    // getSenhasPorIdPasta(id: number): Array<{ id: number, nome: string; conteudo: string; isEditing: boolean }> {
+    //     return this.senhas.getValue().filter(senha => senha.)
+    // }
 
     salvarPasta(index: number, nome: string) {
         const pastasAtualizadas = [...this.pastas.getValue()];
@@ -42,39 +45,20 @@ export class FolderService {
         }
     }
 
-    editar(index: number, nome: string, id: number) {
+    editar(nome: string, id: number) {
         this.http.put<Folder>(`${this.API}/change-name/${id}`, {id: 0, name: nome, userDto: {id: 0, name: '', email: '', password: ''}})
             .pipe(take(1)).subscribe(novaPasta => {
-                this.pastas.getValue()[index].nome = novaPasta.name;
+                this.pastas.getValue().map(pasta => {
+                    if(pasta.id == id) {
+                        pasta.nome = nome;
+                    }
+                });
             });
     }
 
 
-    consultarSenhasPorPasta(id: number) {
-        this.http.get<{ id: number, name: string; content: string }[]>(`${this.API_PASSWORDS}/consult/all/folder/${id}`)
-            .pipe(
-                map(senhasBack => senhasBack.map(senha => ({
-                    id: senha.id,
-                    nome: senha.name,
-                    conteudo: senha.content,
-                    isEditing: false
-                }))),
-                tap(senhasMapeadas => this.senhas.next(senhasMapeadas)),
-                switchMap(senhasMapeadas =>
-                    forkJoin(senhasMapeadas.map(senha =>
-                        this.http.get<SenhaSemPasta>(`http://localhost:8080/password/decrypt/folder/${senha.id}`)
-                            .pipe(
-                                map(decryptedPassword => ({
-                                    ...senha,
-                                    conteudo: decryptedPassword.content
-                                }))
-                            )
-                    ))
-                ),
-                tap(updatedSenhas => this.senhas.next(updatedSenhas)),
-                take(1)
-            ).subscribe();
-
+    consultarSenhasPorPasta(id: number): Observable<{id: number, name: string, content: string}[]> {
+        return this.http.get<{ id: number, name: string; content: string }[]>(`${this.API_PASSWORDS}/consult/all/folder/${id}`);
     }
 
     consultarPastas() {
@@ -103,30 +87,30 @@ export class FolderService {
         return this.http.get<{ id: number, name: string, content: string, userDto: Usuario, folderDto: Folder }>(`${this.API_PASSWORDS}/consult/name/${nome}`);
     }
 
-    alterarSenha(id: number, senhaComPasta: SenhaComPasta) {
-        this.http.put<SenhaComPasta>(`${this.API_PASSWORDS}/change-name`, { name: senhaComPasta.name, id })
-            .pipe(
-                tap(senhaAtualizada => {
-                    const senhasAtualizadas = this.senhas.getValue().map(s => s.id === id ? { ...s, nome: senhaAtualizada.name } : s);
-                    this.senhas.next(senhasAtualizadas);
-                }),
-                take(1)
-            ).subscribe();
+    consultarPastaPorNome(nome: string): Observable<Folder> {
+        return this.http.get<Folder>(`${this.API}/name/${nome}`);
+    }
 
-        console.log(this.senhas.getValue());
+    alterarSenha(id: number, senhaComPasta: SenhaComPasta): Observable<SenhaComPasta> {
+        return this.http.put<SenhaComPasta>(`${this.API_PASSWORDS}/change-name`, { name: senhaComPasta.name, id });
     }
 
     deletar(id: number) {
-        this.http.delete(`${this.API_PASSWORDS}/delete/${id}`).pipe(
-            tap(() => {
-                const senhasAtualizadas = this.senhas.getValue().filter(senha => senha.id !== id);
-                this.senhas.next(senhasAtualizadas);
-            }),
-            take(1)
-        ).subscribe();
+        this.http.delete(`${this.API_PASSWORDS}/delete/${id}`).pipe(take(1)).subscribe();
     }
 
     decriptografarSenha(id: number): Observable<{ id: number, name: string, content: string }> {
         return this.http.get<{ id: number, name: string, content: string }>(`http://localhost:8080/password/decrypt/folder/${id}`);
+    }
+
+
+    deletarPasta(id: number) {
+        this.http.delete(`${this.API}/${id}`).pipe(
+            tap(() => {
+                const pastasAtualizadas = this.pastas.getValue().filter(pasta => pasta.id !== id);
+                this.pastas.next(pastasAtualizadas);    
+            }),
+            take(1)
+        ).subscribe();
     }
 }

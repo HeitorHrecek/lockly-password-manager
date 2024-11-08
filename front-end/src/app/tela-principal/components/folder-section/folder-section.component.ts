@@ -24,9 +24,6 @@ export class FolderSectionComponent implements OnInit {
   ){}
 
   pastas: {id: number; nome: string; isEditing: boolean }[] = [];
-  
-  private isEditingCount = new BehaviorSubject<number>(0);
-  isEditingCount$ = this.isEditingCount.asObservable();
 
   ngOnInit(){
     this.service.consultarPastas();
@@ -38,23 +35,8 @@ export class FolderSectionComponent implements OnInit {
   //this.localStorageService.setItem('senha', {id: novaSenha.id, nome: novaSenha.name, conteudo: novaSenha.content});
 
   salvarNome(index: number, nome: string) {
-
-    this.isEditingCount.pipe(take(1)).subscribe(valor => {
-      console.log(valor);
-      if(valor == 0) {
-        console.log('oi');
-        this.service.salvarPasta(index, nome);
-        this.isEditingCount.next(1);
-      } else {
-        console.log('oi 2');
-        const pasta = this.localStorageService.getItem<{id: number, nome: string}>('pasta');
-        console.log(pasta);
-        if(pasta != null){
-          this.service.editar(index, nome, pasta.id);
-        }
-      }
-      console.log(this.isEditingCount.getValue());
-    });
+    this.service.salvarPasta(index, nome);
+    window.location.reload();
   }
 
   criarPasta() {
