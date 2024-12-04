@@ -97,5 +97,3 @@ Agora, o projeto estará rodando na sua máquina! Basta acessar:
 
 ## ⚠️ LEMBRETE
 É necessário estar conectado à internet para utilizar o projeto, garantindo que os gerenciadores de dependências (Maven e NPM) consigam baixar os pacotes necessários corretamente.
-
-
