@@ -1,4 +1,4 @@
-# Gerenciador-Society
+# Lockly
 
 ## #️⃣ SOBRE
 Este projeto surgiu de um trabalho proposto pela faculdade, cujo tema era desenvolver uma aplicação completa (frontend e backend) que abordasse a temática de cibersegurança. A partir desse tema, nasceu a ideia do Lockly, um sistema web que gerencia suas senhas de forma segura e prática, permitindo que você as guarde e organize como preferir, utilizando pastas. As senhas são criptografadas até o momento de seu acesso.
