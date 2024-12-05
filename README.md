@@ -97,3 +97,21 @@ Agora, o projeto estará rodando na sua máquina! Basta acessar:
 
 ## ⚠️ LEMBRETE
 É necessário estar conectado à internet para utilizar o projeto, garantindo que os gerenciadores de dependências (Maven e NPM) consigam baixar os pacotes necessários corretamente.
+
+# Anexos 🖇️
+
+Caso tenha interesse, foram feitos alguns diagramas do projeto: 
+
+## Diagrama de caso de uso
+
+Clique <a href="https://drive.google.com/file/d/1RsYnli5K3OL2dsZE7Tm12cfXZQU-IXf3/view?usp=sharing">aqui</a> para acessar o diagrama.
+
+## Diagrama Entidade-Relacionamento
+
+Clique <a href="https://drive.google.com/drive/folders/1nX4dhh6Lw_Zxcrj_qwA4y8-6x4zfMP4l?usp=sharing">aqui</a> para acessar o diagrama.
+
+# Participantes 👨‍💻
+
+- <a href="https://www.linkedin.com/in/vitor-hugo-vieira-de-lima/">Vitor Hugo Vieira</a>
+- <a href="https://www.linkedin.com/in/heitor-hrecek-630109339/">Heitor Gomes Hrecek</a>
+- <a href="https://www.linkedin.com/in/gustavo-nakamura/">Gustavo Nakamura Cardoso</a>
