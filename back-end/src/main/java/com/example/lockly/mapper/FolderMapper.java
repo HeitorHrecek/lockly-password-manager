@@ -1,6 +1,6 @@
 package com.example.lockly.mapper;
 
-import com.example.lockly.controllerLayer.dtos.FolderDto;
+import com.example.lockly.entrypoint.dtos.FolderDto;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.repositoryLayer.entities.FolderEntity;
 

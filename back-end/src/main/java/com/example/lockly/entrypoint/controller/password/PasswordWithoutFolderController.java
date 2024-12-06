@@ -1,7 +1,7 @@
-package com.example.lockly.controllerLayer.password;
+package com.example.lockly.entrypoint.controller.password;
 
-import com.example.lockly.controllerLayer.dtos.ChangeDto;
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
+import com.example.lockly.entrypoint.dtos.ChangeDto;
+import com.example.lockly.entrypoint.dtos.passwords.PasswordWithoutFolderDto;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
 import com.example.lockly.serviceLayer.passwords.PasswordWithoutFolderService;
 import lombok.AllArgsConstructor;

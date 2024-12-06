@@ -1,5 +1,5 @@
 package com.example.lockly.serviceLayer;
-import com.example.lockly.controllerLayer.dtos.FolderDto;
+import com.example.lockly.entrypoint.dtos.FolderDto;
 import com.example.lockly.dataproviderLayer.FolderDataProvider;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.User;

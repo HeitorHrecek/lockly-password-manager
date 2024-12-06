@@ -1,6 +1,6 @@
-package com.example.lockly.controllerLayer;
+package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.controllerLayer.dtos.FolderDto;
+import com.example.lockly.entrypoint.dtos.FolderDto;
 import com.example.lockly.serviceLayer.FolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.example.lockly.controllerLayer.middleware;
+package com.example.lockly.entrypoint.middleware;
 
 import lombok.Builder;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.example.lockly.controllerLayer.dtos.passwords;
+package com.example.lockly.entrypoint.dtos.passwords;
 
-import com.example.lockly.controllerLayer.dtos.UserDto;
+import com.example.lockly.entrypoint.dtos.UserDto;
 import lombok.Builder;
 
 @Builder

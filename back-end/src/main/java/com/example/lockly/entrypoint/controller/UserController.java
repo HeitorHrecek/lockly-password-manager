@@ -1,12 +1,10 @@
-package com.example.lockly.controllerLayer;
+package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.controllerLayer.dtos.LoginDto;
-import com.example.lockly.controllerLayer.dtos.UserDto;
-import com.example.lockly.domainLayer.User;
+import com.example.lockly.entrypoint.dtos.LoginDto;
+import com.example.lockly.entrypoint.dtos.UserDto;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.serviceLayer.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;

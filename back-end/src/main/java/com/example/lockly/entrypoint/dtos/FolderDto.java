@@ -1,4 +1,4 @@
-package com.example.lockly.controllerLayer.dtos;
+package com.example.lockly.entrypoint.dtos;
 
 import lombok.Builder;
 

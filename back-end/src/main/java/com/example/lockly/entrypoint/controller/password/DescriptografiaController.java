@@ -1,7 +1,8 @@
-package com.example.lockly.controllerLayer.password;
+package com.example.lockly.entrypoint.controller.password;
 
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithoutFolderDto;
+import com.example.lockly.entrypoint.dtos.ResponseDto;
+import com.example.lockly.entrypoint.dtos.passwords.PasswordWithFolderDto;
+import com.example.lockly.entrypoint.dtos.passwords.PasswordWithoutFolderDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
 import com.example.lockly.serviceLayer.passwords.PasswordDecryptService;
@@ -14,24 +15,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/password/decrypt")
+@RequestMapping("/senha/descriptografar")
 @AllArgsConstructor
-public class PasswordDecryptController {
+public class DescriptografiaController {
 
     @Autowired
     private final PasswordDecryptService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<PasswordWithoutFolderDto> decryptWithoutFolder(@PathVariable Integer id) {
+    public ResponseEntity<ResponseDto<PasswordWithoutFolderDto>> descriptografarSenhasSemPasta(@PathVariable Integer id) {
         PasswordWithoutFolderDto result = PasswordWithoutFolderMapper.forDto(service.decryptWithoutFolder(id));
-        return ResponseEntity.ok(result);
+        ResponseDto<PasswordWithoutFolderDto> resposta = new ResponseDto<>(result);
+        return ResponseEntity.ok(resposta);
     }
 
 
-    @GetMapping(value = "/folder/{id}")
-    public ResponseEntity<PasswordWithFolderDto> decryptWithFolder(@PathVariable Integer id) {
+    @GetMapping(value = "/pasta/{id}")
+    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> descriptografarSenhasComPasta(@PathVariable Integer id) {
         PasswordWithFolderDto result = PasswordWithFolderMapper.forDto(service.decryptWithFolder(id));
-        return ResponseEntity.ok(result);
+        ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(result);
+        return ResponseEntity.ok(resposta);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.lockly.mapper.passwords;
 
-import com.example.lockly.controllerLayer.dtos.passwords.PasswordWithFolderDto;
+import com.example.lockly.entrypoint.dtos.passwords.PasswordWithFolderDto;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.mapper.FolderMapper;
 import com.example.lockly.mapper.UserMapper;

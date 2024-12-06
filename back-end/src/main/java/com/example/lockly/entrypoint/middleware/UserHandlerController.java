@@ -1,4 +1,4 @@
-package com.example.lockly.controllerLayer.middleware;
+package com.example.lockly.entrypoint.middleware;
 
 import com.example.lockly.dataproviderLayer.exceptions.user.UserDeleteErrorException;
 import com.example.lockly.dataproviderLayer.exceptions.user.UserSaveErrorException;
