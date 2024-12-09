@@ -59,9 +59,9 @@ public class FolderService {
         dataProvider.delete(folder.getId());
     }
 
-    public FolderDto changeName(FolderDto folderDto, Integer id) {
+    public FolderDto changeName(String nome, Integer id) {
         Folder folder = findFolderById(id);
-        folder.setName(folderDto.name());
+        folder.setName(nome);
         return FolderMapper.forDto(dataProvider.save(folder));
     }
 

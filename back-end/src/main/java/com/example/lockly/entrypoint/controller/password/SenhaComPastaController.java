@@ -1,6 +1,5 @@
 package com.example.lockly.entrypoint.controller.password;
 
-import com.example.lockly.entrypoint.dtos.ChangeDto;
 import com.example.lockly.entrypoint.dtos.ResponseDto;
 import com.example.lockly.entrypoint.dtos.passwords.PasswordWithFolderDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
@@ -13,7 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("/passwords/folders/")
+@RequestMapping("/senhas/pastas/")
 @AllArgsConstructor
 public class SenhaComPastaController {
 
@@ -29,14 +28,14 @@ public class SenhaComPastaController {
     }
 
     @GetMapping(value = "/usuario/{idUsuario}")
-    public ResponseEntity<ResponseDto<List<PasswordWithFolderDto>>> consultarTodosPorUsuario(@PathVariable Integer idUsuario) {
+    public ResponseEntity<ResponseDto<List<PasswordWithFolderDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
         List<PasswordWithFolderDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUsuario));
         ResponseDto<List<PasswordWithFolderDto>> resposta = new ResponseDto<>(senhas);
         return ResponseEntity.ok(resposta);
     }
 
     @GetMapping(value = "/pasta/{idPasta}")
-    public ResponseEntity<ResponseDto<List<PasswordWithFolderDto>>> consultarTodosPorPasta(@PathVariable Integer idPasta) {
+    public ResponseEntity<ResponseDto<List<PasswordWithFolderDto>>> listarPorPasta(@PathVariable Integer idPasta) {
         List<PasswordWithFolderDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByFolder(idPasta));
         ResponseDto<List<PasswordWithFolderDto>> resposta = new ResponseDto<>(senhas);
         return ResponseEntity.ok(resposta);
@@ -58,14 +57,14 @@ public class SenhaComPastaController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<PasswordWithFolderDto> delete(@PathVariable Integer id) {
+    public ResponseEntity<PasswordWithFolderDto> deletar(@PathVariable Integer id) {
         service.deleteWithFolder(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping()
-    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> alterarNome(@RequestBody ChangeDto novosDados) {
-        PasswordWithFolderDto novaSenha = PasswordWithFolderMapper.forDto(service.changeName(novosDados.name(), novosDados.id()));
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> alterarNome(@PathVariable Integer id, @RequestBody String novoNome) {
+        PasswordWithFolderDto novaSenha = PasswordWithFolderMapper.forDto(service.changeName(novoNome, id));
         ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(novaSenha);
         return ResponseEntity.ok(resposta);
     }

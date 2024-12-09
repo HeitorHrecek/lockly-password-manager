@@ -1,6 +1,7 @@
 package com.example.lockly.entrypoint.controller;
 
 import com.example.lockly.entrypoint.dtos.LoginDto;
+import com.example.lockly.entrypoint.dtos.ResponseDto;
 import com.example.lockly.entrypoint.dtos.UserDto;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.serviceLayer.UserService;
@@ -10,23 +11,25 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usuarios")
 @AllArgsConstructor
-public class UserController {
+public class UsuarioController {
+
     private final UserService service;
 
-    @PostMapping("/register")
-    public ResponseEntity<UserDto> register(@RequestBody UserDto newUser){
-        UserDto userResponse = UserMapper.forDto(service.register(UserMapper.forDomainFromDto(newUser)));
+    @PostMapping
+    public ResponseEntity<ResponseDto<UserDto>> cadastrar(@RequestBody UserDto novoUsuario){
+        UserDto usuarioSalvo = UserMapper.forDto(service.register(UserMapper.forDomainFromDto(novoUsuario)));
+        ResponseDto<UserDto> resposta = new ResponseDto<>(usuarioSalvo);
         return ResponseEntity
                 .created(
                         UriComponentsBuilder
                                 .newInstance()
                                 .path("/users/add/{id}")
-                                .buildAndExpand(userResponse.id())
+                                .buildAndExpand(usuarioSalvo.id())
                                 .toUri()
                 )
-                .body(userResponse);
+                .body(resposta);
     }
 
     @PostMapping("/login")
