@@ -1,6 +1,6 @@
 package com.example.lockly.mapper.passwords;
 
-import com.example.lockly.entrypoint.dtos.passwords.PasswordWithFolderDto;
+import com.example.lockly.entrypoint.dtos.passwords.SenhaComPastaDto;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
 import com.example.lockly.mapper.FolderMapper;
 import com.example.lockly.mapper.UserMapper;
@@ -32,8 +32,8 @@ public abstract class PasswordWithFolderMapper {
                 .build();
     }
 
-    public static PasswordWithFolderDto forDto(PasswordWithFolder domain) {
-        return PasswordWithFolderDto.builder()
+    public static SenhaComPastaDto forDto(PasswordWithFolder domain) {
+        return SenhaComPastaDto.builder()
                 .id(domain.getId())
                 .name(domain.getName())
                 .content(domain.getContent())
@@ -42,7 +42,7 @@ public abstract class PasswordWithFolderMapper {
                 .build();
     }
 
-    public static PasswordWithFolder forDomainFromDto(PasswordWithFolderDto dto) {
+    public static PasswordWithFolder forDomainFromDto(SenhaComPastaDto dto) {
         return PasswordWithFolder.builder()
                 .id(dto.id())
                 .name(dto.name())
@@ -52,7 +52,7 @@ public abstract class PasswordWithFolderMapper {
                 .build();
     }
 
-    public static List<PasswordWithFolderDto> forDtos(List<PasswordWithFolder> passwordWithFolderList) {
+    public static List<SenhaComPastaDto> forDtos(List<PasswordWithFolder> passwordWithFolderList) {
         return passwordWithFolderList.stream().map(PasswordWithFolderMapper::forDto).toList();
     }
 

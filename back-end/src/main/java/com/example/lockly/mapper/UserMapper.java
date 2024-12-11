@@ -1,7 +1,7 @@
 package com.example.lockly.mapper;
 
 
-import com.example.lockly.entrypoint.dtos.UserDto;
+import com.example.lockly.entrypoint.dtos.UsuarioDto;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.repositoryLayer.entities.UserEntity;
 
@@ -24,8 +24,8 @@ public abstract class UserMapper {
                 .build();
     }
 
-    public static UserDto forDto(User domain) {
-        return UserDto.builder()
+    public static UsuarioDto forDto(User domain) {
+        return UsuarioDto.builder()
                 .id(domain.getId())
                 .name(domain.getName())
                 .email(domain.getEmail())
@@ -33,7 +33,7 @@ public abstract class UserMapper {
                 .build();
     }
 
-    public static User forDomainFromDto(UserDto dto) {
+    public static User forDomainFromDto(UsuarioDto dto) {
         return User.builder()
                 .id(dto.id())
                 .name(dto.name())

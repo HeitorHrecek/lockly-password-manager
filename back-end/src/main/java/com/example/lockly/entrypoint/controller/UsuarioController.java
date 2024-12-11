@@ -1,8 +1,7 @@
 package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.entrypoint.dtos.LoginDto;
 import com.example.lockly.entrypoint.dtos.ResponseDto;
-import com.example.lockly.entrypoint.dtos.UserDto;
+import com.example.lockly.entrypoint.dtos.UsuarioDto;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.serviceLayer.UserService;
 import lombok.AllArgsConstructor;
@@ -18,42 +17,44 @@ public class UsuarioController {
     private final UserService service;
 
     @PostMapping
-    public ResponseEntity<ResponseDto<UserDto>> cadastrar(@RequestBody UserDto novoUsuario){
-        UserDto usuarioSalvo = UserMapper.forDto(service.register(UserMapper.forDomainFromDto(novoUsuario)));
-        ResponseDto<UserDto> resposta = new ResponseDto<>(usuarioSalvo);
+    public ResponseEntity<ResponseDto<UsuarioDto>> cadastrar(@RequestBody UsuarioDto novoUsuario){
+        UsuarioDto usuarioSalvo = UserMapper.forDto(service.register(UserMapper.forDomainFromDto(novoUsuario)));
+        ResponseDto<UsuarioDto> resposta = new ResponseDto<>(usuarioSalvo);
         return ResponseEntity
                 .created(
                         UriComponentsBuilder
                                 .newInstance()
-                                .path("/users/add/{id}")
+                                .path("/usuario/{id}")
                                 .buildAndExpand(usuarioSalvo.id())
                                 .toUri()
                 )
                 .body(resposta);
     }
 
-    @GetMapping(value = "/consult/id/{id}")
-    public ResponseEntity<UserDto> consultById(@PathVariable Integer id){
-        UserDto userResult = UserMapper.forDto(service.consultById(id));
-        return ResponseEntity.ok(userResult);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<ResponseDto<UsuarioDto>> consultarPorId(@PathVariable Integer id){
+        UsuarioDto usuario = UserMapper.forDto(service.consultById(id));
+        ResponseDto<UsuarioDto> resposta = new ResponseDto<>(usuario);
+        return ResponseEntity.ok(resposta);
     }
 
-    @GetMapping(value = "/consult/email/{email}")
-    public ResponseEntity<UserDto> consultByEmail(@PathVariable String email){
-        UserDto userResult = UserMapper.forDto(service.consultByEmail(email));
-        return ResponseEntity.ok(userResult);
+    @GetMapping(value = "/email/{email}")
+    public ResponseEntity<ResponseDto<UsuarioDto>> consultarPorEmail(@PathVariable String email){
+        UsuarioDto usuario = UserMapper.forDto(service.consultByEmail(email));
+        ResponseDto<UsuarioDto> resposta = new ResponseDto<>(usuario);
+        return ResponseEntity.ok(resposta);
     }
 
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<UserDto> delete(@PathVariable Integer id){
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Integer id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/change/{id}")
-    public ResponseEntity<UserDto> change(@RequestBody UserDto alterUser, @PathVariable Integer id) {
-        UserDto userResult = UserMapper.forDto(service.change(UserMapper.forDomainFromDto(alterUser), id));
-
-        return ResponseEntity.ok(userResult);
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseDto<UsuarioDto>> alterar(@RequestBody UsuarioDto novosDados, @PathVariable Integer id) {
+        UsuarioDto novoUsuario = UserMapper.forDto(service.change(UserMapper.forDomainFromDto(novosDados), id));
+        ResponseDto<UsuarioDto> resposta = new ResponseDto<>(novoUsuario);
+        return ResponseEntity.ok(resposta);
     }
 }

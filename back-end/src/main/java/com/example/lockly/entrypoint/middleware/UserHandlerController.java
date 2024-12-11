@@ -20,8 +20,8 @@ public class UserHandlerController {
     private final HttpStatus STATUS_400 = HttpStatus.BAD_REQUEST;
 
     @ExceptionHandler(UserAlreadyRegisteredException.class)
-    private ResponseEntity<MessageErrorException> alreadyRegisteredHandler(UserAlreadyRegisteredException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> alreadyRegisteredHandler(UserAlreadyRegisteredException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_400)
                 .message(exception.getMessage())
                 .build();
@@ -30,8 +30,8 @@ public class UserHandlerController {
     }
 
     @ExceptionHandler(EmailPasswordInvalidException.class)
-    private ResponseEntity<MessageErrorException> dateInvalidHandler (EmailPasswordInvalidException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> dateInvalidHandler (EmailPasswordInvalidException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_500)
                 .message(exception.getMessage())
                 .build();
@@ -40,8 +40,8 @@ public class UserHandlerController {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    private ResponseEntity<MessageErrorException> notFoundHandler(UserNotFoundException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> notFoundHandler(UserNotFoundException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_404)
                 .message(exception.getMessage())
                 .build();
@@ -50,8 +50,8 @@ public class UserHandlerController {
     }
 
     @ExceptionHandler(UserSaveErrorException.class)
-    private ResponseEntity<MessageErrorException> saveErrorHandler(UserSaveErrorException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> saveErrorHandler(UserSaveErrorException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_500)
                 .message(exception.getMessage())
                 .build();
@@ -60,8 +60,8 @@ public class UserHandlerController {
     }
 
     @ExceptionHandler(UserSearchByIdErrorException.class)
-    private ResponseEntity<MessageErrorException> searchByIdErrorHandler(UserSearchByIdErrorException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> searchByIdErrorHandler(UserSearchByIdErrorException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_500)
                 .message(exception.getMessage())
                 .build();
@@ -70,8 +70,8 @@ public class UserHandlerController {
     }
 
     @ExceptionHandler(UserSearchByEmailErrorException.class)
-    private ResponseEntity<MessageErrorException> searchByEmailErrorHandler(UserSearchByEmailErrorException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> searchByEmailErrorHandler(UserSearchByEmailErrorException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_500)
                 .message(exception.getMessage())
                 .build();
@@ -80,8 +80,8 @@ public class UserHandlerController {
     }
 
     @ExceptionHandler(UserDeleteErrorException.class)
-    private ResponseEntity<MessageErrorException> deleteErrorHandler(UserDeleteErrorException exception){
-        MessageErrorException message = MessageErrorException.builder()
+    private ResponseEntity<MensagemErroException> deleteErrorHandler(UserDeleteErrorException exception){
+        MensagemErroException message = MensagemErroException.builder()
                 .status(STATUS_500)
                 .message(exception.getMessage())
                 .build();

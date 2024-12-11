@@ -1,5 +1,5 @@
 package com.example.lockly.serviceLayer;
-import com.example.lockly.entrypoint.dtos.FolderDto;
+import com.example.lockly.entrypoint.dtos.PastaDto;
 import com.example.lockly.dataproviderLayer.FolderDataProvider;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.domainLayer.User;
@@ -26,23 +26,23 @@ public class FolderService {
                 .orElseThrow(() -> new NoFolderFoundException("Folder not found"));
     }
 
-    public FolderDto register(FolderDto folderDto) {
-        List<Folder> existingFolders = dataProvider.consultAllByUser(folderDto.userDto().id());
+    public PastaDto register(PastaDto pastaDto) {
+        List<Folder> existingFolders = dataProvider.consultAllByUser(pastaDto.userDto().id());
 
         boolean folderExists = existingFolders.stream()
-                .anyMatch(folder -> folder.getName().equalsIgnoreCase(folderDto.name()));
+                .anyMatch(folder -> folder.getName().equalsIgnoreCase(pastaDto.name()));
 
         if (folderExists) {
             throw new FolderAlreadyRegisteredException("Folder already exists with that name");
         }
 
-        Folder folder = FolderMapper.forDomainFromDto(folderDto);
-        User user = userService.consultById(folderDto.userDto().id());
+        Folder folder = FolderMapper.forDomainFromDto(pastaDto);
+        User user = userService.consultById(pastaDto.userDto().id());
         folder.setUser(user);
         return FolderMapper.forDto(dataProvider.save(folder));
     }
 
-    public List<FolderDto> consultAllByUser(Integer userId) {
+    public List<PastaDto> consultAllByUser(Integer userId) {
         List<Folder> folders = dataProvider.consultAllByUser(userId);
 
         if (folders.isEmpty()) {
@@ -59,13 +59,13 @@ public class FolderService {
         dataProvider.delete(folder.getId());
     }
 
-    public FolderDto changeName(String nome, Integer id) {
+    public PastaDto changeName(String nome, Integer id) {
         Folder folder = findFolderById(id);
         folder.setName(nome);
         return FolderMapper.forDto(dataProvider.save(folder));
     }
 
-    public FolderDto consultByName(String name) {
+    public PastaDto consultByName(String name) {
         Optional<Folder> folder = dataProvider.consultByName(name);
 
         if(folder.isEmpty()) {

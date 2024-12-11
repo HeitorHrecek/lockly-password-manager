@@ -1,6 +1,6 @@
 package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.entrypoint.dtos.FolderDto;
+import com.example.lockly.entrypoint.dtos.PastaDto;
 import com.example.lockly.entrypoint.dtos.ResponseDto;
 import com.example.lockly.serviceLayer.FolderService;
 import lombok.AllArgsConstructor;
@@ -18,9 +18,9 @@ public class PastaController {
     private final FolderService service;
 
     @PostMapping
-    public ResponseEntity<ResponseDto<FolderDto>> cadastrar(@RequestBody FolderDto folderDto) {
-        FolderDto pastaSalva = service.register(folderDto);
-        ResponseDto<FolderDto> resposta = new ResponseDto<>(pastaSalva);
+    public ResponseEntity<ResponseDto<PastaDto>> cadastrar(@RequestBody PastaDto pastaDto) {
+        PastaDto pastaSalva = service.register(pastaDto);
+        ResponseDto<PastaDto> resposta = new ResponseDto<>(pastaSalva);
         return ResponseEntity
                 .created(
                         UriComponentsBuilder
@@ -33,9 +33,9 @@ public class PastaController {
     }
 
     @GetMapping("/usuario/{idUsuario}")
-    public ResponseEntity<ResponseDto<List<FolderDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
-        List<FolderDto> pastas = service.consultAllByUser(idUsuario);
-        ResponseDto<List<FolderDto>> resposta = new ResponseDto<>(pastas);
+    public ResponseEntity<ResponseDto<List<PastaDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
+        List<PastaDto> pastas = service.consultAllByUser(idUsuario);
+        ResponseDto<List<PastaDto>> resposta = new ResponseDto<>(pastas);
         return ResponseEntity.ok(resposta);
     }
 
@@ -46,16 +46,16 @@ public class PastaController {
     }
 
     @GetMapping("/nome/{nome}")
-    public ResponseEntity<ResponseDto<FolderDto>> consultarPorNome(@PathVariable String nome) {
-        FolderDto pasta = service.consultByName(nome);
-        ResponseDto<FolderDto> resposta = new ResponseDto<>(pasta);
+    public ResponseEntity<ResponseDto<PastaDto>> consultarPorNome(@PathVariable String nome) {
+        PastaDto pasta = service.consultByName(nome);
+        ResponseDto<PastaDto> resposta = new ResponseDto<>(pasta);
         return ResponseEntity.ok(resposta);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDto<FolderDto>> mudarNome(@RequestBody String nome, @PathVariable Integer id) {
-        FolderDto novaPasta = service.changeName(nome, id);
-        ResponseDto<FolderDto> resposta = new ResponseDto<>(novaPasta);
+    public ResponseEntity<ResponseDto<PastaDto>> mudarNome(@RequestBody String nome, @PathVariable Integer id) {
+        PastaDto novaPasta = service.changeName(nome, id);
+        ResponseDto<PastaDto> resposta = new ResponseDto<>(novaPasta);
         return ResponseEntity.ok(resposta);
     }
 }

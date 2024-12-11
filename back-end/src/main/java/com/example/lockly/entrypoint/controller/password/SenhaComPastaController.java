@@ -1,7 +1,7 @@
 package com.example.lockly.entrypoint.controller.password;
 
 import com.example.lockly.entrypoint.dtos.ResponseDto;
-import com.example.lockly.entrypoint.dtos.passwords.PasswordWithFolderDto;
+import com.example.lockly.entrypoint.dtos.passwords.SenhaComPastaDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
 import com.example.lockly.serviceLayer.passwords.PasswordWithFolderService;
 import lombok.AllArgsConstructor;
@@ -19,53 +19,53 @@ public class SenhaComPastaController {
     private final PasswordWithFolderService service;
 
     @PostMapping
-    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> cadastrar(@RequestBody PasswordWithFolderDto novaSenha) {
-        PasswordWithFolderDto resultadoNovaSenha = PasswordWithFolderMapper.forDto(service.register(PasswordWithFolderMapper.forDomainFromDto(novaSenha)));
-        ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(resultadoNovaSenha);
+    public ResponseEntity<ResponseDto<SenhaComPastaDto>> cadastrar(@RequestBody SenhaComPastaDto novaSenha) {
+        SenhaComPastaDto resultadoNovaSenha = PasswordWithFolderMapper.forDto(service.register(PasswordWithFolderMapper.forDomainFromDto(novaSenha)));
+        ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(resultadoNovaSenha);
         return ResponseEntity
                 .created(UriComponentsBuilder.newInstance().path("/senhas/pasta/cadastro/{id}").buildAndExpand(resultadoNovaSenha.id()).toUri())
                 .body(resposta);
     }
 
     @GetMapping(value = "/usuario/{idUsuario}")
-    public ResponseEntity<ResponseDto<List<PasswordWithFolderDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
-        List<PasswordWithFolderDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUsuario));
-        ResponseDto<List<PasswordWithFolderDto>> resposta = new ResponseDto<>(senhas);
+    public ResponseEntity<ResponseDto<List<SenhaComPastaDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
+        List<SenhaComPastaDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUsuario));
+        ResponseDto<List<SenhaComPastaDto>> resposta = new ResponseDto<>(senhas);
         return ResponseEntity.ok(resposta);
     }
 
     @GetMapping(value = "/pasta/{idPasta}")
-    public ResponseEntity<ResponseDto<List<PasswordWithFolderDto>>> listarPorPasta(@PathVariable Integer idPasta) {
-        List<PasswordWithFolderDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByFolder(idPasta));
-        ResponseDto<List<PasswordWithFolderDto>> resposta = new ResponseDto<>(senhas);
+    public ResponseEntity<ResponseDto<List<SenhaComPastaDto>>> listarPorPasta(@PathVariable Integer idPasta) {
+        List<SenhaComPastaDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByFolder(idPasta));
+        ResponseDto<List<SenhaComPastaDto>> resposta = new ResponseDto<>(senhas);
         return ResponseEntity.ok(resposta);
     }
 
 
     @GetMapping(value = "/nome/{nome}")
-    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> consultarPorNome(@PathVariable String nome) {
-        PasswordWithFolderDto senha = PasswordWithFolderMapper.forDto(service.queryByName(nome));
-        ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(senha);
+    public ResponseEntity<ResponseDto<SenhaComPastaDto>> consultarPorNome(@PathVariable String nome) {
+        SenhaComPastaDto senha = PasswordWithFolderMapper.forDto(service.queryByName(nome));
+        ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(senha);
         return ResponseEntity.ok(resposta);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> consultarPorId(@PathVariable Integer id) {
-        PasswordWithFolderDto senha = PasswordWithFolderMapper.forDto(service.consultById(id));
-        ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(senha);
+    public ResponseEntity<ResponseDto<SenhaComPastaDto>> consultarPorId(@PathVariable Integer id) {
+        SenhaComPastaDto senha = PasswordWithFolderMapper.forDto(service.consultById(id));
+        ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(senha);
         return ResponseEntity.ok(resposta);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<PasswordWithFolderDto> deletar(@PathVariable Integer id) {
+    public ResponseEntity<SenhaComPastaDto> deletar(@PathVariable Integer id) {
         service.deleteWithFolder(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> alterarNome(@PathVariable Integer id, @RequestBody String novoNome) {
-        PasswordWithFolderDto novaSenha = PasswordWithFolderMapper.forDto(service.changeName(novoNome, id));
-        ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(novaSenha);
+    public ResponseEntity<ResponseDto<SenhaComPastaDto>> alterarNome(@PathVariable Integer id, @RequestBody String novoNome) {
+        SenhaComPastaDto novaSenha = PasswordWithFolderMapper.forDto(service.changeName(novoNome, id));
+        ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(novaSenha);
         return ResponseEntity.ok(resposta);
     }
 }

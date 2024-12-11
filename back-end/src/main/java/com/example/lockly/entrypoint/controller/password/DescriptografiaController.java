@@ -1,8 +1,8 @@
 package com.example.lockly.entrypoint.controller.password;
 
 import com.example.lockly.entrypoint.dtos.ResponseDto;
-import com.example.lockly.entrypoint.dtos.passwords.PasswordWithFolderDto;
-import com.example.lockly.entrypoint.dtos.passwords.PasswordWithoutFolderDto;
+import com.example.lockly.entrypoint.dtos.passwords.SenhaComPastaDto;
+import com.example.lockly.entrypoint.dtos.passwords.SenhaSemPastaDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
 import com.example.lockly.serviceLayer.passwords.PasswordDecryptService;
@@ -23,17 +23,17 @@ public class DescriptografiaController {
     private final PasswordDecryptService service;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto<PasswordWithoutFolderDto>> descriptografarSenhasSemPasta(@PathVariable Integer id) {
-        PasswordWithoutFolderDto result = PasswordWithoutFolderMapper.forDto(service.decryptWithoutFolder(id));
-        ResponseDto<PasswordWithoutFolderDto> resposta = new ResponseDto<>(result);
+    public ResponseEntity<ResponseDto<SenhaSemPastaDto>> descriptografarSenhasSemPasta(@PathVariable Integer id) {
+        SenhaSemPastaDto result = PasswordWithoutFolderMapper.forDto(service.decryptWithoutFolder(id));
+        ResponseDto<SenhaSemPastaDto> resposta = new ResponseDto<>(result);
         return ResponseEntity.ok(resposta);
     }
 
 
     @GetMapping(value = "/pasta/{id}")
-    public ResponseEntity<ResponseDto<PasswordWithFolderDto>> descriptografarSenhasComPasta(@PathVariable Integer id) {
-        PasswordWithFolderDto result = PasswordWithFolderMapper.forDto(service.decryptWithFolder(id));
-        ResponseDto<PasswordWithFolderDto> resposta = new ResponseDto<>(result);
+    public ResponseEntity<ResponseDto<SenhaComPastaDto>> descriptografarSenhasComPasta(@PathVariable Integer id) {
+        SenhaComPastaDto result = PasswordWithFolderMapper.forDto(service.decryptWithFolder(id));
+        ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(result);
         return ResponseEntity.ok(resposta);
     }
 

@@ -1,6 +1,6 @@
 package com.example.lockly.mapper;
 
-import com.example.lockly.entrypoint.dtos.FolderDto;
+import com.example.lockly.entrypoint.dtos.PastaDto;
 import com.example.lockly.domainLayer.Folder;
 import com.example.lockly.repositoryLayer.entities.FolderEntity;
 
@@ -22,15 +22,15 @@ public abstract class FolderMapper {
                 .build();
     }
 
-    public static FolderDto forDto(Folder domain) {
-        return FolderDto.builder()
+    public static PastaDto forDto(Folder domain) {
+        return PastaDto.builder()
                 .id(domain.getId())
                 .name(domain.getName())
                 .userDto(UserMapper.forDto(domain.getUser()))
                 .build();
     }
 
-    public static Folder forDomainFromDto(FolderDto dto) {
+    public static Folder forDomainFromDto(PastaDto dto) {
         return Folder.builder()
                 .id(dto.id())
                 .name(dto.name())
