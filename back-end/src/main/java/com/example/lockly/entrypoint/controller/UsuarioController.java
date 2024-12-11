@@ -32,13 +32,6 @@ public class UsuarioController {
                 .body(resposta);
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginDto loginUser) {
-        service.login(loginUser.email(), loginUser.password());
-
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping(value = "/consult/id/{id}")
     public ResponseEntity<UserDto> consultById(@PathVariable Integer id){
         UserDto userResult = UserMapper.forDto(service.consultById(id));
