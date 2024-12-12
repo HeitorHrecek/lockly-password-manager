@@ -1,7 +1,7 @@
 package com.example.lockly.mapper;
 
 
-import com.example.lockly.entrypoint.dtos.UsuarioDto;
+import com.example.lockly.entrypoint.dto.UsuarioDto;
 import com.example.lockly.domainLayer.User;
 import com.example.lockly.repositoryLayer.entities.UserEntity;
 

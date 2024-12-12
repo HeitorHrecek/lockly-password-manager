@@ -1,9 +1,9 @@
 package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.entrypoint.dtos.ResponseDto;
-import com.example.lockly.entrypoint.dtos.UsuarioDto;
+import com.example.lockly.entrypoint.dto.ResponseDto;
+import com.example.lockly.entrypoint.dto.UsuarioDto;
 import com.example.lockly.mapper.UserMapper;
-import com.example.lockly.serviceLayer.UserService;
+import com.example.lockly.application.usecases.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

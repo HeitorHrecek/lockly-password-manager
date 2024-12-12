@@ -1,8 +1,8 @@
 package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.entrypoint.dtos.PastaDto;
-import com.example.lockly.entrypoint.dtos.ResponseDto;
-import com.example.lockly.serviceLayer.FolderService;
+import com.example.lockly.entrypoint.dto.PastaDto;
+import com.example.lockly.entrypoint.dto.ResponseDto;
+import com.example.lockly.application.usecases.FolderService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

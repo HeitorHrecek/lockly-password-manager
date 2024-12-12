@@ -1,6 +1,6 @@
 package com.example.lockly.mapper.passwords;
 
-import com.example.lockly.entrypoint.dtos.passwords.SenhaSemPastaDto;
+import com.example.lockly.entrypoint.dto.passwords.SenhaSemPastaDto;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.mapper.UserMapper;
 import com.example.lockly.repositoryLayer.entities.passwords.PasswordWithoutFolderEntity;
