@@ -5,7 +5,7 @@ import com.example.lockly.entrypoint.dto.passwords.SenhaComPastaDto;
 import com.example.lockly.entrypoint.dto.passwords.SenhaSemPastaDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
 import com.example.lockly.mapper.passwords.PasswordWithoutFolderMapper;
-import com.example.lockly.application.usecases.passwords.PasswordDecryptService;
+import com.example.lockly.application.usecases.passwords.DescriptografiaSenhaService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 public class DescriptografiaController {
 
-    @Autowired
-    private final PasswordDecryptService service;
+    private final DescriptografiaSenhaService service;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ResponseDto<SenhaSemPastaDto>> descriptografarSenhasSemPasta(@PathVariable Integer id) {
-        SenhaSemPastaDto result = PasswordWithoutFolderMapper.forDto(service.decryptWithoutFolder(id));
+        SenhaSemPastaDto result = PasswordWithoutFolderMapper.forDto(service.descriptografiaSemPasta(id));
         ResponseDto<SenhaSemPastaDto> resposta = new ResponseDto<>(result);
         return ResponseEntity.ok(resposta);
     }
@@ -32,7 +31,7 @@ public class DescriptografiaController {
 
     @GetMapping(value = "/pasta/{id}")
     public ResponseEntity<ResponseDto<SenhaComPastaDto>> descriptografarSenhasComPasta(@PathVariable Integer id) {
-        SenhaComPastaDto result = PasswordWithFolderMapper.forDto(service.decryptWithFolder(id));
+        SenhaComPastaDto result = PasswordWithFolderMapper.forDto(service.descriptografiaComPasta(id));
         ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(result);
         return ResponseEntity.ok(resposta);
     }

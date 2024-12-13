@@ -3,8 +3,8 @@ package com.example.lockly.application.usecases.passwords;
 import com.example.lockly.dataproviderLayer.password.PasswordWithoutFolderDataProvider;
 import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
 import com.example.lockly.application.usecases.UserService;
-import com.example.lockly.application.exceptions.password.NoPasswordFoundException;
-import com.example.lockly.application.exceptions.password.PasswordNotFoundException;
+import com.example.lockly.application.exceptions.senha.NenhumaSenhaEncontradaException;
+import com.example.lockly.application.exceptions.senha.SenhaNaoEncontradaException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,20 +17,20 @@ public class PasswordWithoutFolderService {
 
     private final PasswordWithoutFolderDataProvider dataProvider;
     private final UserService userService;
-    private final EncryptService encryptService;
+    private final CriptografiaService criptografiaService;
 
     public PasswordWithoutFolder register(PasswordWithoutFolder newPassword) {
         newPassword.setUser(userService.consultById(newPassword.getUser().getId()));
-        PasswordAndKey passwordAndKey = encryptService.encrypt(newPassword.getContent());
-        newPassword.setContent(passwordAndKey.passswordEncrypt());
-        newPassword.setEncryptionKey(passwordAndKey.key());
+        SenhaEChave senhaEChave = criptografiaService.criptografar(newPassword.getContent());
+        newPassword.setContent(senhaEChave.senhaCriptografada());
+        newPassword.setEncryptionKey(senhaEChave.chave());
         return dataProvider.save(newPassword);
     }
 
     public List<PasswordWithoutFolder> consultAllByUser(Integer idUser) {
         List<PasswordWithoutFolder> result = dataProvider.consultAllByUser(idUser);
         if(result.isEmpty()) {
-            throw new NoPasswordFoundException();
+            throw new NenhumaSenhaEncontradaException();
         }
         return result;
     }
@@ -38,7 +38,7 @@ public class PasswordWithoutFolderService {
     public PasswordWithoutFolder queryByName(String name) {
         Optional<PasswordWithoutFolder> result = dataProvider.queryByName(name);
         if(result.isEmpty()) {
-            throw new PasswordNotFoundException();
+            throw new SenhaNaoEncontradaException();
         }
         return result.get();
     }
@@ -57,7 +57,7 @@ public class PasswordWithoutFolderService {
     public PasswordWithoutFolder consultById(Integer idPasswordWithoutFolder) {
         Optional<PasswordWithoutFolder> result = dataProvider.consultById(idPasswordWithoutFolder);
         if(result.isEmpty())
-            throw new PasswordNotFoundException();
+            throw new SenhaNaoEncontradaException();
         return result.get();
     }
 }

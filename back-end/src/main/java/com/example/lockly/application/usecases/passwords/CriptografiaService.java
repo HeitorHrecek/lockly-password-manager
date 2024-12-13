@@ -1,7 +1,7 @@
 package com.example.lockly.application.usecases.passwords;
 
-import com.example.lockly.application.exceptions.password.ErroDecryptPasswordException;
-import com.example.lockly.application.exceptions.password.ErrorEncryptPasswordException;
+import com.example.lockly.application.exceptions.senha.ErroDescriptografarSenhaException;
+import com.example.lockly.application.exceptions.senha.ErroCriptografarSenhaException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,47 +15,47 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
-public class EncryptService {
+public class CriptografiaService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public String encryptLogin(String password) {
+    public String criptografiaLogin(String password) {
         return passwordEncoder.encode(password);
     }
 
-    public PasswordAndKey encrypt(String password) {
+    public SenhaEChave criptografar(String password) {
         try {
-            SecretKey key = generateKey(256);
-            IvParameterSpec iv = generateIV();
-            return PasswordAndKey.builder().key(key).passswordEncrypt(encryptPassword(password, key, iv)).build();
+            SecretKey key = gerarChave(256);
+            IvParameterSpec iv = gerarIV();
+            return SenhaEChave.builder().chave(key).senhaCriptografada(criptografarSenha(password, key, iv)).build();
         }catch (Exception exception) {
-            throw new ErrorEncryptPasswordException(exception.getMessage());
+            throw new ErroCriptografarSenhaException(exception.getMessage());
         }
     }
 
-    public String decrypt(String password, SecretKey key) {
+    public String descriptografar(String password, SecretKey key) {
         try {
-            return decryptPassword(password, key);
+            return descriptografarSenha(password, key);
         }catch (Exception exception) {
-            throw new ErroDecryptPasswordException(exception.getMessage());
+            throw new ErroDescriptografarSenhaException(exception.getMessage());
         }
     }
 
-    private static SecretKey generateKey(int n) throws Exception {
+    private static SecretKey gerarChave(int n) throws Exception {
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(n);
         SecretKey key = keyGenerator.generateKey();
         return key;
     }
 
-    private static IvParameterSpec generateIV() {
+    private static IvParameterSpec gerarIV() {
         byte[] iv = new byte[16];
         SecureRandom random = new SecureRandom();
         random.nextBytes(iv);
         return new IvParameterSpec(iv);
     }
 
-    private static String encryptPassword(String plainText, SecretKey key, IvParameterSpec iv) throws Exception {
+    private static String criptografarSenha(String plainText, SecretKey key, IvParameterSpec iv) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
         byte[] cipherText = cipher.doFinal(plainText.getBytes("UTF-8"));
@@ -65,7 +65,7 @@ public class EncryptService {
         return Base64.getEncoder().encodeToString(ivAndCipherText);
     }
 
-    private static String decryptPassword(String cipherText, SecretKey key) throws Exception {
+    private static String descriptografarSenha(String cipherText, SecretKey key) throws Exception {
         byte[] ivAndCipherText = Base64.getDecoder().decode(cipherText);
         byte[] iv = new byte[16];
         System.arraycopy(ivAndCipherText, 0, iv, 0, iv.length);

@@ -5,4 +5,4 @@ import lombok.Builder;
 import javax.crypto.SecretKey;
 
 @Builder
-public record PasswordAndKey(SecretKey key, String passswordEncrypt) {}
+public record SenhaEChave(SecretKey chave, String senhaCriptografada) {}

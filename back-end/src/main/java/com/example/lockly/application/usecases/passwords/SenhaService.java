@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class PasswordService {
+public class SenhaService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public boolean validatePassword(String password, String passwordUser){
-        return passwordEncoder.matches(password, passwordUser);
+    public boolean validaSenha(String senha, String senhaUsuario){
+        return passwordEncoder.matches(senha, senhaUsuario);
     }
 }

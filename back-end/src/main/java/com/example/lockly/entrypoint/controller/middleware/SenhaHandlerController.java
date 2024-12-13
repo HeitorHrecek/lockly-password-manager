@@ -1,9 +1,9 @@
 package com.example.lockly.entrypoint.controller.middleware;
 
 import com.example.lockly.dataproviderLayer.exceptions.password.*;
-import com.example.lockly.application.exceptions.password.NoPasswordFoundException;
-import com.example.lockly.application.exceptions.password.PasswordAlreadyRegisteredException;
-import com.example.lockly.application.exceptions.password.PasswordNotFoundException;
+import com.example.lockly.application.exceptions.senha.NenhumaSenhaEncontradaException;
+import com.example.lockly.application.exceptions.senha.SenhaJaCadastradaException;
+import com.example.lockly.application.exceptions.senha.SenhaNaoEncontradaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -51,20 +51,20 @@ public class SenhaHandlerController {
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(NoPasswordFoundException.class)
-    private ResponseEntity<MensagemErroException> senhaNaoEncontradaHandler(NoPasswordFoundException exception) {
+    @ExceptionHandler(NenhumaSenhaEncontradaException.class)
+    private ResponseEntity<MensagemErroException> senhaNaoEncontradaHandler(NenhumaSenhaEncontradaException exception) {
         MensagemErroException mensagem = MensagemErroException.builder().status(HttpStatus.NOT_FOUND).mensagem(exception.getMessage()).build();
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(PasswordAlreadyRegisteredException.class)
-    private ResponseEntity<MensagemErroException> senhaJaCadastradaHandler(PasswordAlreadyRegisteredException exception) {
+    @ExceptionHandler(SenhaJaCadastradaException.class)
+    private ResponseEntity<MensagemErroException> senhaJaCadastradaHandler(SenhaJaCadastradaException exception) {
         MensagemErroException mensagem = MensagemErroException.builder().status(STATUS_404).mensagem(exception.getMessage()).build();
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(PasswordNotFoundException.class)
-    private ResponseEntity<MensagemErroException> senhaNaoEncontradaHandler(PasswordNotFoundException exception) {
+    @ExceptionHandler(SenhaNaoEncontradaException.class)
+    private ResponseEntity<MensagemErroException> senhaNaoEncontradaHandler(SenhaNaoEncontradaException exception) {
         MensagemErroException mensagem = MensagemErroException.builder().status(STATUS_404).mensagem(exception.getMessage()).build();
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }

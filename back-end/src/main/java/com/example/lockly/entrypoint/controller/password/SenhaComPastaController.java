@@ -3,7 +3,7 @@ package com.example.lockly.entrypoint.controller.password;
 import com.example.lockly.entrypoint.dto.ResponseDto;
 import com.example.lockly.entrypoint.dto.passwords.SenhaComPastaDto;
 import com.example.lockly.mapper.passwords.PasswordWithFolderMapper;
-import com.example.lockly.application.usecases.passwords.PasswordWithFolderService;
+import com.example.lockly.application.usecases.passwords.SenhaComPastaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,11 +16,11 @@ import java.util.List;
 @AllArgsConstructor
 public class SenhaComPastaController {
 
-    private final PasswordWithFolderService service;
+    private final SenhaComPastaService service;
 
     @PostMapping
     public ResponseEntity<ResponseDto<SenhaComPastaDto>> cadastrar(@RequestBody SenhaComPastaDto novaSenha) {
-        SenhaComPastaDto resultadoNovaSenha = PasswordWithFolderMapper.forDto(service.register(PasswordWithFolderMapper.forDomainFromDto(novaSenha)));
+        SenhaComPastaDto resultadoNovaSenha = PasswordWithFolderMapper.forDto(service.cadastrar(PasswordWithFolderMapper.forDomainFromDto(novaSenha)));
         ResponseDto<SenhaComPastaDto> resposta = new ResponseDto<>(resultadoNovaSenha);
         return ResponseEntity
                 .created(UriComponentsBuilder.newInstance().path("/senhas/pasta/cadastro/{id}").buildAndExpand(resultadoNovaSenha.id()).toUri())
@@ -29,7 +29,7 @@ public class SenhaComPastaController {
 
     @GetMapping(value = "/usuario/{idUsuario}")
     public ResponseEntity<ResponseDto<List<SenhaComPastaDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
-        List<SenhaComPastaDto> senhas = PasswordWithFolderMapper.forDtos(service.consultAllByUser(idUsuario));
+        List<SenhaComPastaDto> senhas = PasswordWithFolderMapper.forDtos(service.listarPorUsuario(idUsuario));
         ResponseDto<List<SenhaComPastaDto>> resposta = new ResponseDto<>(senhas);
         return ResponseEntity.ok(resposta);
     }

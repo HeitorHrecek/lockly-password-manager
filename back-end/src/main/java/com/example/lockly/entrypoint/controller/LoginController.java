@@ -18,7 +18,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(@RequestBody LoginDto loginUser) {
-        service.login(loginUser.email(), loginUser.password());
+        service.login(loginUser.email(), loginUser.senha());
         return ResponseEntity.ok().build();
     }
 }
