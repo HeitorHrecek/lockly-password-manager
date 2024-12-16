@@ -15,7 +15,7 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
-public class CriptografiaService {
+public class CriptografiaUseCase {
 
     private final PasswordEncoder passwordEncoder;
 

@@ -12,4 +12,10 @@ public interface SenhaComPastaGateway {
     Optional<PasswordWithFolder> consultarPorNome(String name);
 
     List<PasswordWithFolder> listarPorUsuario(Integer idUsuario);
+
+    void deletar(Integer id);
+
+    Optional<PasswordWithFolder> consultarPorId(Integer id);
+
+    List<PasswordWithFolder> listarPorPasta(Integer idFolder);
 }

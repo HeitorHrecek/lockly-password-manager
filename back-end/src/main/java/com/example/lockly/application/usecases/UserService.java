@@ -5,8 +5,8 @@ import com.example.lockly.domainLayer.User;
 import com.example.lockly.application.exceptions.usuario.EmailSenhaInvalidoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioNaoEncontradoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioJaCadastradoException;
-import com.example.lockly.application.usecases.passwords.CriptografiaService;
-import com.example.lockly.application.usecases.passwords.SenhaService;
+import com.example.lockly.application.usecases.passwords.CriptografiaUseCase;
+import com.example.lockly.application.usecases.passwords.SenhaUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,8 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserService {
     private final UserDataProvider dataProvider;
-    private final SenhaService senhaService;
-    private final CriptografiaService criptografiaService;
+    private final SenhaUseCase senhaService;
+    private final CriptografiaUseCase criptografiaUseCase;
 
     public User register(User newUser){
         Optional<User> resultConsult = dataProvider.searchByEmail(newUser.getEmail());
@@ -25,7 +25,7 @@ public class UserService {
             throw new UsuarioJaCadastradoException();
         });
 
-        newUser.setPassword(criptografiaService.criptografiaLogin(newUser.getPassword()));
+        newUser.setPassword(criptografiaUseCase.criptografiaLogin(newUser.getPassword()));
 
         return dataProvider.save(newUser);
     }

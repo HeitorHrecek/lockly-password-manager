@@ -2,7 +2,7 @@ package com.example.lockly.application.usecases.passwords;
 
 import com.example.lockly.application.gateways.senha.SenhaComPastaGateway;
 import com.example.lockly.domainLayer.passwords.PasswordWithFolder;
-import com.example.lockly.application.usecases.FolderService;
+import com.example.lockly.application.usecases.PastaUseCase;
 import com.example.lockly.application.usecases.UserService;
 import com.example.lockly.application.exceptions.senha.NenhumaSenhaEncontradaException;
 import com.example.lockly.application.exceptions.senha.SenhaJaCadastradaException;
@@ -15,12 +15,12 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
-public class SenhaComPastaService {
+public class SenhaComPastaUseCase {
 
     private final SenhaComPastaGateway gateway;
     private final UserService userService;
-    private final FolderService folderService;
-    private final CriptografiaService criptografiaService;
+    private final PastaUseCase pastaUseCase;
+    private final CriptografiaUseCase criptografiaUseCase;
 
     public PasswordWithFolder cadastrar(PasswordWithFolder novaSenha) {
         Optional<PasswordWithFolder> senhaExistente = gateway.consultarPorNome(novaSenha.getName());
@@ -28,11 +28,11 @@ public class SenhaComPastaService {
             throw new SenhaJaCadastradaException();
         });
 
-        SenhaEChave senhaEChave = criptografiaService.criptografar(novaSenha.getContent());
+        SenhaEChave senhaEChave = criptografiaUseCase.criptografar(novaSenha.getContent());
         novaSenha.setContent(senhaEChave.senhaCriptografada());
         novaSenha.setEncryptionKey(senhaEChave.chave());
         novaSenha.setUser(userService.consultById(novaSenha.getUser().getId()));
-        novaSenha.setFolder(folderService.findFolderById(novaSenha.getFolder().getId()));
+        novaSenha.setFolder(pastaUseCase.consultarPorId(novaSenha.getFolder().getId()));
 
         return gateway.salvar(novaSenha);
     }
@@ -46,38 +46,38 @@ public class SenhaComPastaService {
         return senhas;
     }
 
-    public PasswordWithFolder queryByName(String name) {
-        Optional<PasswordWithFolder> passwordWithFolder = gateway.consultarPorNome(name);
-        if (passwordWithFolder.isEmpty()) {
+    public PasswordWithFolder consultarPorNome(String nome) {
+        Optional<PasswordWithFolder> senha = gateway.consultarPorNome(nome);
+        if (senha.isEmpty()) {
             throw new SenhaNaoEncontradaException();
         }
-        return passwordWithFolder.get();
+        return senha.get();
     }
 
-    public void deleteWithFolder(Integer id) {
-        consultById(id);
-        gateway.delete(id);
+    public void deletar(Integer id) {
+        consultarPorId(id);
+        gateway.deletar(id);
     }
 
-    public PasswordWithFolder changeName(String name, Integer idPassword) {
-        PasswordWithFolder existingPassword = consultById(idPassword);
-        existingPassword.setName(name);
-        return gateway.save(existingPassword);
+    public PasswordWithFolder mudarNome(String nome, Integer idSenha) {
+        PasswordWithFolder senha = consultarPorId(idSenha);
+        senha.setName(nome);
+        return gateway.salvar(senha);
     }
 
-    public PasswordWithFolder consultById(Integer id) {
-        Optional<PasswordWithFolder> resultQuery = gateway.consultById(id);
-        if (resultQuery.isEmpty()) {
+    public PasswordWithFolder consultarPorId(Integer id) {
+        Optional<PasswordWithFolder> senha = gateway.consultarPorId(id);
+        if (senha.isEmpty()) {
             throw new SenhaNaoEncontradaException();
         }
-        return resultQuery.get();
+        return senha.get();
     }
 
-    public List<PasswordWithFolder> consultAllByFolder(Integer idFolder) {
-        List<PasswordWithFolder> result = gateway.consultallByFolder(idFolder);
-        if(result.isEmpty()) {
+    public List<PasswordWithFolder> listarPorPastas(Integer idPasta) {
+        List<PasswordWithFolder> senhas = gateway.listarPorPasta(idPasta);
+        if(senhas.isEmpty()) {
             throw new NenhumaSenhaEncontradaException();
         }
-        return result;
+        return senhas;
     }
 }
