@@ -1,9 +1,9 @@
 package com.example.lockly.entrypoint.controller.middleware;
 
-import com.example.lockly.dataproviderLayer.exceptions.user.UserDeleteErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.user.UserSaveErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.user.UserSearchByEmailErrorException;
-import com.example.lockly.dataproviderLayer.exceptions.user.UserSearchByIdErrorException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroSalvarUsuarioException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorEmailException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorIdException;
 import com.example.lockly.application.exceptions.usuario.EmailSenhaInvalidoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioJaCadastradoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioNaoEncontradoException;
@@ -49,8 +49,8 @@ public class UsuarioHandlerController {
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(UserSaveErrorException.class)
-    private ResponseEntity<MensagemErroException> saveErrorHandler(UserSaveErrorException exception){
+    @ExceptionHandler(ErroSalvarUsuarioException.class)
+    private ResponseEntity<MensagemErroException> saveErrorHandler(ErroSalvarUsuarioException exception){
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -59,8 +59,8 @@ public class UsuarioHandlerController {
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(UserSearchByIdErrorException.class)
-    private ResponseEntity<MensagemErroException> searchByIdErrorHandler(UserSearchByIdErrorException exception){
+    @ExceptionHandler(ErroConsultarUsuarioPorIdException.class)
+    private ResponseEntity<MensagemErroException> searchByIdErrorHandler(ErroConsultarUsuarioPorIdException exception){
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -69,8 +69,8 @@ public class UsuarioHandlerController {
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(UserSearchByEmailErrorException.class)
-    private ResponseEntity<MensagemErroException> searchByEmailErrorHandler(UserSearchByEmailErrorException exception){
+    @ExceptionHandler(ErroConsultarUsuarioPorEmailException.class)
+    private ResponseEntity<MensagemErroException> searchByEmailErrorHandler(ErroConsultarUsuarioPorEmailException exception){
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -79,8 +79,8 @@ public class UsuarioHandlerController {
         return ResponseEntity.status(mensagem.status()).body(mensagem);
     }
 
-    @ExceptionHandler(UserDeleteErrorException.class)
-    private ResponseEntity<MensagemErroException> deleteErrorHandler(UserDeleteErrorException exception){
+    @ExceptionHandler(ErroDeletarUsuarioException.class)
+    private ResponseEntity<MensagemErroException> deleteErrorHandler(ErroDeletarUsuarioException exception){
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())

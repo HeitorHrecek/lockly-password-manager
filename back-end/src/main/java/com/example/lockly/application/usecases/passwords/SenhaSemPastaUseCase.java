@@ -1,8 +1,8 @@
 package com.example.lockly.application.usecases.passwords;
 
 import com.example.lockly.application.gateways.senha.SenhaSemPastaGateway;
-import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
-import com.example.lockly.application.usecases.UserService;
+import com.example.lockly.domain.passwords.SenhaSemPasta;
+import com.example.lockly.application.usecases.UsuarioUseCase;
 import com.example.lockly.application.exceptions.senha.NenhumaSenhaEncontradaException;
 import com.example.lockly.application.exceptions.senha.SenhaNaoEncontradaException;
 import lombok.AllArgsConstructor;
@@ -16,27 +16,27 @@ import java.util.Optional;
 public class SenhaSemPastaUseCase {
 
     private final SenhaSemPastaGateway gateway;
-    private final UserService userService;
+    private final UsuarioUseCase usuarioUseCase;
     private final CriptografiaUseCase criptografiaUseCase;
 
-    public PasswordWithoutFolder cadastrar(PasswordWithoutFolder novaSenha) {
-        novaSenha.setUser(userService.consultById(novaSenha.getUser().getId()));
-        SenhaEChave senhaEChave = criptografiaUseCase.criptografar(novaSenha.getContent());
-        novaSenha.setContent(senhaEChave.senhaCriptografada());
-        novaSenha.setEncryptionKey(senhaEChave.chave());
+    public SenhaSemPasta cadastrar(SenhaSemPasta novaSenha) {
+        novaSenha.setUsuario(usuarioUseCase.consultarPorId(novaSenha.getUsuario().getId()));
+        SenhaEChave senhaEChave = criptografiaUseCase.criptografar(novaSenha.getConteudo());
+        novaSenha.setConteudo(senhaEChave.senhaCriptografada());
+        novaSenha.setChaveCriptografia(senhaEChave.chave());
         return gateway.salvar(novaSenha);
     }
 
-    public List<PasswordWithoutFolder> listarPorUsuario(Integer isUsuario) {
-        List<PasswordWithoutFolder> senhas = gateway.listarPorUsuario(isUsuario);
+    public List<SenhaSemPasta> listarPorUsuario(Integer isUsuario) {
+        List<SenhaSemPasta> senhas = gateway.listarPorUsuario(isUsuario);
         if(senhas.isEmpty()) {
             throw new NenhumaSenhaEncontradaException();
         }
         return senhas;
     }
 
-    public PasswordWithoutFolder consultarPorNome(String nome) {
-        Optional<PasswordWithoutFolder> senha = gateway.consultarPorNome(nome);
+    public SenhaSemPasta consultarPorNome(String nome) {
+        Optional<SenhaSemPasta> senha = gateway.consultarPorNome(nome);
         if(senha.isEmpty()) {
             throw new SenhaNaoEncontradaException();
         }
@@ -48,14 +48,14 @@ public class SenhaSemPastaUseCase {
         gateway.deletar(id);
     }
 
-    public PasswordWithoutFolder mudarNome(String novoNome, Integer id) {
-        PasswordWithoutFolder senha = consultarPorId(id);
-        senha.setName(novoNome);
+    public SenhaSemPasta mudarNome(String novoNome, Integer id) {
+        SenhaSemPasta senha = consultarPorId(id);
+        senha.setNome(novoNome);
         return gateway.salvar(senha);
     }
 
-    public PasswordWithoutFolder consultarPorId(Integer id) {
-        Optional<PasswordWithoutFolder> senha = gateway.consultarPorId(id);
+    public SenhaSemPasta consultarPorId(Integer id) {
+        Optional<SenhaSemPasta> senha = gateway.consultarPorId(id);
         if(senha.isEmpty())
             throw new SenhaNaoEncontradaException();
         return senha.get();

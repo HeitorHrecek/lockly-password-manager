@@ -1,18 +1,18 @@
 package com.example.lockly.application.gateways;
 
-import com.example.lockly.domainLayer.Folder;
+import com.example.lockly.domain.Pasta;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PastaGateway {
-    Optional<Folder> consultarPorId(Integer id);
+    Optional<Pasta> consultarPorId(Integer id);
 
-    List<Folder> listarPorUsuario(Integer idUsuario);
+    List<Pasta> listarPorUsuario(Integer idUsuario);
 
-    Folder salvar(Folder pasta);
+    Pasta salvar(Pasta pasta);
 
     void deletar(Integer id);
 
-    Optional<Folder> consultarPorNome(String nome);
+    Optional<Pasta> consultarPorNome(String nome);
 }

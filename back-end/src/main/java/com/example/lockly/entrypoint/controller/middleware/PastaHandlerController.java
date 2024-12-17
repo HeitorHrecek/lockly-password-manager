@@ -1,7 +1,9 @@
 package com.example.lockly.entrypoint.controller.middleware;
 
-import com.example.lockly.dataproviderLayer.exceptions.folder.*;
 import com.example.lockly.application.exceptions.pasta.*;
+import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.ErroAoListarPastasPorUsuarioException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.ErroDeletarPastaException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.ErroSalvarPastaException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,22 +27,22 @@ public class PastaHandlerController {
         return ResponseEntity.status(STATUS_404).body(mensagem);
     }
 
-    @ExceptionHandler(FolderSaveErrorException.class)
-    public ResponseEntity<MensagemErroException> erroSalvarHandler(FolderSaveErrorException exception) {
+    @ExceptionHandler(ErroSalvarPastaException.class)
+    public ResponseEntity<MensagemErroException> erroSalvarHandler(ErroSalvarPastaException exception) {
         MensagemErroException mensagem = MensagemErroException.builder().status(STATUS_500)
                 .mensagem(exception.getMessage())
                 .build();
         return ResponseEntity.status(STATUS_500).body(mensagem);
     }
 
-    @ExceptionHandler(ConsultAllFolderByUserErroException.class)
-    public ResponseEntity<MensagemErroException> erroBuscarPorTodasHandler(ConsultAllFolderByUserErroException exception) {
+    @ExceptionHandler(ErroAoListarPastasPorUsuarioException.class)
+    public ResponseEntity<MensagemErroException> erroBuscarPorTodasHandler(ErroAoListarPastasPorUsuarioException exception) {
         MensagemErroException mensagem = MensagemErroException.builder().status(STATUS_500).mensagem(exception.getMessage()).build();
         return ResponseEntity.status(STATUS_500).body(mensagem);
     }
 
-    @ExceptionHandler(DeleteFolderErroException.class)
-    public ResponseEntity<MensagemErroException> erroDeletaHandler(DeleteFolderErroException exception) {
+    @ExceptionHandler(ErroDeletarPastaException.class)
+    public ResponseEntity<MensagemErroException> erroDeletaHandler(ErroDeletarPastaException exception) {
         MensagemErroException mensagem = MensagemErroException.builder().status(STATUS_500).mensagem(exception.getMessage()).build();
         return ResponseEntity.status(STATUS_500).body(mensagem);
     }

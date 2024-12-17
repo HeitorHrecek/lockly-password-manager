@@ -1,18 +1,18 @@
 package com.example.lockly.application.gateways.senha;
 
-import com.example.lockly.domainLayer.passwords.PasswordWithoutFolder;
+import com.example.lockly.domain.passwords.SenhaSemPasta;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface SenhaSemPastaGateway {
-    PasswordWithoutFolder salvar(PasswordWithoutFolder novaSenha);
+    SenhaSemPasta salvar(SenhaSemPasta novaSenha);
 
-    List<PasswordWithoutFolder> listarPorUsuario(Integer isUsuario);
+    List<SenhaSemPasta> listarPorUsuario(Integer isUsuario);
 
-    Optional<PasswordWithoutFolder> consultarPorNome(String nome);
+    Optional<SenhaSemPasta> consultarPorNome(String nome);
 
     void deletar(Integer id);
 
-    Optional<PasswordWithoutFolder> consultarPorId(Integer id);
+    Optional<SenhaSemPasta> consultarPorId(Integer id);
 }
