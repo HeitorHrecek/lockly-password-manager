@@ -1,6 +1,6 @@
 package com.example.lockly.infrastructure.dataprovider;
 
-import com.example.lockly.dataproviderLayer.exceptions.folder.*;
+import com.example.lockly.application.gateways.PastaGateway;
 import com.example.lockly.domain.Pasta;
 import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.*;
 import com.example.lockly.infrastructure.mapper.FolderMapper;
@@ -17,65 +17,68 @@ import java.util.stream.Collectors;
 @Slf4j
 @AllArgsConstructor
 @Component
-public class FolderDataProvider {
+public class PastaDataProvider implements PastaGateway {
 
     private final FolderRepository repository;
 
-    public Pasta save(Pasta pasta) {
-        FolderEntity entity = FolderMapper.forEntity(pasta);
+    @Override
+    public Pasta salvar(Pasta novaPasta) {
+        FolderEntity pasta = FolderMapper.forEntity(novaPasta);
         try {
-            FolderEntity savedEntity = repository.save(entity);
-            return FolderMapper.forDomain(savedEntity);
+            pasta = repository.save(pasta);
+            return FolderMapper.forDomain(pasta);
         } catch (Exception exception) {
-            log.error("Error while saving the folder.", exception);
+            log.error("Erro ao salvar pasta.", exception);
             throw new ErroSalvarPastaException(exception.getMessage());
         }
     }
 
-    public List<Pasta> consultAllByUser(Integer idUser) {
+    @Override
+    public List<Pasta> listarPorUsuario(Integer idUsuario) {
         try {
-            List<FolderEntity> entities = repository.consultAllByUser(idUser);
-            return entities.stream()
+            List<FolderEntity> pastas = repository.consultAllByUser(idUsuario);
+            return pastas.stream()
                     .map(FolderMapper::forDomain)
                     .collect(Collectors.toList());
         } catch (Exception exception) {
-            log.error("Error while consulting folders by user", exception);
+            log.error("Erro ao listar pastas por usuario.", exception);
             throw new ErroAoListarPastasPorUsuarioException(exception.getMessage());
         }
     }
 
-    public Optional<Pasta> consultById(Integer id) {
+    @Override
+    public Optional<Pasta> consultarPorId(Integer id) {
         try {
-            Optional<FolderEntity> entity = repository.findById(id);
-            return entity.map(FolderMapper::forDomain);
+            Optional<FolderEntity> pasta = repository.findById(id);
+            return pasta.map(FolderMapper::forDomain);
         } catch (Exception exception) {
-            log.error("Error while consulting folder by", exception);
+            log.error("Erro ao consultar pasta por id.", exception);
             throw new ErroConsultarPastaPorIdException(exception.getMessage());
         }
     }
 
-    public void delete(Integer id) {
+    @Override
+    public void deletar(Integer id) {
         try {
             repository.deleteById(id);
         } catch (Exception exception) {
-            log.error("Error while deleting folder" + id, exception);
+            log.error("Erro ao deletar pasta." + id, exception);
             throw new ErroDeletarPastaException(exception.getMessage());
         }
     }
 
-
-
-    public Optional<Pasta> consultByName(String name) {
-        Optional<FolderEntity> folderEntity;
+    @Override
+    public Optional<Pasta> consultarPorNome(String nome) {
+        Optional<FolderEntity> pasta;
 
         try {
-            folderEntity = repository.findByName(name);
+            pasta = repository.findByName(nome);
         } catch (Exception exception) {
-            log.error("Error while consulting folder by name", exception);
+            log.error("Erro ao consultar pasta por nome.", exception);
             throw new ErroConsultarPastaPorNomeException(exception.getMessage());
         }
 
-        return folderEntity.map(FolderMapper::forDomain);
+        return pasta.map(FolderMapper::forDomain);
     }
 }
 

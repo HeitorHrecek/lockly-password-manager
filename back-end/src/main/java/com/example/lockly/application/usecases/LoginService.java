@@ -1,7 +1,7 @@
 package com.example.lockly.application.usecases;
 
 import com.example.lockly.application.exceptions.usuario.EmailSenhaInvalidoException;
-import com.example.lockly.application.usecases.passwords.SenhaUseCase;
+import com.example.lockly.application.usecases.senha.SenhaUseCase;
 import com.example.lockly.domain.Usuario;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

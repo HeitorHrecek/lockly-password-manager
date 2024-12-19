@@ -4,7 +4,7 @@ import com.example.lockly.application.gateways.UsuarioGateway;
 import com.example.lockly.domain.Usuario;
 import com.example.lockly.application.exceptions.usuario.UsuarioNaoEncontradoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioJaCadastradoException;
-import com.example.lockly.application.usecases.passwords.CriptografiaUseCase;
+import com.example.lockly.application.usecases.senha.CriptografiaUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

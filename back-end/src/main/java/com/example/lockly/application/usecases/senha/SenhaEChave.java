@@ -1,4 +1,4 @@
-package com.example.lockly.application.usecases.passwords;
+package com.example.lockly.application.usecases.senha;
 
 import lombok.Builder;
 

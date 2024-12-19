@@ -1,9 +1,9 @@
-package com.example.lockly.entrypoint.controller.password;
+package com.example.lockly.entrypoint.controller.senha;
 
 import com.example.lockly.entrypoint.dto.ResponseDto;
 import com.example.lockly.entrypoint.dto.passwords.SenhaSemPastaDto;
 import com.example.lockly.infrastructure.mapper.passwords.PasswordWithoutFolderMapper;
-import com.example.lockly.application.usecases.passwords.SenhaSemPastaUseCase;
+import com.example.lockly.application.usecases.senha.SenhaSemPastaUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

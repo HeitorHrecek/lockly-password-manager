@@ -1,4 +1,4 @@
-package com.example.lockly.application.usecases.passwords;
+package com.example.lockly.application.usecases.senha;
 
 import com.example.lockly.application.gateways.senha.SenhaComPastaGateway;
 import com.example.lockly.domain.passwords.SenhaComPasta;

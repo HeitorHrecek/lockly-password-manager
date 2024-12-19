@@ -1,5 +1,6 @@
 package com.example.lockly.infrastructure.dataprovider;
 
+import com.example.lockly.application.gateways.UsuarioGateway;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroSalvarUsuarioException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorEmailException;
@@ -17,52 +18,57 @@ import java.util.Optional;
 @Component
 @Slf4j
 @AllArgsConstructor
-public class UserDataProvider {
+public class UsuarioDataProvider implements UsuarioGateway {
+
     private final UserRepository repository;
 
-    public Usuario save(Usuario newUsuario){
-        UserEntity user = UserMapper.forEntity(newUsuario);
+    @Override
+    public Usuario salvar(Usuario novoUsuario){
+        UserEntity usuario = UserMapper.forEntity(novoUsuario);
 
         try {
-            user = repository.save(user);
+            usuario = repository.save(usuario);
         }catch (Exception exception){
-            log.error("Error while saving the user.", exception);
+            log.error("Erro ao salvar usuario.", exception);
             throw new ErroSalvarUsuarioException(exception.getMessage());
         }
-        return UserMapper.forDomain(user);
+        return UserMapper.forDomain(usuario);
     }
 
-    public Optional<Usuario> searchById(Integer id){
-        Optional<UserEntity> result;
+    @Override
+    public Optional<Usuario> consultarPorId(Integer id){
+        Optional<UserEntity> usuario;
 
         try{
-            result = repository.findById(id);
+            usuario = repository.findById(id);
         }catch (Exception exception){
-            log.error("Error while searching user by id.", exception);
+            log.error("Erro ao consultar usuario por id", exception);
             throw new ErroConsultarUsuarioPorIdException(exception.getMessage());
         }
 
-        return result.map(UserMapper::forDomain);
+        return usuario.map(UserMapper::forDomain);
     }
 
-    public Optional<Usuario> searchByEmail(String email){
-        Optional<UserEntity> result;
+    @Override
+    public Optional<Usuario> consultarPorEmail(String email){
+        Optional<UserEntity> usuario;
 
         try {
-            result = repository.findByEmail(email);
+            usuario = repository.findByEmail(email);
         }catch (Exception exception){
-            log.error("Error while searching email.", exception);
+            log.error("Erro ao consultar usuario por email.", exception);
             throw new ErroConsultarUsuarioPorEmailException(exception.getMessage());
         }
 
-        return result.map(UserMapper::forDomain);
+        return usuario.map(UserMapper::forDomain);
     }
 
-    public void delete(Integer id){
+    @Override
+    public void deletar(Integer id){
         try {
             repository.deleteById(id);
         }catch (Exception exception){
-            log.error("Error while delete an user.", exception);
+            log.error("Erro ao deletar usuario.", exception);
             throw new ErroDeletarUsuarioException(exception.getMessage());
         }
     }

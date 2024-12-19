@@ -32,30 +32,6 @@ public abstract class PasswordWithFolderMapper {
                 .build();
     }
 
-    public static SenhaComPastaDto forDto(SenhaComPasta domain) {
-        return SenhaComPastaDto.builder()
-                .id(domain.getId())
-                .name(domain.getNome())
-                .content(domain.getConteudo())
-                .userDto(UserMapper.forDto(domain.getUsuario()))
-                .folderDto(FolderMapper.forDto(domain.getPasta()))
-                .build();
-    }
-
-    public static SenhaComPasta forDomainFromDto(SenhaComPastaDto dto) {
-        return SenhaComPasta.builder()
-                .id(dto.id())
-                .nome(dto.name())
-                .conteudo(dto.content())
-                .usuario(UserMapper.forDomainFromDto(dto.userDto()))
-                .pasta(FolderMapper.forDomainFromDto(dto.folderDto()))
-                .build();
-    }
-
-    public static List<SenhaComPastaDto> forDtos(List<SenhaComPasta> senhaComPastaList) {
-        return senhaComPastaList.stream().map(PasswordWithFolderMapper::forDto).toList();
-    }
-
     public static List<SenhaComPasta> forDomains(List<PasswordWithFolderEntity> passwordWithFolderEntityList) {
         return passwordWithFolderEntityList.stream().map(PasswordWithFolderMapper::forDomain).toList();
     }

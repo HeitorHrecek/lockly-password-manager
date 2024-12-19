@@ -1,4 +1,4 @@
-package com.example.lockly.infrastructure.dataprovider.password;
+package com.example.lockly.infrastructure.dataprovider.senha;
 
 import com.example.lockly.application.gateways.senha.SenhaComPastaGateway;
 import com.example.lockly.domain.passwords.SenhaComPasta;

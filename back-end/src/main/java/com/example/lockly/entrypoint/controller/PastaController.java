@@ -1,8 +1,10 @@
 package com.example.lockly.entrypoint.controller;
 
+import com.example.lockly.domain.Pasta;
 import com.example.lockly.entrypoint.dto.PastaDto;
 import com.example.lockly.entrypoint.dto.ResponseDto;
 import com.example.lockly.application.usecases.PastaUseCase;
+import com.example.lockly.entrypoint.mapper.PastaMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,14 +21,14 @@ public class PastaController {
 
     @PostMapping
     public ResponseEntity<ResponseDto<PastaDto>> cadastrar(@RequestBody PastaDto pastaDto) {
-        PastaDto pastaSalva = service.cadastrar(pastaDto);
-        ResponseDto<PastaDto> resposta = new ResponseDto<>(pastaSalva);
+        PastaDto pastaDtoSalva = PastaMapper.paraDto(service.cadastrar(PastaMapper.paraDomain(pastaDto)));
+        ResponseDto<PastaDto> resposta = new ResponseDto<>(pastaDtoSalva);
         return ResponseEntity
                 .created(
                         UriComponentsBuilder
                                 .newInstance()
                                 .path("/pasta/{id}")
-                                .buildAndExpand(pastaSalva.id())
+                                .buildAndExpand(pastaDtoSalva.id())
                                 .toUri()
                 )
                 .body(resposta);
@@ -34,8 +36,8 @@ public class PastaController {
 
     @GetMapping("/usuario/{idUsuario}")
     public ResponseEntity<ResponseDto<List<PastaDto>>> listarPorUsuario(@PathVariable Integer idUsuario) {
-        List<PastaDto> pastas = service.listarPorUsuario(idUsuario);
-        ResponseDto<List<PastaDto>> resposta = new ResponseDto<>(pastas);
+        List<PastaDto> pastaDtos = service.listarPorUsuario(idUsuario).stream().map(PastaMapper::paraDto).toList();
+        ResponseDto<List<PastaDto>> resposta = new ResponseDto<>(pastaDtos);
         return ResponseEntity.ok(resposta);
     }
 
@@ -47,15 +49,15 @@ public class PastaController {
 
     @GetMapping("/nome/{nome}")
     public ResponseEntity<ResponseDto<PastaDto>> consultarPorNome(@PathVariable String nome) {
-        PastaDto pasta = service.consultarPorNome(nome);
-        ResponseDto<PastaDto> resposta = new ResponseDto<>(pasta);
+        PastaDto pastaDto = PastaMapper.paraDto(service.consultarPorNome(nome));
+        ResponseDto<PastaDto> resposta = new ResponseDto<>(pastaDto);
         return ResponseEntity.ok(resposta);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ResponseDto<PastaDto>> mudarNome(@RequestBody String nome, @PathVariable Integer id) {
-        PastaDto novaPasta = service.mudarNome(nome, id);
-        ResponseDto<PastaDto> resposta = new ResponseDto<>(novaPasta);
+        PastaDto novaPastaDto = PastaMapper.paraDto(service.mudarNome(nome, id));
+        ResponseDto<PastaDto> resposta = new ResponseDto<>(novaPastaDto);
         return ResponseEntity.ok(resposta);
     }
 }
