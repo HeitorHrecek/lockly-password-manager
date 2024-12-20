@@ -3,9 +3,9 @@ package com.example.lockly.infrastructure.dataprovider.senha;
 import com.example.lockly.application.gateways.senha.SenhaComPastaGateway;
 import com.example.lockly.domain.passwords.SenhaComPasta;
 import com.example.lockly.infrastructure.dataprovider.exceptions.senha.*;
-import com.example.lockly.infrastructure.mapper.passwords.PasswordWithFolderMapper;
-import com.example.lockly.infrastructure.repositoryLayer.entities.passwords.PasswordWithFolderEntity;
-import com.example.lockly.infrastructure.repositoryLayer.password.PasswordWithFolderRepository;
+import com.example.lockly.infrastructure.mapper.passwords.SenhaComPastaMapper;
+import com.example.lockly.infrastructure.repository.entities.senha.SenhaComPastaEntity;
+import com.example.lockly.infrastructure.repository.senha.SenhaComPastaRepositoy;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -18,11 +18,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class SenhaComPastaDataProvider implements SenhaComPastaGateway {
 
-    private final PasswordWithFolderRepository repository;
+    private final SenhaComPastaRepositoy repository;
 
     @Override
     public SenhaComPasta salvar(SenhaComPasta newPassword) {
-        PasswordWithFolderEntity senha = PasswordWithFolderMapper.forEntity(newPassword);
+        SenhaComPastaEntity senha = SenhaComPastaMapper.paraEntity(newPassword);
 
         try {
             senha = repository.save(senha);
@@ -31,31 +31,31 @@ public class SenhaComPastaDataProvider implements SenhaComPastaGateway {
             throw new ErroSalvarSenhaException(exception.getMessage());
         }
 
-        return PasswordWithFolderMapper.forDomain(senha);
+        return SenhaComPastaMapper.paraDomain(senha);
     }
 
     @Override
     public List<SenhaComPasta> listarPorUsuario(Integer idUser) {
-        List<PasswordWithFolderEntity> senhas;
+        List<SenhaComPastaEntity> senhas;
         try {
-            senhas = repository.findByUser(idUser);
+            senhas = repository.consultarPorUsuario(idUser);
         } catch (Exception exception) {
             log.error("Erro ao listar senhas com pasta por usuario", exception);
             throw new ErroListarSenhasPorUsuarioException(exception.getMessage());
         }
-        return PasswordWithFolderMapper.forDomains(senhas);
+        return SenhaComPastaMapper.paraDomains(senhas);
     }
 
     @Override
     public Optional<SenhaComPasta> consultarPorNome(String name) {
-        Optional<PasswordWithFolderEntity> senha;
+        Optional<SenhaComPastaEntity> senha;
         try {
-            senha = repository.findByName(name);
+            senha = repository.consultarPorNome(name);
         } catch (Exception exception) {
             log.error("Erro ao buscar senha com pasta por nome", exception);
             throw new ErroAoConsultarPastaPorNomeException(exception.getMessage());
         }
-        return senha.map(PasswordWithFolderMapper::forDomain);
+        return senha.map(SenhaComPastaMapper::paraDomain);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class SenhaComPastaDataProvider implements SenhaComPastaGateway {
 
     @Override
     public Optional<SenhaComPasta> consultarPorId(Integer id) {
-        Optional<PasswordWithFolderEntity> senha;
+        Optional<SenhaComPastaEntity> senha;
         try {
             senha = repository.findById(id);
         } catch (Exception exception) {
@@ -78,18 +78,18 @@ public class SenhaComPastaDataProvider implements SenhaComPastaGateway {
             throw new ErroConsultarSenhaPorIdException(exception.getMessage());
         }
 
-        return senha.map(PasswordWithFolderMapper::forDomain);
+        return senha.map(SenhaComPastaMapper::paraDomain);
     }
 
     @Override
     public List<SenhaComPasta> listarPorPasta(Integer idFolder) {
-        List<PasswordWithFolderEntity> senhas;
+        List<SenhaComPastaEntity> senhas;
         try {
-            senhas = repository.findByFolder(idFolder);
+            senhas = repository.consultarPorPasta(idFolder);
         } catch (Exception exception) {
             log.error("Erro ao listar senhas com pasta por pasta.");
             throw new ErroAoListarSenhasPorPastaException(exception.getMessage());
         }
-        return PasswordWithFolderMapper.forDomains(senhas);
+        return SenhaComPastaMapper.paraDomains(senhas);
     }
 }

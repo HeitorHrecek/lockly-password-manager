@@ -10,7 +10,7 @@ public abstract class PastaMapper {
         return com.example.lockly.domain.Pasta.builder()
                 .id(dto.id())
                 .nome(dto.nome())
-                .usuario(UserMapper.forDomainFromDto(dto.usuarioDto()))
+                .usuario(UsuarioMapper.paraDomain(dto.usuarioDto()))
                 .build();
     }
 
@@ -18,7 +18,7 @@ public abstract class PastaMapper {
         return PastaDto.builder()
                 .id(domain.getId())
                 .nome(domain.getNome())
-                .usuarioDto(UserMapper.forDto(domain.getUsuario()))
+                .usuarioDto(UsuarioMapper.paraDto(domain.getUsuario()))
                 .build();
     }
 }

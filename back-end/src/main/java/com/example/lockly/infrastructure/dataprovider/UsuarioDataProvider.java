@@ -7,8 +7,8 @@ import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroCon
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorIdException;
 import com.example.lockly.domain.Usuario;
 import com.example.lockly.infrastructure.mapper.UserMapper;
-import com.example.lockly.infrastructure.repositoryLayer.UserRepository;
-import com.example.lockly.infrastructure.repositoryLayer.entities.UserEntity;
+import com.example.lockly.infrastructure.repository.UsuarioRepository;
+import com.example.lockly.infrastructure.repository.entities.UsuarioEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -20,11 +20,11 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UsuarioDataProvider implements UsuarioGateway {
 
-    private final UserRepository repository;
+    private final UsuarioRepository repository;
 
     @Override
     public Usuario salvar(Usuario novoUsuario){
-        UserEntity usuario = UserMapper.forEntity(novoUsuario);
+        UsuarioEntity usuario = UserMapper.paraEntity(novoUsuario);
 
         try {
             usuario = repository.save(usuario);
@@ -32,12 +32,12 @@ public class UsuarioDataProvider implements UsuarioGateway {
             log.error("Erro ao salvar usuario.", exception);
             throw new ErroSalvarUsuarioException(exception.getMessage());
         }
-        return UserMapper.forDomain(usuario);
+        return UserMapper.paraDomain(usuario);
     }
 
     @Override
     public Optional<Usuario> consultarPorId(Integer id){
-        Optional<UserEntity> usuario;
+        Optional<UsuarioEntity> usuario;
 
         try{
             usuario = repository.findById(id);
@@ -46,12 +46,12 @@ public class UsuarioDataProvider implements UsuarioGateway {
             throw new ErroConsultarUsuarioPorIdException(exception.getMessage());
         }
 
-        return usuario.map(UserMapper::forDomain);
+        return usuario.map(UserMapper::paraDomain);
     }
 
     @Override
     public Optional<Usuario> consultarPorEmail(String email){
-        Optional<UserEntity> usuario;
+        Optional<UsuarioEntity> usuario;
 
         try {
             usuario = repository.findByEmail(email);
@@ -60,7 +60,7 @@ public class UsuarioDataProvider implements UsuarioGateway {
             throw new ErroConsultarUsuarioPorEmailException(exception.getMessage());
         }
 
-        return usuario.map(UserMapper::forDomain);
+        return usuario.map(UserMapper::paraDomain);
     }
 
     @Override

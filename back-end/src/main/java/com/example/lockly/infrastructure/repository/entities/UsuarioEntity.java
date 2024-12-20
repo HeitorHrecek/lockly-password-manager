@@ -1,21 +1,21 @@
-package com.example.lockly.infrastructure.repositoryLayer.entities;
+package com.example.lockly.infrastructure.repository.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
 
-@Entity(name = "User")
-@Table(name = "users")
+@Entity(name = "Usuario")
+@Table(name = "usuarios")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class UserEntity {
+public class UsuarioEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private String nome;
     private String email;
-    private String password;
+    private String senha;
 }

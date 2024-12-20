@@ -1,19 +1,19 @@
-package com.example.lockly.infrastructure.repositoryLayer.entities;
+package com.example.lockly.infrastructure.repository.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-@Entity(name = "Folder")
-@Table(name = "folders")
+@Entity(name = "Pasta")
+@Table(name = "pastas")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class FolderEntity {
+public class PastaEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
+    private String nome;
     @ManyToOne
-    private UserEntity userEntity;
+    private UsuarioEntity usuarioEntity;
 }

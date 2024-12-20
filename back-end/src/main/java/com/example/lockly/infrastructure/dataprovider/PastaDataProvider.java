@@ -3,9 +3,9 @@ package com.example.lockly.infrastructure.dataprovider;
 import com.example.lockly.application.gateways.PastaGateway;
 import com.example.lockly.domain.Pasta;
 import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.*;
-import com.example.lockly.infrastructure.mapper.FolderMapper;
-import com.example.lockly.infrastructure.repositoryLayer.FolderRepository;
-import com.example.lockly.infrastructure.repositoryLayer.entities.FolderEntity;
+import com.example.lockly.infrastructure.mapper.PastaMapper;
+import com.example.lockly.infrastructure.repository.PastaRepository;
+import com.example.lockly.infrastructure.repository.entities.PastaEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 @Component
 public class PastaDataProvider implements PastaGateway {
 
-    private final FolderRepository repository;
+    private final PastaRepository repository;
 
     @Override
     public Pasta salvar(Pasta novaPasta) {
-        FolderEntity pasta = FolderMapper.forEntity(novaPasta);
+        PastaEntity pasta = PastaMapper.paraEntity(novaPasta);
         try {
             pasta = repository.save(pasta);
-            return FolderMapper.forDomain(pasta);
+            return PastaMapper.paraDomain(pasta);
         } catch (Exception exception) {
             log.error("Erro ao salvar pasta.", exception);
             throw new ErroSalvarPastaException(exception.getMessage());
@@ -36,9 +36,9 @@ public class PastaDataProvider implements PastaGateway {
     @Override
     public List<Pasta> listarPorUsuario(Integer idUsuario) {
         try {
-            List<FolderEntity> pastas = repository.consultAllByUser(idUsuario);
+            List<PastaEntity> pastas = repository.listarPorUsuario(idUsuario);
             return pastas.stream()
-                    .map(FolderMapper::forDomain)
+                    .map(PastaMapper::paraDomain)
                     .collect(Collectors.toList());
         } catch (Exception exception) {
             log.error("Erro ao listar pastas por usuario.", exception);
@@ -49,8 +49,8 @@ public class PastaDataProvider implements PastaGateway {
     @Override
     public Optional<Pasta> consultarPorId(Integer id) {
         try {
-            Optional<FolderEntity> pasta = repository.findById(id);
-            return pasta.map(FolderMapper::forDomain);
+            Optional<PastaEntity> pasta = repository.findById(id);
+            return pasta.map(PastaMapper::paraDomain);
         } catch (Exception exception) {
             log.error("Erro ao consultar pasta por id.", exception);
             throw new ErroConsultarPastaPorIdException(exception.getMessage());
@@ -69,16 +69,16 @@ public class PastaDataProvider implements PastaGateway {
 
     @Override
     public Optional<Pasta> consultarPorNome(String nome) {
-        Optional<FolderEntity> pasta;
+        Optional<PastaEntity> pasta;
 
         try {
-            pasta = repository.findByName(nome);
+            pasta = repository.findByNome(nome);
         } catch (Exception exception) {
             log.error("Erro ao consultar pasta por nome.", exception);
             throw new ErroConsultarPastaPorNomeException(exception.getMessage());
         }
 
-        return pasta.map(FolderMapper::forDomain);
+        return pasta.map(PastaMapper::paraDomain);
     }
 }
 

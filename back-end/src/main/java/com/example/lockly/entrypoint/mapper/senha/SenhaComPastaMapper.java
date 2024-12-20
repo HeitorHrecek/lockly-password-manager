@@ -3,8 +3,7 @@ package com.example.lockly.entrypoint.mapper.senha;
 import com.example.lockly.domain.passwords.SenhaComPasta;
 import com.example.lockly.entrypoint.dto.passwords.SenhaComPastaDto;
 import com.example.lockly.entrypoint.mapper.PastaMapper;
-import com.example.lockly.infrastructure.mapper.UserMapper;
-import com.example.lockly.infrastructure.mapper.passwords.PasswordWithFolderMapper;
+import com.example.lockly.entrypoint.mapper.UsuarioMapper;
 
 import java.util.List;
 
@@ -15,7 +14,7 @@ public abstract class SenhaComPastaMapper {
                 .id(domain.getId())
                 .nome(domain.getNome())
                 .conteudo(domain.getConteudo())
-                .usuarioDto(UserMapper.forDto(domain.getUsuario()))
+                .usuarioDto(UsuarioMapper.paraDto(domain.getUsuario()))
                 .pastaDto(PastaMapper.paraDto(domain.getPasta()))
                 .build();
     }
@@ -25,7 +24,7 @@ public abstract class SenhaComPastaMapper {
                 .id(dto.id())
                 .nome(dto.nome())
                 .conteudo(dto.conteudo())
-                .usuario(UserMapper.forDomainFromDto(dto.usuarioDto()))
+                .usuario(UsuarioMapper.paraDomain(dto.usuarioDto()))
                 .pasta(PastaMapper.paraDomain(dto.pastaDto()))
                 .build();
     }

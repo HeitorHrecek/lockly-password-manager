@@ -2,8 +2,6 @@ package com.example.lockly.application.usecases;
 import com.example.lockly.application.gateways.PastaGateway;
 import com.example.lockly.domain.Pasta;
 import com.example.lockly.domain.Usuario;
-import com.example.lockly.entrypoint.dto.PastaDto;
-import com.example.lockly.infrastructure.mapper.FolderMapper;
 import com.example.lockly.application.exceptions.pasta.PastaNaoEncontradaException;
 import com.example.lockly.application.exceptions.pasta.PastaJaCadastradaException;
 import com.example.lockly.application.exceptions.pasta.NenhumaPastaEncontradaException;
