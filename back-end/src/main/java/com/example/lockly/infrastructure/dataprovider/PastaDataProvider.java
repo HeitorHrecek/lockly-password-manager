@@ -37,9 +37,7 @@ public class PastaDataProvider implements PastaGateway {
     public List<Pasta> listarPorUsuario(Integer idUsuario) {
         try {
             List<PastaEntity> pastas = repository.listarPorUsuario(idUsuario);
-            return pastas.stream()
-                    .map(PastaMapper::paraDomain)
-                    .collect(Collectors.toList());
+            return pastas.stream().map(PastaMapper::paraDomain).collect(Collectors.toList());
         } catch (Exception exception) {
             log.error("Erro ao listar pastas por usuario.", exception);
             throw new ErroAoListarPastasPorUsuarioException(exception.getMessage());

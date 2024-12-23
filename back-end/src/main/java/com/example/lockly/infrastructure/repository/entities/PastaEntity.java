@@ -2,6 +2,7 @@ package com.example.lockly.infrastructure.repository.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
+
 @Entity(name = "Pasta")
 @Table(name = "pastas")
 @AllArgsConstructor

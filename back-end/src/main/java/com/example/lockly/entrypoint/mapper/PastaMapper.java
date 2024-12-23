@@ -2,7 +2,6 @@ package com.example.lockly.entrypoint.mapper;
 
 import com.example.lockly.domain.Pasta;
 import com.example.lockly.entrypoint.dto.PastaDto;
-import com.example.lockly.infrastructure.mapper.UserMapper;
 
 public abstract class PastaMapper {
 

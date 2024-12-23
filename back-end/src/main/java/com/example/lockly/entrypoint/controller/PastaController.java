@@ -1,9 +1,8 @@
 package com.example.lockly.entrypoint.controller;
 
-import com.example.lockly.domain.Pasta;
+import com.example.lockly.application.usecases.PastaUseCase;
 import com.example.lockly.entrypoint.dto.PastaDto;
 import com.example.lockly.entrypoint.dto.ResponseDto;
-import com.example.lockly.application.usecases.PastaUseCase;
 import com.example.lockly.entrypoint.mapper.PastaMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

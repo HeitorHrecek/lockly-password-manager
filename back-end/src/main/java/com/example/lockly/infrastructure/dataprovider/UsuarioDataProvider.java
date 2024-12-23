@@ -1,11 +1,11 @@
 package com.example.lockly.infrastructure.dataprovider;
 
 import com.example.lockly.application.gateways.UsuarioGateway;
-import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
-import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroSalvarUsuarioException;
+import com.example.lockly.domain.Usuario;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorEmailException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorIdException;
-import com.example.lockly.domain.Usuario;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroSalvarUsuarioException;
 import com.example.lockly.infrastructure.mapper.UserMapper;
 import com.example.lockly.infrastructure.repository.UsuarioRepository;
 import com.example.lockly.infrastructure.repository.entities.UsuarioEntity;
@@ -23,12 +23,12 @@ public class UsuarioDataProvider implements UsuarioGateway {
     private final UsuarioRepository repository;
 
     @Override
-    public Usuario salvar(Usuario novoUsuario){
+    public Usuario salvar(Usuario novoUsuario) {
         UsuarioEntity usuario = UserMapper.paraEntity(novoUsuario);
 
         try {
             usuario = repository.save(usuario);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.error("Erro ao salvar usuario.", exception);
             throw new ErroSalvarUsuarioException(exception.getMessage());
         }
@@ -36,12 +36,12 @@ public class UsuarioDataProvider implements UsuarioGateway {
     }
 
     @Override
-    public Optional<Usuario> consultarPorId(Integer id){
+    public Optional<Usuario> consultarPorId(Integer id) {
         Optional<UsuarioEntity> usuario;
 
-        try{
+        try {
             usuario = repository.findById(id);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.error("Erro ao consultar usuario por id", exception);
             throw new ErroConsultarUsuarioPorIdException(exception.getMessage());
         }
@@ -50,12 +50,12 @@ public class UsuarioDataProvider implements UsuarioGateway {
     }
 
     @Override
-    public Optional<Usuario> consultarPorEmail(String email){
+    public Optional<Usuario> consultarPorEmail(String email) {
         Optional<UsuarioEntity> usuario;
 
         try {
             usuario = repository.findByEmail(email);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.error("Erro ao consultar usuario por email.", exception);
             throw new ErroConsultarUsuarioPorEmailException(exception.getMessage());
         }
@@ -64,10 +64,10 @@ public class UsuarioDataProvider implements UsuarioGateway {
     }
 
     @Override
-    public void deletar(Integer id){
+    public void deletar(Integer id) {
         try {
             repository.deleteById(id);
-        }catch (Exception exception){
+        } catch (Exception exception) {
             log.error("Erro ao deletar usuario.", exception);
             throw new ErroDeletarUsuarioException(exception.getMessage());
         }

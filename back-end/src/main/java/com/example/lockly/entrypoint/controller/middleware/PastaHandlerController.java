@@ -1,6 +1,7 @@
 package com.example.lockly.entrypoint.controller.middleware;
 
-import com.example.lockly.application.exceptions.pasta.*;
+import com.example.lockly.application.exceptions.pasta.NenhumaPastaEncontradaException;
+import com.example.lockly.application.exceptions.pasta.PastaJaCadastradaException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.ErroAoListarPastasPorUsuarioException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.ErroDeletarPastaException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.pasta.ErroSalvarPastaException;

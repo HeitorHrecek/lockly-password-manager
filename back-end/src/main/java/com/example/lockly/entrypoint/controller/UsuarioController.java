@@ -17,7 +17,7 @@ public class UsuarioController {
     private final UsuarioUseCase service;
 
     @PostMapping
-    public ResponseEntity<ResponseDto<UsuarioDto>> cadastrar(@RequestBody UsuarioDto novoUsuario){
+    public ResponseEntity<ResponseDto<UsuarioDto>> cadastrar(@RequestBody UsuarioDto novoUsuario) {
         UsuarioDto usuarioSalvo = UsuarioMapper.paraDto(service.cadastrar(UsuarioMapper.paraDomain(novoUsuario)));
         ResponseDto<UsuarioDto> resposta = new ResponseDto<>(usuarioSalvo);
         return ResponseEntity
@@ -32,21 +32,21 @@ public class UsuarioController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ResponseDto<UsuarioDto>> consultarPorId(@PathVariable Integer id){
+    public ResponseEntity<ResponseDto<UsuarioDto>> consultarPorId(@PathVariable Integer id) {
         UsuarioDto usuario = UsuarioMapper.paraDto(service.consultarPorId(id));
         ResponseDto<UsuarioDto> resposta = new ResponseDto<>(usuario);
         return ResponseEntity.ok(resposta);
     }
 
     @GetMapping(value = "/email/{email}")
-    public ResponseEntity<ResponseDto<UsuarioDto>> consultarPorEmail(@PathVariable String email){
+    public ResponseEntity<ResponseDto<UsuarioDto>> consultarPorEmail(@PathVariable String email) {
         UsuarioDto usuario = UsuarioMapper.paraDto(service.consultarPorEmail(email));
         ResponseDto<UsuarioDto> resposta = new ResponseDto<>(usuario);
         return ResponseEntity.ok(resposta);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable Integer id){
+    public ResponseEntity<Void> deletar(@PathVariable Integer id) {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }

@@ -4,4 +4,5 @@ import lombok.Builder;
 import org.springframework.http.HttpStatus;
 
 @Builder
-public record MensagemErroException(HttpStatus status, String mensagem) {}
+public record MensagemErroException(HttpStatus status, String mensagem) {
+}

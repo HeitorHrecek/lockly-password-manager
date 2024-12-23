@@ -1,12 +1,12 @@
 package com.example.lockly.entrypoint.controller.middleware;
 
-import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
-import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroSalvarUsuarioException;
-import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorEmailException;
-import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorIdException;
 import com.example.lockly.application.exceptions.usuario.EmailSenhaInvalidoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioJaCadastradoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioNaoEncontradoException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorEmailException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorIdException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
+import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroSalvarUsuarioException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -20,7 +20,7 @@ public class UsuarioHandlerController {
     private final HttpStatus STATUS_400 = HttpStatus.BAD_REQUEST;
 
     @ExceptionHandler(UsuarioJaCadastradoException.class)
-    private ResponseEntity<MensagemErroException> alreadyRegisteredHandler(UsuarioJaCadastradoException exception){
+    private ResponseEntity<MensagemErroException> alreadyRegisteredHandler(UsuarioJaCadastradoException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_400)
                 .mensagem(exception.getMessage())
@@ -30,7 +30,7 @@ public class UsuarioHandlerController {
     }
 
     @ExceptionHandler(EmailSenhaInvalidoException.class)
-    private ResponseEntity<MensagemErroException> dateInvalidHandler (EmailSenhaInvalidoException exception){
+    private ResponseEntity<MensagemErroException> dateInvalidHandler(EmailSenhaInvalidoException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -40,7 +40,7 @@ public class UsuarioHandlerController {
     }
 
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    private ResponseEntity<MensagemErroException> notFoundHandler(UsuarioNaoEncontradoException exception){
+    private ResponseEntity<MensagemErroException> notFoundHandler(UsuarioNaoEncontradoException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_404)
                 .mensagem(exception.getMessage())
@@ -50,7 +50,7 @@ public class UsuarioHandlerController {
     }
 
     @ExceptionHandler(ErroSalvarUsuarioException.class)
-    private ResponseEntity<MensagemErroException> saveErrorHandler(ErroSalvarUsuarioException exception){
+    private ResponseEntity<MensagemErroException> saveErrorHandler(ErroSalvarUsuarioException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -60,7 +60,7 @@ public class UsuarioHandlerController {
     }
 
     @ExceptionHandler(ErroConsultarUsuarioPorIdException.class)
-    private ResponseEntity<MensagemErroException> searchByIdErrorHandler(ErroConsultarUsuarioPorIdException exception){
+    private ResponseEntity<MensagemErroException> searchByIdErrorHandler(ErroConsultarUsuarioPorIdException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -70,7 +70,7 @@ public class UsuarioHandlerController {
     }
 
     @ExceptionHandler(ErroConsultarUsuarioPorEmailException.class)
-    private ResponseEntity<MensagemErroException> searchByEmailErrorHandler(ErroConsultarUsuarioPorEmailException exception){
+    private ResponseEntity<MensagemErroException> searchByEmailErrorHandler(ErroConsultarUsuarioPorEmailException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())
@@ -80,7 +80,7 @@ public class UsuarioHandlerController {
     }
 
     @ExceptionHandler(ErroDeletarUsuarioException.class)
-    private ResponseEntity<MensagemErroException> deleteErrorHandler(ErroDeletarUsuarioException exception){
+    private ResponseEntity<MensagemErroException> deleteErrorHandler(ErroDeletarUsuarioException exception) {
         MensagemErroException mensagem = MensagemErroException.builder()
                 .status(STATUS_500)
                 .mensagem(exception.getMessage())

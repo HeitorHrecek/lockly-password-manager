@@ -1,10 +1,11 @@
 package com.example.lockly.application.usecases;
+
+import com.example.lockly.application.exceptions.pasta.NenhumaPastaEncontradaException;
+import com.example.lockly.application.exceptions.pasta.PastaJaCadastradaException;
+import com.example.lockly.application.exceptions.pasta.PastaNaoEncontradaException;
 import com.example.lockly.application.gateways.PastaGateway;
 import com.example.lockly.domain.Pasta;
 import com.example.lockly.domain.Usuario;
-import com.example.lockly.application.exceptions.pasta.PastaNaoEncontradaException;
-import com.example.lockly.application.exceptions.pasta.PastaJaCadastradaException;
-import com.example.lockly.application.exceptions.pasta.NenhumaPastaEncontradaException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +19,13 @@ public class PastaUseCase {
     private final PastaGateway gateway;
     private final UsuarioUseCase usuarioUseCase;
 
-    public com.example.lockly.domain.Pasta consultarPorId(Integer id) {
+    public Pasta consultarPorId(Integer id) {
         return gateway.consultarPorId(id)
                 .orElseThrow(NenhumaPastaEncontradaException::new);
     }
 
-    public com.example.lockly.domain.Pasta cadastrar(com.example.lockly.domain.Pasta novaPasta) {
-        List<com.example.lockly.domain.Pasta> pastasExistentes = gateway.listarPorUsuario(novaPasta.getUsuario().getId());
+    public Pasta cadastrar(Pasta novaPasta) {
+        List<Pasta> pastasExistentes = gateway.listarPorUsuario(novaPasta.getUsuario().getId());
 
         boolean pastaExiste = pastasExistentes.stream()
                 .anyMatch(folder -> folder.getNome().equalsIgnoreCase(novaPasta.getNome()));
@@ -38,8 +39,8 @@ public class PastaUseCase {
         return gateway.salvar(novaPasta);
     }
 
-    public List<com.example.lockly.domain.Pasta> listarPorUsuario(Integer userId) {
-        List<com.example.lockly.domain.Pasta> senhas = gateway.listarPorUsuario(userId);
+    public List<Pasta> listarPorUsuario(Integer userId) {
+        List<Pasta> senhas = gateway.listarPorUsuario(userId);
 
         if (senhas.isEmpty()) {
             throw new NenhumaPastaEncontradaException();
@@ -54,7 +55,7 @@ public class PastaUseCase {
     }
 
     public Pasta mudarNome(String nome, Integer id) {
-        com.example.lockly.domain.Pasta pasta = consultarPorId(id);
+        Pasta pasta = consultarPorId(id);
         pasta.setNome(nome);
         return gateway.salvar(pasta);
     }
@@ -62,7 +63,7 @@ public class PastaUseCase {
     public Pasta consultarPorNome(String nome) {
         Optional<Pasta> pasta = gateway.consultarPorNome(nome);
 
-        if(pasta.isEmpty()) {
+        if (pasta.isEmpty()) {
             throw new PastaNaoEncontradaException();
         }
 

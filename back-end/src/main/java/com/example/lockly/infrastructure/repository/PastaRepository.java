@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface PastaRepository extends JpaRepository<PastaEntity, Integer> {
     @Query("SELECT fld FROM Pasta fld WHERE fld.usuarioEntity.id = :usuarioId")
     List<PastaEntity> listarPorUsuario(Integer usuarioId);
+
     Optional<PastaEntity> findByNome(String name);
 }

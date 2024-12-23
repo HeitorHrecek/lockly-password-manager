@@ -13,11 +13,11 @@ public class Usuario {
     private String email;
     private String senha;
 
-    public void setData(Usuario alteredUsuario){
-        if (alteredUsuario.getNome() != null){
+    public void setData(Usuario alteredUsuario) {
+        if (alteredUsuario.getNome() != null) {
             this.nome = alteredUsuario.nome;
         }
-        if (alteredUsuario.getEmail() != null){
+        if (alteredUsuario.getEmail() != null) {
             this.email = alteredUsuario.email;
         }
     }
