@@ -3,6 +3,7 @@ package com.example.lockly.entrypoint.controller.middleware;
 import com.example.lockly.application.exceptions.usuario.EmailSenhaInvalidoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioJaCadastradoException;
 import com.example.lockly.application.exceptions.usuario.UsuarioNaoEncontradoException;
+import com.example.lockly.entrypoint.dto.ResponseDto;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorEmailException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroConsultarUsuarioPorIdException;
 import com.example.lockly.infrastructure.dataprovider.exceptions.usuario.ErroDeletarUsuarioException;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.List;
+
 @RestControllerAdvice
 public class UsuarioHandlerController {
 
@@ -20,72 +23,44 @@ public class UsuarioHandlerController {
     private final HttpStatus STATUS_400 = HttpStatus.BAD_REQUEST;
 
     @ExceptionHandler(UsuarioJaCadastradoException.class)
-    private ResponseEntity<MensagemErroException> alreadyRegisteredHandler(UsuarioJaCadastradoException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_400)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> alreadyRegisteredHandler(UsuarioJaCadastradoException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_400).body(ResponseDto.comErro(erroDto));
     }
 
     @ExceptionHandler(EmailSenhaInvalidoException.class)
-    private ResponseEntity<MensagemErroException> dateInvalidHandler(EmailSenhaInvalidoException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_500)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> dateInvalidHandler(EmailSenhaInvalidoException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_400).body(ResponseDto.comErro(erroDto));
     }
 
     @ExceptionHandler(UsuarioNaoEncontradoException.class)
-    private ResponseEntity<MensagemErroException> notFoundHandler(UsuarioNaoEncontradoException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_404)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> notFoundHandler(UsuarioNaoEncontradoException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_404).body(ResponseDto.comErro(erroDto));
     }
 
     @ExceptionHandler(ErroSalvarUsuarioException.class)
-    private ResponseEntity<MensagemErroException> saveErrorHandler(ErroSalvarUsuarioException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_500)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> saveErrorHandler(ErroSalvarUsuarioException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_500).body(ResponseDto.comErro(erroDto));
     }
 
     @ExceptionHandler(ErroConsultarUsuarioPorIdException.class)
-    private ResponseEntity<MensagemErroException> searchByIdErrorHandler(ErroConsultarUsuarioPorIdException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_500)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> searchByIdErrorHandler(ErroConsultarUsuarioPorIdException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_500).body(ResponseDto.comErro(erroDto));
     }
 
     @ExceptionHandler(ErroConsultarUsuarioPorEmailException.class)
-    private ResponseEntity<MensagemErroException> searchByEmailErrorHandler(ErroConsultarUsuarioPorEmailException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_500)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> searchByEmailErrorHandler(ErroConsultarUsuarioPorEmailException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_500).body(ResponseDto.comErro(erroDto));
     }
 
     @ExceptionHandler(ErroDeletarUsuarioException.class)
-    private ResponseEntity<MensagemErroException> deleteErrorHandler(ErroDeletarUsuarioException exception) {
-        MensagemErroException mensagem = MensagemErroException.builder()
-                .status(STATUS_500)
-                .mensagem(exception.getMessage())
-                .build();
-
-        return ResponseEntity.status(mensagem.status()).body(mensagem);
+    private ResponseEntity<ResponseDto> deleteErrorHandler(ErroDeletarUsuarioException exception) {
+        ResponseDto.ErroDto erroDto = ResponseDto.ErroDto.builder().mensagens(List.of(exception.getMessage())).build();
+        return ResponseEntity.status(STATUS_500).body(ResponseDto.comErro(erroDto));
     }
 }
