@@ -8,6 +8,7 @@ import com.example.lockly.application.usecases.PastaUseCase;
 import com.example.lockly.application.usecases.UsuarioUseCase;
 import com.example.lockly.domain.senhas.SenhaComPasta;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SenhaComPastaUseCase {
 
     private final SenhaComPastaGateway gateway;
@@ -23,6 +25,7 @@ public class SenhaComPastaUseCase {
     private final CriptografiaUseCase criptografiaUseCase;
 
     public SenhaComPasta cadastrar(SenhaComPasta novaSenha) {
+        log.info("Cadastrando senha com pasta. senha={}", novaSenha);
         Optional<SenhaComPasta> senhaExistente = gateway.consultarPorNome(novaSenha.getNome());
         senhaExistente.ifPresent(password -> {
             throw new SenhaJaCadastradaException();
@@ -34,15 +37,23 @@ public class SenhaComPastaUseCase {
         novaSenha.setUsuario(usuarioUseCase.consultarPorId(novaSenha.getUsuario().getId()));
         novaSenha.setPasta(pastaUseCase.consultarPorId(novaSenha.getPasta().getId()));
 
-        return gateway.salvar(novaSenha);
+        SenhaComPasta senhaSalva = gateway.salvar(novaSenha);
+
+        log.info("Senha cadastrada. senha={}", senhaSalva);
+
+        return senhaSalva;
     }
 
 
     public List<SenhaComPasta> listarPorUsuario(Integer idUsuario) {
+        log.info("Listar senhas com pasta por usuario. idUsuario={}", idUsuario);
         List<SenhaComPasta> senhas = gateway.listarPorUsuario(idUsuario);
         if (senhas.isEmpty()) {
             throw new NenhumaSenhaEncontradaException();
         }
+
+        log.info("Lista de senha com pasta. lista={}", senhas);
+
         return senhas;
     }
 

@@ -3,6 +3,7 @@ package com.example.lockly.application.usecases.senhas;
 import com.example.lockly.application.exceptions.senha.ErroCriptografarSenhaException;
 import com.example.lockly.application.exceptions.senha.ErroDescriptografarSenhaException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CriptografiaUseCase {
 
     private final PasswordEncoder passwordEncoder;
@@ -23,36 +25,60 @@ public class CriptografiaUseCase {
         return passwordEncoder.encode(password);
     }
 
-    public SenhaEChave criptografar(String password) {
+    public SenhaEChave criptografar(String senha) {
+        log.info("Criptografar senha. senha={}", senha);
         try {
-            SecretKey key = gerarChave(256);
+            SecretKey chave = gerarChave(256);
+            log.info("Gerando chave secreta. chave={}", chave);
             IvParameterSpec iv = gerarIV();
-            return SenhaEChave.builder().chave(key).senhaCriptografada(criptografarSenha(password, key, iv)).build();
+            log.info("Gerenado IV. IV={}", iv);
+            SenhaEChave senhaCriptografada = SenhaEChave.builder()
+                    .chave(chave)
+                    .senhaCriptografada(criptografarSenha(senha, chave, iv))
+                    .build();
+
+            log.info("Senha criptograda. senha={}", senhaCriptografada);
+
+            return senhaCriptografada;
         } catch (Exception exception) {
             throw new ErroCriptografarSenhaException(exception.getMessage());
         }
     }
 
-    public String descriptografar(String password, SecretKey key) {
+    public String descriptografar(String senha, SecretKey chave) {
+        log.info("Descriptografar senha. senha={}", senha);
+        log.info("chave={}", chave);
+        String senhaDescriptograda;
         try {
-            return descriptografarSenha(password, key);
+             senhaDescriptograda = descriptografarSenha(senha, chave);
         } catch (Exception exception) {
             throw new ErroDescriptografarSenhaException(exception.getMessage());
         }
+
+        log.info("Senha descriptografada. senha={}", senhaDescriptograda);
+
+        return senhaDescriptograda;
     }
 
     private static SecretKey gerarChave(int n) throws Exception {
+        log.info("Gerar chave secreta. n={}", n);
         KeyGenerator keyGenerator = KeyGenerator.getInstance("AES");
         keyGenerator.init(n);
-        SecretKey key = keyGenerator.generateKey();
-        return key;
+        SecretKey chave = keyGenerator.generateKey();
+        log.info("Chave secreta gerada. chave={}", chave);
+        return chave;
     }
 
     private static IvParameterSpec gerarIV() {
+        log.info("Gerando IV");
         byte[] iv = new byte[16];
         SecureRandom random = new SecureRandom();
         random.nextBytes(iv);
-        return new IvParameterSpec(iv);
+        IvParameterSpec novoIv = new IvParameterSpec(iv);
+
+        log.info("IV gerado. IV={}", novoIv);
+
+        return novoIv;
     }
 
     private static String criptografarSenha(String plainText, SecretKey key, IvParameterSpec iv) throws Exception {
