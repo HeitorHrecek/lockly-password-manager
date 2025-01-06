@@ -39,7 +39,7 @@ public class SenhaComPastaUseCase {
 
         SenhaComPasta senhaSalva = gateway.salvar(novaSenha);
 
-        log.info("Senha cadastrada. senha={}", senhaSalva);
+        log.info("Senha com pasta cadastrada. senha={}", senhaSalva);
 
         return senhaSalva;
     }
@@ -58,37 +58,54 @@ public class SenhaComPastaUseCase {
     }
 
     public SenhaComPasta consultarPorNome(String nome) {
-        Optional<SenhaComPasta> senha = gateway.consultarPorNome(nome);
-        if (senha.isEmpty()) {
+        log.info("Consultar senha com pasta por nome. nome={}", nome);
+        Optional<SenhaComPasta> senhaOptional = gateway.consultarPorNome(nome);
+        if (senhaOptional.isEmpty()) {
             throw new SenhaNaoEncontradaException();
         }
-        return senha.get();
+
+        SenhaComPasta senha = senhaOptional.get();
+
+        log.info("Senha com pasta consultada com sucesso. senha={}", senha);
+
+        return senha;
     }
 
     public void deletar(Integer id) {
-        consultarPorId(id);
+        log.info("Deleção de senha com pasta pelo id. id={}", id);
+        SenhaComPasta senhaDeletar = consultarPorId(id);
         gateway.deletar(id);
+        log.info("Senha com pasta deletada com sucesso. senha={}", senhaDeletar);
     }
 
     public SenhaComPasta mudarNome(String nome, Integer idSenha) {
+        log.info("Mudar nome da senha com pasta. nome={}", nome);
+        log.info("id={}", idSenha);
         SenhaComPasta senha = consultarPorId(idSenha);
         senha.setNome(nome);
-        return gateway.salvar(senha);
+        SenhaComPasta senhaSalva = gateway.salvar(senha);
+        log.info("Senha com pasta alterada com sucesso. senha={}", senhaSalva);
+        return senhaSalva;
     }
 
     public SenhaComPasta consultarPorId(Integer id) {
-        Optional<SenhaComPasta> senha = gateway.consultarPorId(id);
-        if (senha.isEmpty()) {
+        log.info("Consultar senha com pasta pelo id. id={}", id);
+        Optional<SenhaComPasta> senhaOptional = gateway.consultarPorId(id);
+        if (senhaOptional.isEmpty()) {
             throw new SenhaNaoEncontradaException();
         }
-        return senha.get();
+        SenhaComPasta senha = senhaOptional.get();
+        log.info("Senha com pasta consultada com sucesso. senha={}", senha);
+        return senha;
     }
 
     public List<SenhaComPasta> listarPorPastas(Integer idPasta) {
+        log.info("Listar senhas com pasta pelo id da pasta. id={}", idPasta);
         List<SenhaComPasta> senhas = gateway.listarPorPasta(idPasta);
         if (senhas.isEmpty()) {
             throw new NenhumaSenhaEncontradaException();
         }
+        log.info("Senhas com pasta listadas com sucesso. senhas={}", senhas);
         return senhas;
     }
 }

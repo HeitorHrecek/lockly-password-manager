@@ -4,8 +4,10 @@ import com.example.lockly.application.exceptions.senha.NenhumaSenhaEncontradaExc
 import com.example.lockly.application.exceptions.senha.SenhaNaoEncontradaException;
 import com.example.lockly.application.gateways.senhas.SenhaSemPastaGateway;
 import com.example.lockly.application.usecases.UsuarioUseCase;
+import com.example.lockly.domain.senhas.SenhaComPasta;
 import com.example.lockly.domain.senhas.SenhaSemPasta;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class SenhaSemPastaUseCase {
 
     private final SenhaSemPastaGateway gateway;
@@ -20,32 +23,46 @@ public class SenhaSemPastaUseCase {
     private final CriptografiaUseCase criptografiaUseCase;
 
     public SenhaSemPasta cadastrar(SenhaSemPasta novaSenha) {
+        log.info("Cadastro de senha. senha={}", novaSenha);
         novaSenha.setUsuario(usuarioUseCase.consultarPorId(novaSenha.getUsuario().getId()));
         SenhaEChave senhaEChave = criptografiaUseCase.criptografar(novaSenha.getConteudo());
         novaSenha.setConteudo(senhaEChave.senhaCriptografada());
         novaSenha.setChaveCriptografia(senhaEChave.chave());
-        return gateway.salvar(novaSenha);
+        SenhaSemPasta senhaSalva = gateway.salvar(novaSenha);
+        log.info("Senha cadastrada com sucesso. senha={}", senhaSalva);
+        return senhaSalva;
     }
 
     public List<SenhaSemPasta> listarPorUsuario(Integer isUsuario) {
+        log.info("Listar senhas pelo usuário. id={}", isUsuario);
         List<SenhaSemPasta> senhas = gateway.listarPorUsuario(isUsuario);
         if (senhas.isEmpty()) {
             throw new NenhumaSenhaEncontradaException();
         }
+
+        log.info("Senhas listadas com sucesso. senhas={}", senhas);
         return senhas;
     }
 
     public SenhaSemPasta consultarPorNome(String nome) {
-        Optional<SenhaSemPasta> senha = gateway.consultarPorNome(nome);
-        if (senha.isEmpty()) {
+        log.info("Consultar senha pelo nome. nome={}", nome);
+        Optional<SenhaSemPasta> senhaOptional = gateway.consultarPorNome(nome);
+        if (senhaOptional.isEmpty()) {
             throw new SenhaNaoEncontradaException();
         }
-        return senha.get();
+
+        SenhaSemPasta senha = senhaOptional.get();
+
+        log.info("Senha consultada com sucesso. senha={}", senha);
+
+        return senha;
     }
 
     public void deletar(Integer id) {
-        consultarPorId(id);
+        log.info("Deleção de senha pelo id. id={}", id);
+        SenhaSemPasta senha = consultarPorId(id);
         gateway.deletar(id);
+        log.info("Deleção de senha concluida com sucesso. senha={}", senha);
     }
 
     public SenhaSemPasta mudarNome(String novoNome, Integer id) {
