@@ -7,6 +7,7 @@ import com.example.lockly.application.gateways.PastaGateway;
 import com.example.lockly.domain.Pasta;
 import com.example.lockly.domain.Usuario;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +15,22 @@ import java.util.Optional;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class PastaUseCase {
 
     private final PastaGateway gateway;
     private final UsuarioUseCase usuarioUseCase;
 
     public Pasta consultarPorId(Integer id) {
-        return gateway.consultarPorId(id)
+        log.info("Consultar pasta pelo seu id. id={}", id);
+        Pasta pasta = gateway.consultarPorId(id)
                 .orElseThrow(NenhumaPastaEncontradaException::new);
+        log.info("Consulta realizada com sucesso. pasta={}", pasta);
+        return pasta;
     }
 
     public Pasta cadastrar(Pasta novaPasta) {
+        log.info("Cadastro de pasta. pasta={}", novaPasta);
         List<Pasta> pastasExistentes = gateway.listarPorUsuario(novaPasta.getUsuario().getId());
 
         boolean pastaExiste = pastasExistentes.stream()
@@ -36,37 +42,52 @@ public class PastaUseCase {
 
         Usuario usuario = usuarioUseCase.consultarPorId(novaPasta.getUsuario().getId());
         novaPasta.setUsuario(usuario);
-        return gateway.salvar(novaPasta);
+        Pasta pastaSalva = gateway.salvar(novaPasta);
+        log.info("Pasta cadastrada com sucesso. pasta={}", pastaSalva);
+        return pastaSalva;
     }
 
     public List<Pasta> listarPorUsuario(Integer userId) {
-        List<Pasta> senhas = gateway.listarPorUsuario(userId);
+        log.info("Listar pastas pelo id do usuário. id={}", userId);
+        List<Pasta> pastas = gateway.listarPorUsuario(userId);
 
-        if (senhas.isEmpty()) {
+        if (pastas.isEmpty()) {
             throw new NenhumaPastaEncontradaException();
         }
 
-        return senhas;
+        log.info("Listagem realizada com sucesso. lista={}", pastas);
+
+        return pastas;
     }
 
     public void deletar(Integer id) {
-        consultarPorId(id);
+        log.info("Deleção de pasta pelo seu id. id={}", id);
+        Pasta pasta = consultarPorId(id);
         gateway.deletar(id);
+        log.info("Deleção feita com sucesso. pasta={}", pasta);
     }
 
     public Pasta mudarNome(String nome, Integer id) {
+        log.info("Mudar nome da pasta. nome={} id={}", nome, id);
         Pasta pasta = consultarPorId(id);
         pasta.setNome(nome);
-        return gateway.salvar(pasta);
+        Pasta pastaSalva = gateway.salvar(pasta);
+        log.info("Mudança de nome feita com sucesso. pasta={}", pastaSalva);
+        return pastaSalva;
     }
 
     public Pasta consultarPorNome(String nome) {
-        Optional<Pasta> pasta = gateway.consultarPorNome(nome);
+        log.info("Consulta pasta pelo seu nome. nome={}", nome);
+        Optional<Pasta> pastaOptional = gateway.consultarPorNome(nome);
 
-        if (pasta.isEmpty()) {
+        if (pastaOptional.isEmpty()) {
             throw new PastaNaoEncontradaException();
         }
 
-        return pasta.get();
+        Pasta pasta = pastaOptional.get();
+
+        log.info("Consulta feita com sucesso. pasta={}", pasta);
+
+        return pasta;
     }
 }
