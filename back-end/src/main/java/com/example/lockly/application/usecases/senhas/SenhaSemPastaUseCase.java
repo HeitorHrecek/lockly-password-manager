@@ -66,15 +66,22 @@ public class SenhaSemPastaUseCase {
     }
 
     public SenhaSemPasta mudarNome(String novoNome, Integer id) {
+        log.info("Mudar nome da senha. novo nome={}", novoNome);
+        log.info("id={}", id);
         SenhaSemPasta senha = consultarPorId(id);
         senha.setNome(novoNome);
-        return gateway.salvar(senha);
+        SenhaSemPasta senhaSalva = gateway.salvar(senha);
+        log.info("Senha salva com sucesso. senha={}", senhaSalva);
+        return senhaSalva;
     }
 
     public SenhaSemPasta consultarPorId(Integer id) {
-        Optional<SenhaSemPasta> senha = gateway.consultarPorId(id);
-        if (senha.isEmpty())
+        log.info("Consultar senha por id. id={}", id);
+        Optional<SenhaSemPasta> senhaOptional = gateway.consultarPorId(id);
+        if (senhaOptional.isEmpty())
             throw new SenhaNaoEncontradaException();
-        return senha.get();
+        SenhaSemPasta senha = senhaOptional.get();
+        log.info("Senha consultada com sucesso. senha={}", senha);
+        return senha;
     }
 }
